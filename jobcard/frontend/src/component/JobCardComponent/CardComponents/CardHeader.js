@@ -6,10 +6,10 @@ const cardHeaderStyles = makeStyles({
   cardHeader: {
     width: "100%",
     height: "45px",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#efefef",
   },
   name: {
-    padding: "12px 12px",
+    padding: "12px 8px",
     fontSize: "20px",
     lineHeight: "24px",
     color: "#000000",

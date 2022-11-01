@@ -1,35 +1,61 @@
 import React from 'react';
 import moneyIcon from "../../../icons/money.svg";
+import { makeStyles } from '@mui/styles';
 
-const SalaryDiv = ({ current_ctc, current_inhand, expected_inhand }) => {
+const salaryDivStyles = makeStyles({
+  salaryDiv: {
+    margin: "0px 8px",
+    // width: "120px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "7px",
+    fontWeight: "300",
+    fontSize: "8px",
+    lineHeight: "10px",
+  },
+  salaryText: {
+    fontWeight: "700",
+    letterSpacing: "0.2px",
+    fontSize: "8px",
+    lineHeight: "10px",
+  }
+});
+
+const SalaryDiv = ({ current_ctc, current_inhand, expected_ctc, offered_ctc }) => {
+  const classes = salaryDivStyles();
+
   return (
-    <div className="salaryDiv">
-      <div style={{ display: "flex", gap: "7px" }}>
-        <img src={moneyIcon} alt="money" height="10px" width="10px" />
-        <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-          <span>Current CTC</span>
-          <span className="exampleText">(in L/yr Ex-4L,20L)</span>
+    <div className={classes.salaryDiv}>
+      <div style={{ display: "flex", gap: "3px" }}>
+        <div style={{ display: "flex", gap: "7px", width: "105px" }}>
+          <img src={moneyIcon} alt="money" height="10px" width="10px" />
+          <span>Current annual CTC</span>
         </div>
-        <span className="salaryText">{current_ctc}L</span>
+        <span className={classes.salaryText}>{current_ctc}L</span>
       </div>
 
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <div style={{ display: "flex", gap: "7px" }}>
+      <div style={{ display: "flex", gap: "3px" }}>
+        <div style={{ display: "flex", gap: "7px", width: "105px" }}>
           <img src={moneyIcon} alt="money" height="10px" width="10px" />
-          <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-            <span>Current In-hand</span>
-            <span className="exampleText">(in K/month Ex-20K,65K)</span>
-          </div>
-          <span className="salaryText">{current_inhand}K</span>
+          <span>Current monthly in-hand</span>
         </div>
-        <div style={{ display: "flex", gap: "7px" }}>
+        <span className={classes.salaryText}>{current_inhand}K</span>
+      </div>
+
+      <div style={{ display: "flex", gap: "3px" }}>
+        <div style={{ display: "flex", gap: "7px", width: "105px" }}>
           <img src={moneyIcon} alt="money" height="10px" width="10px" />
-          <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-            <span>Expected In-hand</span>
-            <span className="exampleText">(in K/month Ex-20K,65K)</span>
-          </div>
-          <span className="salaryText">{expected_inhand}K</span>
+          <span>Any offered CTC</span>
         </div>
+        <span className={classes.salaryText}>{offered_ctc}L</span>
+      </div>
+
+      <div style={{ display: "flex", gap: "3px" }}>
+        <div style={{ display: "flex", gap: "7px", width: "105px" }}>
+          <img src={moneyIcon} alt="money" height="10px" width="10px" />
+          <span>Expected CTC</span>
+        </div>
+        <span className={classes.salaryText}>{expected_ctc}L</span>
       </div>
     </div>
   );
