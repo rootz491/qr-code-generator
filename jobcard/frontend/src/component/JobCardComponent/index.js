@@ -10,6 +10,9 @@ import { Card, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 import location from "../../icons/location.svg";
+import circle from "../../icons/circle.svg";
+import check_circle from "../../icons/check_circle.svg";
+import immediate_join from "../../icons/immediate_join.svg";
 
 const jobCardStyles = makeStyles({
   jobCard: {
@@ -22,7 +25,9 @@ const jobCardStyles = makeStyles({
     overflow: "hidden",
     // transform: "scale(1.4)",
     fontFamily: "Poppins, sans-serif",
-    fontSize: "10px",
+    fontSize: "8px",
+    lineHeight: "10px",
+    fontWeight: "300",
   },
   jobTitle: {
     margin: "10px 8px",
@@ -42,10 +47,10 @@ const jobCardStyles = makeStyles({
     gap: "7px",
   },
   locationText: {
-    fontSize: "8px",
-    fontWeight: "600",
+    fontSize: "9px",
+    fontWeight: "700",
     lineHeight: "10px",
-  }
+  },
 });
 
 export default function JobCard() {
@@ -59,11 +64,11 @@ export default function JobCard() {
     return <img src={divider} alt="divider" className={classes.divider} />;
   };
 
-  const CurrentOfficeCity = () => {
+  const CurrentOfficeCity = ({ current_office_city }) => {
     return (
       <div className={classes.location}>
         <img src={location} alt="location" height="12px" width="12px" />
-        <span className={classes.locationText}>{candidate.current_office_city}</span>
+        <span className={classes.locationText}>{current_office_city}</span>
       </div>
     );
   };
@@ -83,8 +88,20 @@ export default function JobCard() {
       <div style={{ display: "flex" }}>
         <SalaryDiv current_ctc={candidate.current_ctc} current_inhand={candidate.current_inhand} offered_ctc={candidate.offered_ctc} expected_ctc={candidate.expected_ctc} />
         <Divider />
-        <div style={{ width: "135px", height: "150px", border: "1px solid red", marginLeft: "15px", marginTop: "-30px" }}>
-          <CurrentOfficeCity />
+        <div style={{ width: "135px", height: "150px", marginLeft: "15px", marginTop: "-20px", display: "flex", flexDirection: "column", gap: "5px" }}>
+          <CurrentOfficeCity current_office_city={candidate.current_office_city} />
+          <div className={classes.location}>
+            <img src={circle} alt="location" height="12px" width="12px" />
+            <span>Work from Office/Hybrid</span>
+          </div>
+          <div className={classes.location}>
+            <img src={check_circle} alt="location" height="12px" width="12px" />
+            <span className={classes.locationText}>Ok to Relocate Dehradun</span>
+          </div>
+          <div className={classes.location}>
+            <img src={immediate_join} alt="location" height="12px" width="12px" />
+            <span className={classes.locationText}>Immediate Joinee</span>
+          </div>
         </div>
       </div>
       <MessageDiv />
