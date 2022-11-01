@@ -1,6 +1,6 @@
 import React from "react";
 import moneyIcon from "../../../icons/money.svg";
-import { styled } from '@mui/system';
+import { styled } from "@mui/system";
 
 const salaryDivStyles = styled({
   salaryDiv: {
@@ -18,10 +18,10 @@ const salaryDivStyles = styled({
     letterSpacing: "0.2px",
     fontSize: "8px",
     lineHeight: "10px",
-  }
+  },
 });
 
-const SalaryDiv = ({ current_ctc, current_inhand, expected_ctc, offered_ctc, fresher }) => {
+const SalaryDiv = ({ current_ctc, current_inhand, expected_inhand, offered_ctc, fresher }) => {
   const classes = salaryDivStyles();
 
   return (
@@ -31,7 +31,7 @@ const SalaryDiv = ({ current_ctc, current_inhand, expected_ctc, offered_ctc, fre
           <img src={moneyIcon} alt="money" height="10px" width="10px" />
           <span>Current annual CTC</span>
         </div>
-        <span className={classes.salaryText}>{current_ctc}L</span>
+        <span className={classes.salaryText}>{current_ctc}</span>
       </div>
 
       <div style={{ display: "flex", gap: "3px" }}>
@@ -39,7 +39,7 @@ const SalaryDiv = ({ current_ctc, current_inhand, expected_ctc, offered_ctc, fre
           <img src={moneyIcon} alt="money" height="10px" width="10px" />
           <span>Current monthly in-hand</span>
         </div>
-        <span className={classes.salaryText}>{current_inhand}K</span>
+        <span className={classes.salaryText}>{current_inhand}</span>
       </div>
 
       <div style={{ display: "flex", gap: "3px" }}>
@@ -47,7 +47,7 @@ const SalaryDiv = ({ current_ctc, current_inhand, expected_ctc, offered_ctc, fre
           <img src={moneyIcon} alt="money" height="10px" width="10px" />
           <span>Any offered CTC</span>
         </div>
-        <span className={classes.salaryText}>{offered_ctc}L</span>
+        <span className={classes.salaryText}>{offered_ctc}</span>
       </div>
 
       <div style={{ display: "flex", gap: "3px" }}>
@@ -55,7 +55,7 @@ const SalaryDiv = ({ current_ctc, current_inhand, expected_ctc, offered_ctc, fre
           <img src={moneyIcon} alt="money" height="10px" width="10px" />
           <span>Expected CTC</span>
         </div>
-        <span className={classes.salaryText}>{expected_ctc}L</span>
+        <span className={classes.salaryText}>{expected_inhand}</span>
       </div>
     </div>
   );

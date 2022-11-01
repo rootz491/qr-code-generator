@@ -167,10 +167,10 @@ function FormComponent({ setFormState, formState }) {
 
           <Grid item xs={12}>
             <FormControl>
-              <FormLabel id="workingRemote" required>
+              <FormLabel id="workingremote" required>
                 Are you working Remotely
               </FormLabel>
-              <RadioGroup row aria-labelledby="workingRemote" name="workingRemote" onChange={handleChange}>
+              <RadioGroup row aria-labelledby="workingremote" name="workingremote" onChange={handleChange}>
                 <FormControlLabel value="yes" control={<Radio />} label="Yes" />
                 <FormControlLabel value="no" control={<Radio />} label="No" />
                 <FormControlLabel value="not-applicable" control={<Radio />} label="Not Applicable" />
@@ -242,16 +242,34 @@ function FormComponent({ setFormState, formState }) {
               onChange={handleChange}
             />
           </Grid>
-
+          {formState.experience !== "Fresher" ? (
+            <Grid item xs={12}>
+              <Stack spacing={1}>
+                <Typography variant="body1" color="grey">
+                  Last working day (If serving notice period)
+                </Typography>
+                <TextField
+                  type="date"
+                  id="lastWorkDay"
+                  name="lastWorkDay"
+                  fullWidth
+                  variant="outlined"
+                  onChange={handleChange}
+                />
+              </Stack>
+            </Grid>
+          ) : (
+            <></>
+          )}
           <Grid item xs={12}>
             <Stack spacing={1}>
               <Typography variant="body1" color="grey">
-                Last working day (If serving notice period)
+                Joining Date
               </Typography>
               <TextField
                 type="date"
-                id="lastWorkDay"
-                name="lastWorkDay"
+                id="joiningDate"
+                name="joiningDate"
                 fullWidth
                 variant="outlined"
                 onChange={handleChange}
@@ -259,33 +277,11 @@ function FormComponent({ setFormState, formState }) {
             </Stack>
           </Grid>
           <Grid item xs={12}>
-            <FormControl>
-              <FormLabel id="isJoining" required>
-                Are you able to join immediately
-              </FormLabel>
-              <RadioGroup row aria-labelledby="isJoining" name="isJoining" onChange={handleChange}>
-                <FormControlLabel value="yes" control={<Radio />} label="Yes" />
-                <FormControlLabel value="no" control={<Radio />} label="No" />
-              </RadioGroup>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12}>
             <TextField
               required
-              id="currOfficLocation"
-              name="currOfficLocation"
+              id="currLocation"
+              name="currLocation"
               label="Current location"
-              fullWidth
-              variant="outlined"
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              id="currWFHLocation"
-              name="currWFHLocation"
-              label="Current work from home location"
               fullWidth
               variant="outlined"
               onChange={handleChange}
@@ -296,7 +292,7 @@ function FormComponent({ setFormState, formState }) {
               <FormLabel id="relocate" required>
                 Relocate to Dehradun for job?
               </FormLabel>
-              <RadioGroup row aria-labelledby="relocate" name="relocate">
+              <RadioGroup row aria-labelledby="relocate" name="relocate" onChange={handleChange}>
                 <FormControlLabel value="yes" control={<Radio />} label="Yes" />
                 <FormControlLabel value="no" control={<Radio />} label="No" />
               </RadioGroup>

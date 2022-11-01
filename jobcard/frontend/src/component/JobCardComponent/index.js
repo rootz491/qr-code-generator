@@ -14,6 +14,73 @@ import check_circle from "../../icons/check_circle.svg";
 import immediate_join from "../../icons/immediate_join.svg";
 
 export default function JobCard({ formState }) {
+  const RenderExperience = () => {
+    if (formState.experience === "Experienced") {
+      return (
+        <div className="location">
+          <img src={immediate_join} alt="location" height="12px" width="12px" />
+          <span className="locationText">Not in Notice Period</span>
+        </div>
+      );
+    } else if (formState.experience === "Experienced and currently serving notice period") {
+      return (
+        <div className="location">
+          <img src={immediate_join} alt="location" height="12px" width="12px" />
+          <span className="locationText">Serving Notice Period</span>
+        </div>
+      );
+    } else if (formState.experience === "Experienced and already serving notice period") {
+      return (
+        <div className="location">
+          <img src={immediate_join} alt="location" height="12px" width="12px" />
+          <span className="locationText">Immediate Joining</span>
+        </div>
+      );
+    } else {
+      return <></>;
+    }
+  };
+
+  const Relocate = () => {
+    if (formState.relocate === "no") {
+      return (
+        <div className="location">
+          <img src={circle} alt="location" height="12px" width="12px" />
+          <span className="locationText">Can't Relocate to Dehradun</span>
+        </div>
+      );
+    } else if (formState.relocate === "yes") {
+      return (
+        <div className="location">
+          <img src={check_circle} alt="location" height="12px" width="12px" />
+          <span className="locationText">Ok to Relocate Dehradun</span>
+        </div>
+      );
+    } else {
+      return <></>;
+    }
+  };
+
+  const WorkLocation = () => {
+    if (formState.workingremote === "yes") {
+      return (
+        <div className="location">
+          <img src={circle} alt="location" height="12px" width="12px" />
+          <span className="locationText">Work from Remote</span>
+        </div>
+      );
+    } else if (formState.workingremote === "no") {
+      return (
+        <div className="location">
+          <img src={circle} alt="location" height="12px" width="12px" />
+          <span className="locationText">Work from Office/Hybrid</span>
+        </div>
+      );
+    } else {
+      return <></>;
+    }
+  };
+
   const JobTitle = () => {
     return <div className="jobTitle">{formState.jobtitle || "Applicant Position"}</div>;
   };
@@ -26,7 +93,7 @@ export default function JobCard({ formState }) {
     return (
       <div className="location">
         <img src={Ilocation} alt="location" height="12px" width="12px" />
-        <span className="locationText">{current_office_city}</span>
+        <span className="locationText">{current_office_city || "City"}</span>
       </div>
     );
   };
@@ -59,19 +126,14 @@ export default function JobCard({ formState }) {
         qualification={formState.qualification || "Qualification"}
         passing_year={formState.passingYear || "Passing Year"}
       />
-      <SalaryDiv
-        formState={formState}
-        current_ctc={salaryFormmater(formState.currCTC) || "not filled"}
-        current_inhand={salaryFormmater(formState.currInHandCTC) || "not filled"}
-        expected_inhand={salaryFormmater(formState.expectedSalary) || "not filled"}
-        offered_ctc={salaryFormmater(formState.offeredCTC) || "not filled"}
-      />
+
       <div style={{ display: "flex" }}>
         <SalaryDiv
-          current_ctc={candidate.current_ctc}
-          current_inhand={candidate.current_inhand}
-          offered_ctc={candidate.offered_ctc}
-          expected_ctc={candidate.expected_ctc}
+          formState={formState}
+          current_ctc={salaryFormmater(formState.currCTC) || "not filled"}
+          current_inhand={salaryFormmater(formState.currInHandCTC) || "not filled"}
+          expected_inhand={salaryFormmater(formState.expectedSalary) || "not filled"}
+          offered_ctc={salaryFormmater(formState.offeredCTC) || "not filled"}
         />
         <Divider />
         <div
@@ -85,22 +147,13 @@ export default function JobCard({ formState }) {
             gap: "5px",
           }}
         >
-          <CurrentOfficeCity current_office_city={candidate.current_office_city} />
-          <div className="location">
-            <img src={circle} alt="location" height="12px" width="12px" />
-            <span>Work from Office/Hybrid</span>
-          </div>
-          <div className="location">
-            <img src={check_circle} alt="location" height="12px" width="12px" />
-            <span className="locationText">Ok to Relocate Dehradun</span>
-          </div>
-          <div className="location">
-            <img src={immediate_join} alt="location" height="12px" width="12px" />
-            <span className="locationText">Immediate Joinee</span>
-          </div>
+          <CurrentOfficeCity current_office_city={formState.currLocation} />
+          {WorkLocation()}
+          {Relocate()}
+          {RenderExperience()}
         </div>
       </div>
-      <MessageDiv />
+      <MessageDiv message={formState.message || 'Any message for us'} />
     </Card>
   );
 }

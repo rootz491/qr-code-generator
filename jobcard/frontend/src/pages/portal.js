@@ -23,9 +23,12 @@ function Portal() {
     expectedSalary: "",
     noticePeriod: "",
     lastWorkDay: "",
-    currOfficLocation: "",
+    joiningDate: "",
+    currLocation: "",
     currWFHLocation: "",
     message: "",
+    relocate: "",
+    workingremote: "",
   });
   return (
     <>
@@ -34,7 +37,7 @@ function Portal() {
           <FormComponent setFormState={setFormState} formState={formState} />
         </Stack>
         <Stack sx={{ flex: 1 }} justifyContent="center" alignItems="center">
-          <JobCardComponent formState={formState}  />
+          <JobCardComponent formState={formState} />
         </Stack>
       </Stack>
     </>
