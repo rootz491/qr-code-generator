@@ -3,26 +3,24 @@ import timeIcon from "../../../icons/time.svg";
 import officeIcon from "../../../icons/office.svg";
 import educationIcon from "../../../icons/education.svg";
 import TypeLabel from "./TypeLabel";
-import { styled } from "@mui/system";
+import { Box } from "@mui/material";
 
-const experienceDivStyles = styled({
-  experienceDiv: {
-    margin: "10px 8px",
-    fontSize: "9px",
-    fontWeight: "600",
-    lineHeight: "10px",
-    display: "flex",
-    flexDirection: "column",
-    gap: "8px",
-    alignItems: "flex-start",
-    justifyContent: "center",
-  },
-});
 
 const ExperienceDiv = ({ experience, fresher, current_company_name, qualification, passing_year }) => {
-  const classes = experienceDivStyles();
   return (
-    <div className={classes.experienceDiv}>
+    <Box
+      sx={{
+        margin: "10px 8px",
+        fontSize: "9px",
+        fontWeight: "600",
+        lineHeight: "10px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "8px",
+        alignItems: "flex-start",
+        justifyContent: "center",
+      }}
+    >
       <div
         style={{
           display: "flex",
@@ -68,7 +66,7 @@ const ExperienceDiv = ({ experience, fresher, current_company_name, qualificatio
           {qualification} ({passing_year})
         </span>
       </div>
-    </div>
+    </Box>
   );
 };
 

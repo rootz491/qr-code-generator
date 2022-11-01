@@ -1,5 +1,4 @@
 // import "./styles.css";
-import candidate from "./demo.json";
 import dividerr from "../../icons/line.svg";
 import CardHeader from "./CardComponents/CardHeader";
 import ExperienceDiv from "./CardComponents/ExperienceDiv";
@@ -12,6 +11,7 @@ import Ilocation from "../../icons/location.svg";
 import circle from "../../icons/circle.svg";
 import check_circle from "../../icons/check_circle.svg";
 import immediate_join from "../../icons/immediate_join.svg";
+import { CheckRounded } from "@mui/icons-material";
 
 export default function JobCard({ formState }) {
   const RenderExperience = () => {
@@ -65,7 +65,7 @@ export default function JobCard({ formState }) {
     if (formState.workingremote === "yes") {
       return (
         <div className="location">
-          <img src={circle} alt="location" height="12px" width="12px" />
+          <img src={check_circle} alt="location" height="12px" width="12px" />
           <span className="locationText">Work from Remote</span>
         </div>
       );
@@ -115,7 +115,7 @@ export default function JobCard({ formState }) {
   };
 
   return (
-    <Card className="jobcard">
+    <Card className="jobCard">
       <CardHeader name={formState.fullname || "Applicant Name"} />
       <JobTitle />
       <ContactDiv email={formState.email || "Email"} mobile={formState.mobilenum || "Mobile Number"} />
@@ -153,7 +153,7 @@ export default function JobCard({ formState }) {
           {RenderExperience()}
         </div>
       </div>
-      <MessageDiv message={formState.message || 'Any message for us'} />
+      <MessageDiv message={formState.message || "Any message for us"} />
     </Card>
   );
 }

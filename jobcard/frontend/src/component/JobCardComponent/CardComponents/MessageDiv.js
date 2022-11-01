@@ -1,25 +1,11 @@
 import React from "react";
-import { styled } from "@mui/system";
-
-const messageDivStyles = styled({
-  messageDiv: {
-    height: "150px",
-    backgroundColor: "#FFFDC8",
-    padding: "4px",
-  },
-  messageTitle: {
-    fontSize: "9px",
-    fontWeight: "600",
-    lineHeight: "12px",
-  },
-});
+import { Box, Typography } from "@mui/material";
 
 const MessageDiv = ({ message }) => {
-  const classes = messageDivStyles();
   return (
-    <div className={classes.messageDiv}>
-      <span className={classes.messageTitle}>{message}</span>
-    </div>
+    <Box sx={{ height: "150px", backgroundColor: "#FFFDC8", padding: "4px" }}>
+      <Typography sx={{ fontSize: "9px", fontWeight: "600", lineHeight: "12px" }}>{message}</Typography>
+    </Box>
   );
 };
 
