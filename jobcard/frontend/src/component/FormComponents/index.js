@@ -12,7 +12,11 @@ import {
 } from "@mui/material";
 import { UploadFile } from "@mui/icons-material";
 
-function FormComponent() {
+function FormComponent({ setFormState }) {
+  const handleChange = (e) => {
+    setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
   return (
     <Stack
       sx={{
@@ -32,6 +36,7 @@ function FormComponent() {
             fullWidth
             autoComplete="given-name"
             variant="outlined"
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={4}>
@@ -44,10 +49,19 @@ function FormComponent() {
           </Stack>
         </Grid>
         <Grid item xs={12}>
-          <TextField required id="mobilenum" name="mobilenum" label="Mobile Number" fullWidth variant="outlined" />
+          <TextField required id="mobilenum" name="mobilenum" label="Mobile Number" fullWidth variant="outlined" onChange={handleChange}/>
         </Grid>
         <Grid item xs={12}>
-          <TextField id="email" name="email" label="Email" fullWidth autoComplete="email" variant="outlined" required />
+          <TextField
+            id="email"
+            name="email"
+            label="Email"
+            fullWidth
+            autoComplete="email"
+            variant="outlined"
+            required
+            onChange={handleChange}
+          />
         </Grid>
         <Grid item xs={12}>
           <TextField
@@ -58,6 +72,7 @@ function FormComponent() {
             fullWidth
             autoComplete="qualification"
             variant="outlined"
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12}>
@@ -67,6 +82,7 @@ function FormComponent() {
             label="Passing year (Ex - 2019)"
             fullWidth
             variant="outlined"
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12}>
@@ -77,6 +93,7 @@ function FormComponent() {
             label="Total Experience (Ex - 4.5 years)"
             fullWidth
             variant="outlined"
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12}>
@@ -98,6 +115,7 @@ function FormComponent() {
             label="Current Company Name"
             fullWidth
             variant="outlined"
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12}>
@@ -142,6 +160,7 @@ function FormComponent() {
             label="Current CTC (Ex - 2.4 LPA)"
             fullWidth
             variant="outlined"
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12}>
@@ -152,6 +171,7 @@ function FormComponent() {
             label="Current in hand salary (per month, Ex 20K, 34K)"
             fullWidth
             variant="outlined"
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12}>
@@ -162,6 +182,7 @@ function FormComponent() {
             label="Expected in hand salary (per month, Ex 20K, 34K)"
             fullWidth
             variant="outlined"
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12}>
@@ -172,6 +193,7 @@ function FormComponent() {
             label="Notice period (Months) (Ex - 2)"
             fullWidth
             variant="outlined"
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12}>
@@ -196,7 +218,7 @@ function FormComponent() {
             <Typography variant="body1" color="grey">
               Last working day (If serving notice period)
             </Typography>
-            <TextField type="date" id="lastWorkDay" name="lastWorkDay" fullWidth variant="outlined" />
+            <TextField type="date" id="lastWorkDay" name="lastWorkDay" fullWidth variant="outlined" onChange={handleChange} />
           </Stack>
         </Grid>
         <Grid item xs={12}>
@@ -218,6 +240,7 @@ function FormComponent() {
             label="Current office location"
             fullWidth
             variant="outlined"
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12}>
@@ -228,6 +251,7 @@ function FormComponent() {
             label="Current work from home location"
             fullWidth
             variant="outlined"
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12}>
@@ -249,6 +273,7 @@ function FormComponent() {
             label="Which City you did your Schooling (10th and 12th)"
             fullWidth
             variant="outlined"
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12}>
@@ -259,6 +284,7 @@ function FormComponent() {
             label="Which City you did Graduation (Ex - BE, MBA etc)"
             fullWidth
             variant="outlined"
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12}>
@@ -271,6 +297,7 @@ function FormComponent() {
             fullWidth
             multiline
             variant="outlined"
+            onChange={handleChange}
           />
         </Grid>
       </Grid>

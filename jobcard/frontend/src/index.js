@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Form from "./pages/Form";
 import JobCard from "./pages/Jobcard";
+import AuthForm from "./pages/signin";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,6 +16,7 @@ root.render(
         <Route path="/" element={<App />} />
         <Route path="/form" element={<Form />} />
         <Route path="/jobcard" element={<JobCard />} />
+        <Route path="/auth" element={<AuthForm />} />
       </Routes>
     </Router>
   </React.StrictMode>

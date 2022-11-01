@@ -8,7 +8,9 @@ import educationIcon from "../../icons/education.svg";
 import moneyIcon from "../../icons/money.svg";
 import divider from "../../icons/line.svg";
 
-export default function JobCard() {
+export default function JobCard({ formState }) {
+  console.log(formState);
+
   const WaterMark = () => {
     return <span className="watermark">Yugam</span>;
   };
@@ -16,7 +18,7 @@ export default function JobCard() {
   const CardHeader = () => {
     return (
       <div className="cardHeader">
-        <p className="name">{candidate.name}</p>
+        <p className="name">{formState.fullname || "Applicant Name"}</p>
       </div>
     );
   };
@@ -34,11 +36,11 @@ export default function JobCard() {
       <div className="contactDiv">
         <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
           <img src={mailIcon} alt="mail" />
-          <span className="email">{candidate.email}</span>
+          <span className="email">{formState.email || "Email"}</span>
         </div>
         <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
           <img src={callIcon} alt="call" />
-          <span className="mobile">{candidate.mobile}</span>
+          <span className="mobile">{formState.mobilenum || "Mobile number"}</span>
         </div>
       </div>
     );
@@ -52,38 +54,35 @@ export default function JobCard() {
             display: "flex",
             gap: "7px",
             alignItems: "center",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
         >
           <img src={timeIcon} alt="time" height="10px" width="10px" />
           <span>{candidate.experience}yrs</span>
-          <TypeLabel
-            fresher={candidate.fresher}
-            experience={candidate.experience}
-          />
+          <TypeLabel fresher={candidate.fresher} experience={candidate.experience} />
         </div>
         <div
           style={{
             display: "flex",
             gap: "7px",
             alignItems: "center",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
         >
           <img src={officeIcon} alt="office" height="10px" width="10px" />
-          <span>{candidate.current_company_name}</span>
+          <span>{formState.currCompany || "Current company name"}</span>
         </div>
         <div
           style={{
             display: "flex",
             gap: "7px",
             alignItems: "center",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
         >
           <img src={educationIcon} alt="education" height="10px" width="10px" />
           <span>
-            {candidate.qualification} ({candidate.passing_year})
+            {formState.qualification || "Qualification"} ({formState.passingYear || "Passing Year"})
           </span>
         </div>
       </div>
@@ -99,29 +98,25 @@ export default function JobCard() {
             <span>Current CTC</span>
             <span className="exampleText">(in L/yr Ex-4L,20L)</span>
           </div>
-          <span className="salaryText">{candidate.current_ctc}L</span>
+          <span className="salaryText">{formState.currCTC || "Current CTC?"}</span>
         </div>
 
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div style={{ display: "flex", gap: "7px" }}>
             <img src={moneyIcon} alt="money" height="10px" width="10px" />
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "2px" }}
-            >
+            <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
               <span>Current In-hand</span>
               <span className="exampleText">(in K/month Ex-20K,65K)</span>
             </div>
-            <span className="salaryText">{candidate.current_inhand}K</span>
+            <span className="salaryText">{formState.currInHandCTC || "Current Inhand CTC?"}</span>
           </div>
           <div style={{ display: "flex", gap: "7px" }}>
             <img src={moneyIcon} alt="money" height="10px" width="10px" />
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "2px" }}
-            >
+            <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
               <span>Expected In-hand</span>
               <span className="exampleText">(in K/month Ex-20K,65K)</span>
             </div>
-            <span className="salaryText">{candidate.expected_inhand}K</span>
+            <span className="salaryText">{formState.expectedSalary}K</span>
           </div>
         </div>
       </div>
@@ -129,19 +124,13 @@ export default function JobCard() {
   };
 
   const Divider = () => {
-    return (
-      <img
-        src={divider}
-        alt="divider"
-        style={{ margin: "10px", width: "280px" }}
-      />
-    );
+    return <img src={divider} alt="divider" style={{ margin: "10px", width: "280px" }} />;
   };
 
   const MessageDiv = () => {
     return (
       <div className="messageDiv">
-        <span className="messageTitle">Any message for us ?</span>
+        <span className="messageTitle">{formState.message || "Any message for us ?"}</span>
       </div>
     );
   };
