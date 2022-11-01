@@ -2,6 +2,7 @@ import { Stack } from "@mui/material";
 import { useState } from "react";
 import FormComponent from "../component/FormComponents";
 import JobCardComponent from "../component/JobCardComponent";
+import "../component/JobCardComponent/index.css";
 
 function Portal() {
   // gobal state for form to pass to jobcard
@@ -33,7 +34,7 @@ function Portal() {
           <FormComponent setFormState={setFormState} formState={formState} />
         </Stack>
         <Stack sx={{ flex: 1 }} justifyContent="center" alignItems="center">
-          <JobCardComponent formState={formState} />
+          <JobCardComponent formState={formState}  />
         </Stack>
       </Stack>
     </>

@@ -9,7 +9,9 @@ function JobCard() {
       <Typography variant="h1" color="pink" textAlign="center">
         Job Card
       </Typography>
-      <JobCardComponent />
+      <div style={{ marginTop: "10px", width: "100%", height: "100vh" }}>
+        <JobCardComponent />
+      </div>
     </>
   );
 }

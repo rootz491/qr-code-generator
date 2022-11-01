@@ -12,5 +12,6 @@
   "current_office_city": "Mumbai",
   "current_ctc": "4.8",
   "current_inhand": "40",
-  "expected_inhand": "45"
+  "expected_ctc": "45",
+  "offered_ctc": "8"
 }

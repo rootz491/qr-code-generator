@@ -1,140 +1,34 @@
-import "./styles.css";
+// import "./styles.css";
 import candidate from "./demo.json";
-import divider from "../../icons/line.svg";
+import dividerr from "../../icons/line.svg";
 import CardHeader from "./CardComponents/CardHeader";
 import ExperienceDiv from "./CardComponents/ExperienceDiv";
 import ContactDiv from "./CardComponents/ContactDiv";
 import SalaryDiv from "./CardComponents/SalaryDiv";
 import MessageDiv from "./CardComponents/MessageDiv";
+import { Card } from "@mui/material";
+import "./index.css";
+import Ilocation from "../../icons/location.svg";
+import circle from "../../icons/circle.svg";
+import check_circle from "../../icons/check_circle.svg";
+import immediate_join from "../../icons/immediate_join.svg";
 
 export default function JobCard({ formState }) {
-  console.log(formState);
-
-  const WaterMark = () => {
-    return <span className="watermark">Yugam</span>;
+  const JobTitle = () => {
+    return <div className="jobTitle">{formState.jobtitle || "Applicant Position"}</div>;
   };
 
-  // const CardHeader = () => {
-  //   return (
-  //     <div className="cardHeader">
-  //       <p className="name">{formState.fullname || "Applicant Name"}</p>
-  //     </div>
-  //   );
-  // };
-
-  // const TypeLabel = ({ fresher, experience }) => {
-  //   if (fresher === "no" && experience.length) {
-  //     return <span className="expLabel">Experience</span>;
-  //   } else if (fresher === "yes" && experience === "0") {
-  //     return <span className="fresherLabel">Fresher</span>;
-  //   }
-  // };
-
-  // const ContactDiv = () => {
-  //   return (
-  //     <div className="contactDiv">
-  //       <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
-  //         <img src={mailIcon} alt="mail" />
-  //         <span className="email">{formState.email || "Email"}</span>
-  //       </div>
-  //       <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
-  //         <img src={callIcon} alt="call" />
-  //         <span className="mobile">{formState.mobilenum || "Mobile number"}</span>
-  //       </div>
-  //     </div>
-  //   );
-  // };
-
-  // const GeneralInfo = () => {
-  //   return (
-  //     <div className="generalInfo">
-  //       <div
-  //         style={{
-  //           display: "flex",
-  //           gap: "7px",
-  //           alignItems: "center",
-  //           justifyContent: "center",
-  //         }}
-  //       >
-  //         <img src={timeIcon} alt="time" height="10px" width="10px" />
-  //         <span>{candidate.experience}yrs</span>
-  //         <TypeLabel fresher={candidate.fresher} experience={candidate.experience} />
-  //       </div>
-  //       <div
-  //         style={{
-  //           display: "flex",
-  //           gap: "7px",
-  //           alignItems: "center",
-  //           justifyContent: "center",
-  //         }}
-  //       >
-  //         <img src={officeIcon} alt="office" height="10px" width="10px" />
-  //         <span>{formState.currCompany || "Current company name"}</span>
-  //       </div>
-  //       <div
-  //         style={{
-  //           display: "flex",
-  //           gap: "7px",
-  //           alignItems: "center",
-  //           justifyContent: "center",
-  //         }}
-  //       >
-  //         <img src={educationIcon} alt="education" height="10px" width="10px" />
-  //         <span>
-  //           {formState.qualification || "Qualification"} ({formState.passingYear || "Passing Year"})
-  //         </span>
-  //       </div>
-  //     </div>
-  //   );
-  // };
-
-  // const SalaryDiv = () => {
-  //   return (
-  //     <div className="salaryDiv">
-  //       <div style={{ display: "flex", gap: "7px" }}>
-  //         <img src={moneyIcon} alt="money" height="10px" width="10px" />
-  //         <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-  //           <span>Current CTC</span>
-  //           <span className="exampleText">(in L/yr Ex-4L,20L)</span>
-  //         </div>
-  //         <span className="salaryText">{formState.currCTC || "Current CTC?"}</span>
-  //       </div>
-
-  //       <div style={{ display: "flex", justifyContent: "space-between" }}>
-  //         <div style={{ display: "flex", gap: "7px" }}>
-  //           <img src={moneyIcon} alt="money" height="10px" width="10px" />
-  //           <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-  //             <span>Current In-hand</span>
-  //             <span className="exampleText">(in K/month Ex-20K,65K)</span>
-  //           </div>
-  //           <span className="salaryText">{formState.currInHandCTC || "Current Inhand CTC?"}</span>
-  //         </div>
-  //         <div style={{ display: "flex", gap: "7px" }}>
-  //           <img src={moneyIcon} alt="money" height="10px" width="10px" />
-  //           <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-  //             <span>Expected In-hand</span>
-  //             <span className="exampleText">(in K/month Ex-20K,65K)</span>
-  //           </div>
-  //           <span className="salaryText">{formState.expectedSalary}K</span>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // };
-
-  // const Divider = () => {
-  //   return <img src={divider} alt="divider" style={{ margin: "10px", width: "280px" }} />;
-  // };
-
-  // const MessageDiv = () => {
-  //   return (
-  //     <div className="messageDiv">
-  //       <span className="messageTitle">{formState.message || "Any message for us ?"}</span>
-  //     </div>
-  //   );
-  // =======
   const Divider = () => {
-    return <img src={divider} alt="divider" style={{ margin: "10px", width: "280px" }} />;
+    return <img src={dividerr} alt="divider" className="divider" />;
+  };
+
+  const CurrentOfficeCity = ({ current_office_city }) => {
+    return (
+      <div className="location">
+        <img src={Ilocation} alt="location" height="12px" width="12px" />
+        <span className="locationText">{current_office_city}</span>
+      </div>
+    );
   };
 
   const salaryFormmater = (salary) => {
@@ -154,10 +48,9 @@ export default function JobCard({ formState }) {
   };
 
   return (
-    <div className="jobCard">
-      <WaterMark />
+    <Card className="jobcard">
       <CardHeader name={formState.fullname || "Applicant Name"} />
-      <p className="jobTitle">{formState.jobtitle || "Applicant Position"}</p>
+      <JobTitle />
       <ContactDiv email={formState.email || "Email"} mobile={formState.mobilenum || "Mobile Number"} />
       <ExperienceDiv
         experience={formState.totalexperience || "Total Exp."}
@@ -173,8 +66,41 @@ export default function JobCard({ formState }) {
         expected_inhand={salaryFormmater(formState.expectedSalary) || "not filled"}
         offered_ctc={salaryFormmater(formState.offeredCTC) || "not filled"}
       />
-      <Divider />
+      <div style={{ display: "flex" }}>
+        <SalaryDiv
+          current_ctc={candidate.current_ctc}
+          current_inhand={candidate.current_inhand}
+          offered_ctc={candidate.offered_ctc}
+          expected_ctc={candidate.expected_ctc}
+        />
+        <Divider />
+        <div
+          style={{
+            width: "135px",
+            height: "150px",
+            marginLeft: "15px",
+            marginTop: "-20px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "5px",
+          }}
+        >
+          <CurrentOfficeCity current_office_city={candidate.current_office_city} />
+          <div className="location">
+            <img src={circle} alt="location" height="12px" width="12px" />
+            <span>Work from Office/Hybrid</span>
+          </div>
+          <div className="location">
+            <img src={check_circle} alt="location" height="12px" width="12px" />
+            <span className="locationText">Ok to Relocate Dehradun</span>
+          </div>
+          <div className="location">
+            <img src={immediate_join} alt="location" height="12px" width="12px" />
+            <span className="locationText">Immediate Joinee</span>
+          </div>
+        </div>
+      </div>
       <MessageDiv />
-    </div>
+    </Card>
   );
 }
