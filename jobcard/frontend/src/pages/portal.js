@@ -29,14 +29,15 @@ function Portal() {
     message: "",
     relocate: "",
     workingremote: "",
+    resume: null,
   });
   return (
     <>
       <Stack direction="row" sx={{ height: "100vh" }}>
         <Stack sx={{ width: "50%", height: "100%", overflowY: "scroll" }} alignItems="center">
-          <FormComponent setFormState={setFormState} formState={formState} />
+          <FormComponent setFormState={setFormState} formState={formState}  />
         </Stack>
-        <Stack sx={{ flex: 1 }} justifyContent="center" alignItems="center">
+        <Stack sx={{ flex: 1, height: "100%", overflow: "hidden" }} justifyContent="center" alignItems="center">
           <JobCardComponent formState={formState} />
         </Stack>
       </Stack>
