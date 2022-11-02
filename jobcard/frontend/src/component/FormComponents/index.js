@@ -18,6 +18,7 @@ import { UploadFile } from "@mui/icons-material";
 
 function FormComponent({ setFormState, formState }) {
   const handleChange = (e) => {
+    console.log("working");
     setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
@@ -248,7 +249,7 @@ function FormComponent({ setFormState, formState }) {
                   label="Current CTC"
                   fullWidth
                   variant="outlined"
-                  type="number"
+                  value={Number(formState.currCTC).toLocaleString("en-IN", { style: "currency", currency: "INR" })}
                   onChange={handleChange}
                 />
               </Grid>
@@ -260,7 +261,6 @@ function FormComponent({ setFormState, formState }) {
                   label="Current in hand salary"
                   fullWidth
                   variant="outlined"
-                  type="number"
                   onChange={handleChange}
                 />
               </Grid>
@@ -272,7 +272,6 @@ function FormComponent({ setFormState, formState }) {
                   label="Any offered CTC "
                   fullWidth
                   variant="outlined"
-                  type="number"
                   onChange={handleChange}
                 />
               </Grid>
@@ -286,7 +285,6 @@ function FormComponent({ setFormState, formState }) {
               label="Expected CTC"
               fullWidth
               variant="outlined"
-              type="number"
               onChange={handleChange}
             />
           </Grid>
