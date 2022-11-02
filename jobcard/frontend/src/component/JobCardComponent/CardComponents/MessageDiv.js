@@ -4,8 +4,10 @@ import { Box, Typography } from "@mui/material";
 const MessageDiv = ({ message, experience }) => {
   return (
     <Box sx={{ height: "140px", backgroundColor: "#FFFDC8", padding: "4px" }}>
-      <Typography sx={{marginBottom: "5px", fontSize: "9px", lineHeight: "14px", fontWeight: "600", letterSpacing: "0.2px" }}>
-        {experience === "fresher" ? "Why are you a good fit?" : "Short Introduction or Any Message"}
+      <Typography
+        sx={{ marginBottom: "5px", fontSize: "9px", lineHeight: "14px", fontWeight: "600", letterSpacing: "0.2px" }}
+      >
+        {experience === "Fresher" ? "Why are you a good fit?" : "Short Introduction or Any Message"}
       </Typography>
       <Typography
         sx={{
@@ -18,6 +20,7 @@ const MessageDiv = ({ message, experience }) => {
           display: "-webkit-box",
           WebkitLineClamp: 11,
           WebkitBoxOrient: "vertical",
+          height: "120px",
         }}
       >
         {message}
