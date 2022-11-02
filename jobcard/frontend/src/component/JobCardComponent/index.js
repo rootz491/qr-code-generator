@@ -46,7 +46,7 @@ export default function JobCard({ formState }) {
       return (
         <div className="location">
           <img src={circle} alt="location" height="12px" width="12px" />
-          <span className="locationText">Can't Relocate to Dehradun</span>
+          <span>Can't Relocate to Dehradun</span>
         </div>
       );
     } else if (formState.relocate === "yes") {
@@ -73,7 +73,7 @@ export default function JobCard({ formState }) {
       return (
         <div className="location">
           <img src={circle} alt="location" height="12px" width="12px" />
-          <span className="locationText">Work from Office/Hybrid</span>
+          <span>Work from Office/Hybrid</span>
         </div>
       );
     } else {
