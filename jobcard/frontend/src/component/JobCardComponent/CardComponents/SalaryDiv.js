@@ -21,7 +21,7 @@ const SalaryDiv = ({ current_ctc, current_inhand, expected_inhand, offered_ctc, 
           <span>Current annual CTC</span>
         </div>
         <Typography sx={{ fontWeight: "700", letterSpacing: "0.2px", fontSize: "8px", lineHeight: "10px" }}>
-          {current_ctc}
+          {current_ctc}L
         </Typography>
       </div>
 
@@ -31,7 +31,7 @@ const SalaryDiv = ({ current_ctc, current_inhand, expected_inhand, offered_ctc, 
           <span>Current monthly in-hand</span>
         </div>
         <Typography sx={{ fontWeight: "700", letterSpacing: "0.2px", fontSize: "8px", lineHeight: "10px" }}>
-          {current_inhand}
+          {current_inhand}K
         </Typography>
       </div>
 
@@ -41,7 +41,7 @@ const SalaryDiv = ({ current_ctc, current_inhand, expected_inhand, offered_ctc, 
           <span>Any offered CTC</span>
         </div>
         <Typography sx={{ fontWeight: "700", letterSpacing: "0.2px", fontSize: "8px", lineHeight: "10px" }}>
-          {offered_ctc}
+          {offered_ctc}L
         </Typography>
       </div>
 
@@ -51,7 +51,7 @@ const SalaryDiv = ({ current_ctc, current_inhand, expected_inhand, offered_ctc, 
           <span>Expected CTC</span>
         </div>
         <Typography sx={{ fontWeight: "700", letterSpacing: "0.2px", fontSize: "8px", lineHeight: "10px" }}>
-          {expected_inhand}
+          {expected_inhand}L
         </Typography>
       </div>
     </Box>

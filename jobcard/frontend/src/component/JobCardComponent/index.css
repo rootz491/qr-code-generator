@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 .jobCard {
   position: relative;
@@ -6,7 +6,7 @@
   height: 420px;
   color: #000;
   overflow: hidden;
-  font-family: "Poppins, sans-serif";
+  font-family: "Poppins", sans-serif;
   font-size: 8px;
   line-height: 10px;
   font-weight: 300;
@@ -38,6 +38,7 @@
   line-height: 10px;
 }
 
+
 .contactDiv {
   position: absolute;
   left: 152px;
@@ -56,4 +57,30 @@
   flex-direction: column;
   gap: 2px;
   justify-content: center;
+}
+
+.dateDiv{
+  margin-top: 5px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.datesLeft{
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.datesRight{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+}
+.dateLabel{
+  font-size: 7.2px;
+}
+.dateText{
+  font-size: 7px;
+  font-weight: 600;
+  line-height: 10px;
 }

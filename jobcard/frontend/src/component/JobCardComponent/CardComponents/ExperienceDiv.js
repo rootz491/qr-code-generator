@@ -11,7 +11,7 @@ const ExperienceDiv = ({ experience, fresher, current_company_name, qualificatio
     <Box
       sx={{
         margin: "10px 8px",
-        fontSize: "9px",
+        fontSize: "8.5px",
         fontWeight: "600",
         lineHeight: "10px",
         display: "flex",
