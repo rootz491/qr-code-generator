@@ -3,20 +3,21 @@ import moneyIcon from "../../../icons/money.svg";
 import resumeIcon from "../../../icons/resumeIcon.svg";
 import { Box, Typography } from "@mui/material";
 
-const SalaryDiv = ({ current_ctc, current_inhand, expected_inhand, offered_ctc, resume }) => {
+const SalaryDiv = ({ current_ctc, current_inhand, expected_inhand, offered_ctc, formState }) => {
   const ResumeDiv = () => {
-    // if (!formState.resume === null) {
+    
     return (
-      <div className="resumeDiv">
-        <img src={resumeIcon} alt="resume" height="12px" width="12px" />
-        <a href={resume} target="_blank" rel="noreferrer">
-          <span className="resumeText">View Resume</span>
-        </a>
-      </div>
+      <>
+        {formState.resume && (
+          <div className="resumeDiv">
+            <img src={resumeIcon} alt="resume" height="12px" width="12px" />
+            <a href={formState.resume.data} target="_blank" rel="noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
+              {formState?.resume?.name ?? "Preview Resume"}
+            </a>
+          </div>
+        )}
+      </>
     );
-    // } else {
-    //   return <></>;
-    // }
   };
 
   return (

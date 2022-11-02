@@ -1,4 +1,3 @@
-// import "./styles.css";
 import dividerr from "../../icons/line.svg";
 import CardHeader from "./CardComponents/CardHeader";
 import ExperienceDiv from "./CardComponents/ExperienceDiv";
@@ -144,9 +143,9 @@ export default function JobCard({ formState }) {
           current_inhand={salaryFormmater(formState.currInHandCTC)}
           expected_inhand={salaryFormmater(formState.expectedSalary)}
           offered_ctc={salaryFormmater(formState.offeredCTC)}
-          resume={formState.resume}
         />
         <Divider />
+
         <div
           style={{
             flex: 1,
