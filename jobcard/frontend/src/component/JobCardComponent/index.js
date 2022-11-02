@@ -15,15 +15,18 @@ import not_in_notice_period from "../../icons/not_in_notice_period.svg";
 import calender from "../../icons/calender.svg";
 
 export default function JobCard({ formState }) {
-
   const NoticePeriod = () => {
     if (formState.experience && formState.noticePeriod) {
       return <span className="noticePeriodText">({formState.noticePeriod} months)</span>;
     }
-  }
+  };
 
   const LastWorkDate = () => {
-    if ((formState.experience === "Experienced and already serving notice period" || formState.experience === "Experienced and currently serving notice period") && formState.lastWorkDay) {
+    if (
+      (formState.experience === "Experienced and already serving notice period" ||
+        formState.experience === "Experienced and currently serving notice period") &&
+      formState.lastWorkDay
+    ) {
       return (
         <div className="dateDiv">
           <div className="datesLeft">
@@ -32,10 +35,10 @@ export default function JobCard({ formState }) {
           </div>
           <div className="datesRight">
             <div>
-            <span className="locationText">{formState.lastWorkDay}</span>
+              <span className="locationText">{formState.lastWorkDay}</span>
             </div>
             <div>
-            <span className="dateText">(0 days from now)</span>
+              <span className="dateText">(0 days from now)</span>
             </div>
           </div>
         </div>
@@ -45,7 +48,9 @@ export default function JobCard({ formState }) {
 
   const JoiningDate = () => {
     if (
-      (formState.experience === "Experienced and already serving notice period" || formState.experience === "Experienced and currently serving notice period" || formState.experience === "Fresher") &&
+      (formState.experience === "Experienced and already serving notice period" ||
+        formState.experience === "Experienced and currently serving notice period" ||
+        formState.experience === "Fresher") &&
       formState.joiningDate
     ) {
       return (
@@ -56,10 +61,10 @@ export default function JobCard({ formState }) {
           </div>
           <div className="datesRight">
             <div>
-            <span className="locationText">{formState.joiningDate}</span>
+              <span className="locationText">{formState.joiningDate}</span>
             </div>
             <div>
-            <span className="dateText">(0 days from now)</span>
+              <span className="dateText">(0 days from now)</span>
             </div>
           </div>
         </div>
@@ -183,7 +188,7 @@ export default function JobCard({ formState }) {
         passing_year={formState.passingYear || "Passing Year"}
       />
 
-      <div style={{ display: "flex", gap: "15px" }}>
+      <div style={{ display: "flex" }}>
         <SalaryDiv
           formState={formState}
           current_ctc={salaryFormmater(formState.currCTC)}
@@ -202,7 +207,7 @@ export default function JobCard({ formState }) {
             flexDirection: "column",
             gap: "5px",
             boxSizing: "border-box",
-            marginTop: "-40px",
+            marginTop: formState.experience === "Fresher" ? "-60px" : "-50px",
           }}
         >
           <CurrentOfficeCity current_office_city={formState.currLocation} />
@@ -212,8 +217,8 @@ export default function JobCard({ formState }) {
           {LastWorkDate()}
           {JoiningDate()}
         </div>
-        </div>
-      <MessageDiv message={formState.message} experience={formState.experience}  />
+      </div>
+      <MessageDiv message={formState.message} experience={formState.experience} />
     </Card>
   );
 }

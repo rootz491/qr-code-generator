@@ -54,3 +54,6 @@ export default Portal;
 // qualification -> instute name
 //  if fresher -> internship current company name
 // rupees coma seprated.
+
+// fresher -> h: 200px mt: -70px .... exp -> h: 170px mt: 40px
+

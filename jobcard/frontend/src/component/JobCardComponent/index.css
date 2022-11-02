@@ -38,7 +38,6 @@
   line-height: 10px;
 }
 
-
 .contactDiv {
   position: absolute;
   left: 152px;
@@ -59,17 +58,13 @@
   justify-content: center;
 }
 
-.noticePeriodText{
+.noticePeriodText {
   font-size: 8px;
   font-weight: 700;
   line-height: 10px;
 }
 
-.resumeDiv{
-  position: absolute;
-  left: -10px;
-  top: 270px;
-  padding-left: 18px;
+.resumeDiv {
   font-size: 7px;
   font-weight: 600;
   line-height: 8px;
@@ -79,28 +74,29 @@
   align-items: center;
   font-size: 9px;
   font-weight: 700;
+  margin-top: 5px;
 }
-.dateDiv{
+.dateDiv {
   margin-top: 5px;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
 }
-.datesLeft{
+.datesLeft {
   display: flex;
   align-items: center;
   gap: 7px;
 }
-.datesRight{
+.datesRight {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 3px;
 }
-.dateLabel{
+.dateLabel {
   font-size: 7.2px;
 }
-.dateText{
+.dateText {
   font-size: 7px;
   font-weight: 600;
   line-height: 10px;
