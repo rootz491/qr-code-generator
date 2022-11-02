@@ -139,7 +139,7 @@ export default function JobCard({ formState }) {
           style={{
             width: "135px",
             height: "150px",
-            marginLeft: "15px",
+            marginLeft: "25px",
             marginTop: "-20px",
             display: "flex",
             flexDirection: "column",
