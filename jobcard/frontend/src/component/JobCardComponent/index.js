@@ -11,14 +11,26 @@ import Ilocation from "../../icons/location.svg";
 import circle from "../../icons/circle.svg";
 import check_circle from "../../icons/check_circle.svg";
 import immediate_join from "../../icons/immediate_join.svg";
+import resumeIcon from "../../icons/resumeIcon.svg";
 
 export default function JobCard({ formState }) {
+
+  const NoticePeriod = () => {
+  if ( formState.experience && formState.noticePeriod) {
+    return <span className="noticePeriodText">({formState.noticePeriod} months)</span>;
+  }
+
+  };
+
   const RenderExperience = () => {
     if (formState.experience === "Experienced") {
       return (
         <div className="location">
           <img src={immediate_join} alt="location" height="12px" width="12px" />
-          <span className="locationText">Not in Notice Period</span>
+          <div style={{display: "flex", flexDirection: "column",gap: "3px", alignItems: "flex-start",}}>
+          <span className="locationText">Not in notice period</span>
+          {NoticePeriod()}
+          </div>
         </div>
       );
     } else if (formState.experience === "Experienced and currently serving notice period") {
@@ -113,6 +125,21 @@ export default function JobCard({ formState }) {
     }
   };
 
+  const ResumeDiv = () => {
+    // if (!formState.resume === null) {
+      return (
+        <div className="resumeDiv">
+          <img src={resumeIcon} alt="resume" height="12px" width="12px" />
+          <a href={formState.resume} target="_blank" rel="noreferrer">
+            <span className="resumeText">View Resume</span>
+          </a>
+        </div>
+      );
+    // } else {
+    //   return <></>;
+    // }
+  }
+
   return (
     <Card className="jobCard">
       <CardHeader name={formState.fullname || "Applicant Name"} />
@@ -152,7 +179,8 @@ export default function JobCard({ formState }) {
           {Relocate()}
           {RenderExperience()}
         </div>
-      </div>
+        </div>
+        {ResumeDiv()}
       <MessageDiv message={formState.message} experience={formState.experience}  />
     </Card>
   );

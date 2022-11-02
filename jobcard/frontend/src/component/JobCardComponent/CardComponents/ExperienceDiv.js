@@ -42,7 +42,7 @@ const ExperienceDiv = ({ experience, fresher, current_company_name, qualificatio
         )}
         <TypeLabel fresher={fresher} experience={experience} />
       </div>
-      
+
       <div
         style={{
           display: "flex",
@@ -52,7 +52,16 @@ const ExperienceDiv = ({ experience, fresher, current_company_name, qualificatio
         }}
       >
         <img src={officeIcon} alt="office" height="10px" width="10px" />
-        <span>{current_company_name}</span>
+        {fresher === "no" ? (
+          <>
+            <span>{current_company_name}</span>
+          </>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: "1px", width: "120px" }}>
+            <span style={{ fontSize: "7px", fontWeight: "600" }}>Internship</span>
+            <span>UI/UX designer at {current_company_name}</span>
+          </div>
+        )}
       </div>
       <div
         style={{
@@ -63,9 +72,12 @@ const ExperienceDiv = ({ experience, fresher, current_company_name, qualificatio
         }}
       >
         <img src={educationIcon} alt="education" height="10px" width="10px" />
-        <span>
-          {qualification} ({passing_year})
-        </span>
+        <div style={{ display: "flex", flexDirection: "column", gap: "1px", width: "120px" }}>
+          <span>
+            {qualification} ({passing_year})
+          </span>
+          <span style={{ fontSize: "8px", fontWeight: "600" }}>IIT Delhi</span>
+        </div>
       </div>
     </Box>
   );

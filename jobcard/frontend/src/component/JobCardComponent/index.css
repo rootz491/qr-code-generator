@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 .jobCard {
   position: relative;
@@ -6,7 +6,7 @@
   height: 420px;
   color: #000;
   overflow: hidden;
-  font-family: "Poppins, sans-serif";
+  font-family: "Poppins", sans-serif;
   font-size: 8px;
   line-height: 10px;
   font-weight: 300;
@@ -29,7 +29,7 @@
 
 .location {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 7px;
 }
 .locationText {
@@ -56,4 +56,26 @@
   flex-direction: column;
   gap: 2px;
   justify-content: center;
+}
+
+.noticePeriodText{
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 10px;
+}
+
+.resumeDiv{
+  position: absolute;
+  left: -10px;
+  top: 270px;
+  padding-left: 18px;
+  font-size: 7px;
+  font-weight: 600;
+  line-height: 8px;
+  color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 9px;
+  font-weight: 700;
 }
