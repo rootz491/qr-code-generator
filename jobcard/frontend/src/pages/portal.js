@@ -48,14 +48,8 @@ function Portal() {
 export default Portal;
 
 // todo
-// roles applyin for
-// 1. slider for total exp.
-// 2. dropdown for fresher, experienced, exp. and currently serving notice period, exp. already served notice period, freelancer,
-// 3 .remove Are you a fresher
-// 4. remove rating (done)
-// 5. . only no. allowed in ctc -> conversion to LPA or K (approx)
-// 6. curr .office loca. -curr location
-// 7. remove highscool - graduation (done)
-//  msgs -> text area
-
-//  are you workin remotely - yes no (if yes then show textfield)
+//  message area -> text area
+//  show resume pdf in card if click can view the pdf
+//  notice period at render-experienced and onlyf for "experience" === "experienced"
+// qualification -> instute name
+//  if fresher -> current company name 

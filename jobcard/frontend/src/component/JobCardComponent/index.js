@@ -129,21 +129,22 @@ export default function JobCard({ formState }) {
       <div style={{ display: "flex" }}>
         <SalaryDiv
           formState={formState}
-          current_ctc={salaryFormmater(formState.currCTC) || "not filled"}
-          current_inhand={salaryFormmater(formState.currInHandCTC) || "not filled"}
-          expected_inhand={salaryFormmater(formState.expectedSalary) || "not filled"}
-          offered_ctc={salaryFormmater(formState.offeredCTC) || "not filled"}
+          current_ctc={salaryFormmater(formState.currCTC)}
+          current_inhand={salaryFormmater(formState.currInHandCTC)}
+          expected_inhand={salaryFormmater(formState.expectedSalary)}
+          offered_ctc={salaryFormmater(formState.offeredCTC)}
         />
         <Divider />
         <div
           style={{
-            width: "135px",
-            height: "150px",
-            marginLeft: "25px",
-            marginTop: "-20px",
+            flex: 1,
+            padding: "0px 8px",
+            height: "170px",
             display: "flex",
             flexDirection: "column",
             gap: "5px",
+            boxSizing: "border-box",
+            marginTop: "-40px",
           }}
         >
           <CurrentOfficeCity current_office_city={formState.currLocation} />
@@ -152,7 +153,7 @@ export default function JobCard({ formState }) {
           {RenderExperience()}
         </div>
       </div>
-      <MessageDiv message={formState.message || "Any message for us"} />
+      <MessageDiv message={formState.message} experience={formState.experience}  />
     </Card>
   );
 }

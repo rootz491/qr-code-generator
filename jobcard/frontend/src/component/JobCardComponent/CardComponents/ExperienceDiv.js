@@ -5,7 +5,6 @@ import educationIcon from "../../../icons/education.svg";
 import TypeLabel from "./TypeLabel";
 import { Box } from "@mui/material";
 
-
 const ExperienceDiv = ({ experience, fresher, current_company_name, qualification, passing_year }) => {
   return (
     <Box
@@ -32,6 +31,7 @@ const ExperienceDiv = ({ experience, fresher, current_company_name, qualificatio
         {fresher === "no" ? (
           <>
             <img src={timeIcon} alt="time" height="10px" width="10px" />
+
             <span>
               {experience}
               {Number(experience) ? " yrs" : ""}
@@ -42,6 +42,7 @@ const ExperienceDiv = ({ experience, fresher, current_company_name, qualificatio
         )}
         <TypeLabel fresher={fresher} experience={experience} />
       </div>
+      
       <div
         style={{
           display: "flex",

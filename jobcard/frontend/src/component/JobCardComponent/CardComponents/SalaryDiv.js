@@ -6,13 +6,15 @@ const SalaryDiv = ({ current_ctc, current_inhand, expected_inhand, offered_ctc, 
   return (
     <Box
       sx={{
-        margin: "0px 8px",
+        padding: "0px 8px",
         display: "flex",
         flexDirection: "column",
         gap: "7px",
         fontWeight: "300",
         fontSize: "8px",
         lineHeight: "10px",
+        width: "50%",
+        boxSizing: 'border-box',
       }}
     >
       <div style={{ display: "flex", gap: "3px" }}>
