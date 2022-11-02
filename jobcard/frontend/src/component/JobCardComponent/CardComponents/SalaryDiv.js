@@ -2,7 +2,7 @@ import React from "react";
 import moneyIcon from "../../../icons/money.svg";
 import { Box, Typography } from "@mui/material";
 
-const SalaryDiv = ({ current_ctc, current_inhand, expected_inhand, offered_ctc, fresher }) => {
+const SalaryDiv = ({ current_ctc, current_inhand, expected_inhand, offered_ctc, fresher, formState }) => {
   return (
     <Box
       sx={{
@@ -14,7 +14,7 @@ const SalaryDiv = ({ current_ctc, current_inhand, expected_inhand, offered_ctc, 
         fontSize: "8px",
         lineHeight: "10px",
         width: "50%",
-        boxSizing: 'border-box',
+        boxSizing: "border-box",
       }}
     >
       <div style={{ display: "flex", gap: "3px" }}>
@@ -56,6 +56,19 @@ const SalaryDiv = ({ current_ctc, current_inhand, expected_inhand, offered_ctc, 
           {expected_inhand}
         </Typography>
       </div>
+
+      {formState.resume && (
+      <div style={{ display: "flex", gap: "3px" }}>
+          <a
+            href={formState.resume.data}
+            target="_blank"
+            rel="noreferrer"
+            style={{ textDecoration: "none", color: "#000000" }}
+          >
+            {formState?.resume?.name ?? 'Preview Resume'}
+          </a>
+        </div>
+      )}
     </Box>
   );
 };

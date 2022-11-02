@@ -1,4 +1,3 @@
-// import "./styles.css";
 import dividerr from "../../icons/line.svg";
 import CardHeader from "./CardComponents/CardHeader";
 import ExperienceDiv from "./CardComponents/ExperienceDiv";
@@ -135,6 +134,7 @@ export default function JobCard({ formState }) {
           offered_ctc={salaryFormmater(formState.offeredCTC)}
         />
         <Divider />
+
         <div
           style={{
             flex: 1,

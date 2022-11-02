@@ -1,28 +1,27 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./pages/portal";
-import reportWebVitals from "./reportWebVitals";
+import Portal from "./pages/portal";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Form from "./pages/Form";
 import JobCard from "./pages/Jobcard";
 import AuthForm from "./pages/signin";
-
+import DynamicJob from "./component/dynamicJob";
+import Jobs from "./component/Jobs";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Router>
       <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/form" element={<Form />} />
-        <Route path="/jobcard" element={<JobCard />} />
+        <Route path="/" element={<Portal />} />
+        <Route path="/:id" element={<DynamicJob />} />
+        <Route path="/list" element={<Jobs />} />
+        {/* UNDER DEVELOPMENT */}
         <Route path="/auth" element={<AuthForm />} />
+        {/* TESTING OMLY */}
+        <Route path="/form" element={<Form />} />
+        <Route path="/jobcard/" element={<JobCard />} />
       </Routes>
     </Router>
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

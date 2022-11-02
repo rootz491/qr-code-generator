@@ -21,9 +21,33 @@ function FormComponent({ setFormState, formState }) {
   };
 
   const saveFormData = () => {
-    // save to local storage
     console.log(formState);
-    localStorage.setItem("formState", JSON.stringify(formState));
+
+    const id = Math.floor(Math.random() * 100000000);
+    const clientInfos = JSON.parse(localStorage.getItem("clientInfos")) || [];
+    console.log(id);
+    clientInfos.push({
+      id,
+      ...formState,
+    });
+
+    localStorage.setItem("clientInfos", JSON.stringify(clientInfos));
+  };
+
+  const handleFile = (e) => {
+    console.log(e.target.files[0]);
+    //  base64 encode the file
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      setFormState((prev) => ({
+        ...prev,
+        resume: {
+          name: e.target.files[0].name,
+          data: reader.result,
+        },
+      }));
+    };
   };
 
   return (
@@ -112,9 +136,15 @@ function FormComponent({ setFormState, formState }) {
           <Grid item xs={4}>
             <Stack spacing={2}>
               <Typography>Resume (pdf only)</Typography>
-              <Button variant="outlined" component="label" endIcon={<UploadFile />} name="resume">
-                Upload File
-                <input hidden accept=".pdf" type="file" />
+              <Button
+                variant={formState?.resume != null ? "solid" : "outlined"}
+                component="label"
+                sx={{ width: "fit-content" }}
+                endIcon={<UploadFile />}
+                name="resume"
+              >
+                <Typography>{formState?.resume?.name ?? "Upload File"}</Typography>
+                <input hidden accept=".pdf" type="file" onChange={handleFile} />
               </Button>
             </Stack>
           </Grid>

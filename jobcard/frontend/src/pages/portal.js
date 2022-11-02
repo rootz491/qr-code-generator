@@ -5,7 +5,6 @@ import JobCardComponent from "../component/JobCardComponent";
 import "../component/JobCardComponent/index.css";
 
 function Portal() {
-  // gobal state for form to pass to jobcard
 
   const [formState, setFormState] = useState({
     experience: "Fresher",
@@ -31,11 +30,12 @@ function Portal() {
     workingremote: "",
     resume: null,
   });
+
   return (
     <>
       <Stack direction="row" sx={{ height: "100vh" }}>
         <Stack sx={{ width: "50%", height: "100%", overflowY: "scroll" }} alignItems="center">
-          <FormComponent setFormState={setFormState} formState={formState}  />
+          <FormComponent setFormState={setFormState} formState={formState} />
         </Stack>
         <Stack sx={{ flex: 1, height: "100%", overflow: "hidden" }} justifyContent="center" alignItems="center">
           <JobCardComponent formState={formState} />
@@ -52,4 +52,5 @@ export default Portal;
 //  show resume pdf in card if click can view the pdf
 //  notice period at render-experienced and onlyf for "experience" === "experienced"
 // qualification -> instute name
-//  if fresher -> current company name 
+//  if fresher -> internship current company name
+// rupees coma seprated.
