@@ -28,7 +28,7 @@ export default function JobCard({ formState }) {
           <span className="locationText">Serving Notice Period</span>
         </div>
       );
-    } else if (formState.experience === "Experienced and already serving notice period") {
+    } else if (formState.experience === "Experienced and already served notice period") {
       return (
         <div className="location">
           <img src={immediate_join} alt="location" height="12px" width="12px" />

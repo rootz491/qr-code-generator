@@ -53,8 +53,8 @@ function FormComponent({ setFormState, formState }) {
                 <MenuItem value="Experienced and currently serving notice period">
                   Experienced and currently serving notice period
                 </MenuItem>
-                <MenuItem value="Experienced and already serving notice period">
-                  Experienced and already serving notice period
+                <MenuItem value="Experienced and already served notice period">
+                  Experienced and already served notice period
                 </MenuItem>
               </Select>
             </FormControl>
