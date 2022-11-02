@@ -1,7 +1,7 @@
 import React from "react";
 import mailIcon from "../../../icons/mail.svg";
 import callIcon from "../../../icons/call.svg";
-import "../index.css";
+import "./../index.css";
 
 const ContactDiv = ({ email, mobile }) => {
   return (
