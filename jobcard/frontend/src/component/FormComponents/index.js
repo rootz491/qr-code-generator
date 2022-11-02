@@ -30,7 +30,7 @@ function FormComponent({ setFormState, formState }) {
     <>
       <Stack
         sx={{
-          width: "580px",
+          width: "85%",
           p: "20px",
           boxShadow: "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;",
           margin: "20px",
@@ -112,7 +112,7 @@ function FormComponent({ setFormState, formState }) {
           <Grid item xs={4}>
             <Stack spacing={2}>
               <Typography>Resume (pdf only)</Typography>
-              <Button variant="outlined" component="label" endIcon={<UploadFile />}>
+              <Button variant="outlined" component="label" endIcon={<UploadFile />} name="resume">
                 Upload File
                 <input hidden accept=".pdf" type="file" />
               </Button>
@@ -313,7 +313,7 @@ function FormComponent({ setFormState, formState }) {
           </Grid>
         </Grid>
       </Stack>
-      <Button variant="contained" type="submit" sx={{ mt: 3, mb: 2 }} onClick={saveFormData}>
+      <Button variant="contained" type="submit" sx={{ mt: 3, mb: 2, width: "200px" }} onClick={saveFormData}>
         Save
       </Button>
     </>

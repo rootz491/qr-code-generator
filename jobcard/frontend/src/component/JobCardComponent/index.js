@@ -11,7 +11,6 @@ import Ilocation from "../../icons/location.svg";
 import circle from "../../icons/circle.svg";
 import check_circle from "../../icons/check_circle.svg";
 import immediate_join from "../../icons/immediate_join.svg";
-import { CheckRounded } from "@mui/icons-material";
 
 export default function JobCard({ formState }) {
   const RenderExperience = () => {
@@ -140,7 +139,7 @@ export default function JobCard({ formState }) {
           style={{
             width: "135px",
             height: "150px",
-            marginLeft: "15px",
+            marginLeft: "25px",
             marginTop: "-20px",
             display: "flex",
             flexDirection: "column",
