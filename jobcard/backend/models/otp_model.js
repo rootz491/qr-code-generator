@@ -23,6 +23,9 @@ const OtpSchema = mongoose.Schema(
 			default: "pending",
 			enum: ["pending", "verified"],
 		},
+		sid: {
+			type: String,
+		},
 	},
 	{
 		timestamps: true,
