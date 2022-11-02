@@ -162,14 +162,15 @@ export default function JobCard({ formState }) {
   const salaryFormmater = (salary) => {
     let stringSalary = salary.toString();
     if (stringSalary.length === 4) {
-      console.log(stringSalary.slice(0, 1) + "K");
-      return stringSalary.slice(0, 1) + "K";
+      console.log(stringSalary.slice(0, 1) + " K");
+      return stringSalary.slice(0, 1) + " K";
     } else if (stringSalary.length === 5) {
-      return stringSalary.slice(0, 2) + "K";
+      return stringSalary.slice(0, 2) + " K";
     } else if (stringSalary.length === 6) {
-      return stringSalary.slice(0, 1) + "L";
+      const slicedSal = stringSalary.slice(0, 2);
+      return slicedSal.slice(0, 1) + "." + slicedSal.slice(1, 2) + " L";
     } else if (stringSalary.length === 7) {
-      return stringSalary.slice(0, 2) + "L";
+      return stringSalary.slice(0, 2) + " L";
     } else {
       return salary;
     }
@@ -186,6 +187,7 @@ export default function JobCard({ formState }) {
         current_company_name={formState.currCompany || "Current Company Name"}
         qualification={formState.qualification || "Qualification"}
         passing_year={formState.passingYear || "Passing Year"}
+        institute={formState.institute}
       />
 
       <div style={{ display: "flex" }}>

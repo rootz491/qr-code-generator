@@ -7,7 +7,7 @@ const MessageDiv = ({ message, experience }) => {
       <Typography
         sx={{ marginBottom: "5px", fontSize: "9px", lineHeight: "14px", fontWeight: "600", letterSpacing: "0.2px" }}
       >
-        {experience === "fresher" ? "Why are you a good fit?" : "Short Introduction or Any Message"}
+        {experience === "Fresher" ? "Why are you a good fit?" : "Short Introduction or Any Message"}
       </Typography>
       <Typography
         sx={{

@@ -10,6 +10,7 @@ import {
   RadioGroup,
   Select,
   Stack,
+  TextareaAutosize,
   TextField,
   Typography,
 } from "@mui/material";
@@ -139,11 +140,13 @@ function FormComponent({ setFormState, formState }) {
               <Button
                 variant={formState?.resume != null ? "solid" : "outlined"}
                 component="label"
-                sx={{ width: "fit-content" }}
+                sx={{ width: "200px" }}
                 endIcon={<UploadFile />}
                 name="resume"
               >
-                <Typography>{formState?.resume?.name ?? "Upload File"}</Typography>
+                <Typography sx={{ width: "70%", overflow: "hidden", textOverflow: "ellipsis" }}>
+                  {formState?.resume?.name ?? "Upload File"}
+                </Typography>
                 <input hidden accept=".pdf" type="file" onChange={handleFile} />
               </Button>
             </Stack>
@@ -194,6 +197,16 @@ function FormComponent({ setFormState, formState }) {
               type="number"
             />
           </Grid>
+          <Grid item xs={12}>
+            <TextField
+              id="institute"
+              name="institute"
+              label="Institute Name"
+              fullWidth
+              variant="outlined"
+              onChange={handleChange}
+            />
+          </Grid>
 
           <Grid item xs={12}>
             <FormControl>
@@ -207,21 +220,26 @@ function FormComponent({ setFormState, formState }) {
               </RadioGroup>
             </FormControl>
           </Grid>
+
+          {formState.experience === "Experienced" ? (
+            <Grid item xs={12}>
+              <TextField
+                required
+                id="noticePeriod"
+                name="noticePeriod"
+                label="Notice period (Months) (Ex - 2)"
+                fullWidth
+                variant="outlined"
+                onChange={handleChange}
+              />
+            </Grid>
+          ) : (
+            <></>
+          )}
           {formState.experience === "Fresher" ? (
             <></>
           ) : (
             <>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  id="noticePeriod"
-                  name="noticePeriod"
-                  label="Notice period (Months) (Ex - 2)"
-                  fullWidth
-                  variant="outlined"
-                  onChange={handleChange}
-                />
-              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
@@ -273,39 +291,42 @@ function FormComponent({ setFormState, formState }) {
             />
           </Grid>
           {formState.experience !== "Fresher" ? (
-            <Grid item xs={12}>
-              <Stack spacing={1}>
-                <Typography variant="body1" color="grey">
-                  Last working day (If serving notice period)
-                </Typography>
-                <TextField
-                  type="date"
-                  id="lastWorkDay"
-                  name="lastWorkDay"
-                  fullWidth
-                  variant="outlined"
-                  onChange={handleChange}
-                />
-              </Stack>
-            </Grid>
+            <>
+              <Grid item xs={12}>
+                <Stack spacing={1}>
+                  <Typography variant="body1" color="grey">
+                    Last working day (If serving notice period)
+                  </Typography>
+                  <TextField
+                    type="date"
+                    id="lastWorkDay"
+                    name="lastWorkDay"
+                    fullWidth
+                    variant="outlined"
+                    onChange={handleChange}
+                  />
+                </Stack>
+              </Grid>
+              <Grid item xs={12}>
+                <Stack spacing={1}>
+                  <Typography variant="body1" color="grey">
+                    Joining Date
+                  </Typography>
+                  <TextField
+                    type="date"
+                    id="joiningDate"
+                    name="joiningDate"
+                    fullWidth
+                    variant="outlined"
+                    onChange={handleChange}
+                  />
+                </Stack>
+              </Grid>
+            </>
           ) : (
             <></>
           )}
-          <Grid item xs={12}>
-            <Stack spacing={1}>
-              <Typography variant="body1" color="grey">
-                Joining Date
-              </Typography>
-              <TextField
-                type="date"
-                id="joiningDate"
-                name="joiningDate"
-                fullWidth
-                variant="outlined"
-                onChange={handleChange}
-              />
-            </Stack>
-          </Grid>
+
           <Grid item xs={12}>
             <TextField
               required
@@ -328,16 +349,22 @@ function FormComponent({ setFormState, formState }) {
               </RadioGroup>
             </FormControl>
           </Grid>
+
           <Grid item xs={12}>
-            <TextField
-              sx={{ height: "auto" }}
-              required
+            <Typography variant="body1" color="grey">
+              {" "}
+              {formState.experience === "Fresher"
+                ? "Why you are a good fit?"
+                : "Short Introduction or Any Message"}{" "}
+            </Typography>
+            <TextareaAutosize
               id="message"
               name="message"
-              label="Any message for us?"
-              fullWidth
-              multiline
-              variant="outlined"
+              placeholder="Enter your message here"
+              minRows={8}
+              cols={65}
+              style={{ padding: "5px", marginTop: "10px" }}
+              sx={{ background: "white", border: "1px solid gray", borderRadius: "2px", width: "100%" }}
               onChange={handleChange}
             />
           </Grid>
