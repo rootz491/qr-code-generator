@@ -4,6 +4,9 @@ const config = require("../../config");
 const twilio = require("twilio");
 const client = new twilio(config.TWILIO_ACCOUNT_SID, config.TWILIO_AUTH_TOKEN);
 const Otp = require("../../models/otp_model");
+const User = require("../../models/user_model");
+const auth = require("../../middleware/auth");
+const jwt = require("jsonwebtoken");
 
 router.post("/request-otp", async (req, res) => {
 	try {
@@ -37,19 +40,23 @@ router.post("/request-otp", async (req, res) => {
 		});
 		if (savedOtp) {
 			savedOtp.otp = otp;
+			savedOtp.sid = message.sid;
 			savedOtp.save();
 			res.status(200).json({ message: "OTP sent successfully" });
 		} else {
 			const newOtp = new Otp({
 				phoneNumber: number,
 				otp: otp,
+				sid: message.sid,
 			});
 			await newOtp.save();
 			res.status(200).json({ message: "OTP sent successfully" });
 		}
 	} catch (err) {
 		console.log(err);
-		res.status(err?.status || 500).send(err?.message || "Server Error");
+		res
+			.status(err?.status || 500)
+			.send({ message: err.message || "Server Error" });
 	}
 });
 
@@ -76,7 +83,9 @@ router.post("/verify-otp", async (req, res) => {
 				status: 400,
 				message: "Otp was already used",
 			};
+
 		//checking if the otp is expired
+		//The Doc is TTL but we still time check it here cause mongo db run the TTL check every 60 seconds and can be inaccurate
 		if (savedOtp.createdAt < Date.now() - 300000)
 			throw {
 				status: 400,
@@ -92,10 +101,65 @@ router.post("/verify-otp", async (req, res) => {
 		}
 		savedOtp.status = "verified";
 		await savedOtp.save();
-		res.status(200).json({ message: "OTP verified successfully" });
+		const user = await new User({
+			phoneNumber: number,
+		}).save();
+		const token = jwt.sign(
+			{
+				_id: user._id,
+				phoneNumber: user.phoneNumber,
+			},
+			config.SECRET_KEY
+		);
+
+		res
+			.status(200)
+			.json({ message: "OTP verified successfully", access_token: token })
+			.send();
 	} catch (err) {
 		console.log(err);
-		res.status(err.status || 500).send(err.message || "Server Error");
+		res
+			.status(err.status || 500)
+			.send({ message: err.message || "Server Error" });
+	}
+});
+
+router.post("/save-user", auth, async (req, res) => {
+	try {
+		const user = req.user;
+		if (!req.body)
+			throw {
+				status: 400,
+				message: "Content can not be empty!",
+			};
+
+		const savedUser = await User.findById(user._id);
+		if (!savedUser)
+			throw {
+				status: 400,
+				message: "User not found",
+			};
+		await savedUser.updateOne(req.body);
+		res.status(200).json({ message: "User saved successfully" });
+	} catch (e) {
+		console.log(e);
+		res.status(e.status || 500).send({ message: e.message || "Server Error" });
+	}
+});
+
+router.get("/get-user", auth, async (req, res) => {
+	try {
+		const user = req.user;
+		const savedUser = await User.findById(user._id);
+		if (!savedUser)
+			throw {
+				status: 400,
+				message: "User not found",
+			};
+		res.status(200).json(savedUser);
+	} catch (e) {
+		console.log(e);
+		res.status(e.status || 500).send({ message: e.message || "Server Error" });
 	}
 });
 
