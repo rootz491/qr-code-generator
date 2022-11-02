@@ -10,7 +10,7 @@ const ExperienceDiv = ({ experience, fresher, current_company_name, qualificatio
     <Box
       sx={{
         margin: "10px 8px",
-        fontSize: "9px",
+        fontSize: "8.5px",
         fontWeight: "600",
         lineHeight: "10px",
         display: "flex",
@@ -57,7 +57,7 @@ const ExperienceDiv = ({ experience, fresher, current_company_name, qualificatio
             <span>{current_company_name}</span>
           </>
         ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: "1px", width: "120px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1px", width: "120px", border: "1px sollid red" }}>
             <span style={{ fontSize: "7px", fontWeight: "600" }}>Internship</span>
             <span>UI/UX designer at {current_company_name}</span>
           </div>
@@ -72,7 +72,7 @@ const ExperienceDiv = ({ experience, fresher, current_company_name, qualificatio
         }}
       >
         <img src={educationIcon} alt="education" height="10px" width="10px" />
-        <div style={{ display: "flex", flexDirection: "column", gap: "1px", width: "120px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "1px", width: "120px", border: "1px sollid red" }}>
           <span>
             {qualification} ({passing_year})
           </span>

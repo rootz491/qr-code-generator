@@ -10,38 +10,85 @@ import Ilocation from "../../icons/location.svg";
 import circle from "../../icons/circle.svg";
 import check_circle from "../../icons/check_circle.svg";
 import immediate_join from "../../icons/immediate_join.svg";
+import serving from "../../icons/serving.svg";
+import not_in_notice_period from "../../icons/not_in_notice_period.svg";
+import calender from "../../icons/calender.svg";
 
 export default function JobCard({ formState }) {
 
   const NoticePeriod = () => {
-  if ( formState.experience && formState.noticePeriod) {
-    return <span className="noticePeriodText">({formState.noticePeriod} months)</span>;
+    if (formState.experience && formState.noticePeriod) {
+      return <span className="noticePeriodText">({formState.noticePeriod} months)</span>;
+    }
   }
 
+  const LastWorkDate = () => {
+    if ((formState.experience === "Experienced and already serving notice period" || formState.experience === "Experienced and currently serving notice period") && formState.lastWorkDay) {
+      return (
+        <div className="dateDiv">
+          <div className="datesLeft">
+            <img src={calender} alt="calender" width="12px" height="12px" />
+            <span className="dateLabel">Last Work Day</span>
+          </div>
+          <div className="datesRight">
+            <div>
+            <span className="locationText">{formState.lastWorkDay}</span>
+            </div>
+            <div>
+            <span className="dateText">(0 days from now)</span>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  };
+
+  const JoiningDate = () => {
+    if (
+      (formState.experience === "Experienced and already serving notice period" || formState.experience === "Experienced and currently serving notice period" || formState.experience === "Fresher") &&
+      formState.joiningDate
+    ) {
+      return (
+        <div className="dateDiv">
+          <div className="datesLeft">
+            <img src={calender} alt="calender" width="12px" height="12px" />
+            <span className="dateLabel">Joining Date</span>
+          </div>
+          <div className="datesRight">
+            <div>
+            <span className="locationText">{formState.joiningDate}</span>
+            </div>
+            <div>
+            <span className="dateText">(0 days from now)</span>
+            </div>
+          </div>
+        </div>
+      );
+    }
   };
 
   const RenderExperience = () => {
     if (formState.experience === "Experienced") {
       return (
         <div className="location">
-          <img src={immediate_join} alt="location" height="12px" width="12px" />
-          <div style={{display: "flex", flexDirection: "column",gap: "3px", alignItems: "flex-start",}}>
-          <span className="locationText">Not in notice period</span>
-          {NoticePeriod()}
+          <img src={not_in_notice_period} alt="not_in_notice_period" height="12px" width="12px" />
+          <div style={{ display: "flex", flexDirection: "column", gap: "3px", alignItems: "flex-start" }}>
+            <span className="locationText">Not in notice period</span>
+            {NoticePeriod()}
           </div>
         </div>
       );
     } else if (formState.experience === "Experienced and currently serving notice period") {
       return (
         <div className="location">
-          <img src={immediate_join} alt="location" height="12px" width="12px" />
+          <img src={serving} alt="serving" height="12px" width="12px" />
           <span className="locationText">Serving Notice Period</span>
         </div>
       );
     } else if (formState.experience === "Experienced and already served notice period") {
       return (
         <div className="location">
-          <img src={immediate_join} alt="location" height="12px" width="12px" />
+          <img src={immediate_join} alt="immediate_join" height="12px" width="12px" />
           <span className="locationText">Immediate Joining</span>
         </div>
       );
@@ -55,7 +102,7 @@ export default function JobCard({ formState }) {
       return (
         <div className="location">
           <img src={circle} alt="location" height="12px" width="12px" />
-          <span className="locationText">Can't Relocate to Dehradun</span>
+          <span>Can't Relocate to Dehradun</span>
         </div>
       );
     } else if (formState.relocate === "yes") {
@@ -82,7 +129,7 @@ export default function JobCard({ formState }) {
       return (
         <div className="location">
           <img src={circle} alt="location" height="12px" width="12px" />
-          <span className="locationText">Work from Office/Hybrid</span>
+          <span>Work from Office/Hybrid</span>
         </div>
       );
     } else {
@@ -136,7 +183,7 @@ export default function JobCard({ formState }) {
         passing_year={formState.passingYear || "Passing Year"}
       />
 
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", gap: "15px" }}>
         <SalaryDiv
           formState={formState}
           current_ctc={salaryFormmater(formState.currCTC)}
@@ -162,6 +209,8 @@ export default function JobCard({ formState }) {
           {WorkLocation()}
           {Relocate()}
           {RenderExperience()}
+          {LastWorkDate()}
+          {JoiningDate()}
         </div>
         </div>
       <MessageDiv message={formState.message} experience={formState.experience}  />

@@ -38,6 +38,7 @@
   line-height: 10px;
 }
 
+
 .contactDiv {
   position: absolute;
   left: 152px;
@@ -78,4 +79,29 @@
   align-items: center;
   font-size: 9px;
   font-weight: 700;
+}
+.dateDiv{
+  margin-top: 5px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.datesLeft{
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.datesRight{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+}
+.dateLabel{
+  font-size: 7.2px;
+}
+.dateText{
+  font-size: 7px;
+  font-weight: 600;
+  line-height: 10px;
 }
