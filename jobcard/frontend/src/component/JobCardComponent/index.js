@@ -11,7 +11,6 @@ import Ilocation from "../../icons/location.svg";
 import circle from "../../icons/circle.svg";
 import check_circle from "../../icons/check_circle.svg";
 import immediate_join from "../../icons/immediate_join.svg";
-import resumeIcon from "../../icons/resumeIcon.svg";
 
 export default function JobCard({ formState }) {
 
@@ -125,21 +124,6 @@ export default function JobCard({ formState }) {
     }
   };
 
-  const ResumeDiv = () => {
-    // if (!formState.resume === null) {
-      return (
-        <div className="resumeDiv">
-          <img src={resumeIcon} alt="resume" height="12px" width="12px" />
-          <a href={formState.resume} target="_blank" rel="noreferrer">
-            <span className="resumeText">View Resume</span>
-          </a>
-        </div>
-      );
-    // } else {
-    //   return <></>;
-    // }
-  }
-
   return (
     <Card className="jobCard">
       <CardHeader name={formState.fullname || "Applicant Name"} />
@@ -160,6 +144,7 @@ export default function JobCard({ formState }) {
           current_inhand={salaryFormmater(formState.currInHandCTC)}
           expected_inhand={salaryFormmater(formState.expectedSalary)}
           offered_ctc={salaryFormmater(formState.offeredCTC)}
+          resume={formState.resume}
         />
         <Divider />
         <div
@@ -180,7 +165,6 @@ export default function JobCard({ formState }) {
           {RenderExperience()}
         </div>
         </div>
-        {ResumeDiv()}
       <MessageDiv message={formState.message} experience={formState.experience}  />
     </Card>
   );
