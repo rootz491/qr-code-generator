@@ -29,6 +29,7 @@ function Portal() {
     workingremote: "",
     resume: null,
     institute: "",
+    prevJobTitle: "",
   });
 
   return (
