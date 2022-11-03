@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 
 const OtpSchema = mongoose.Schema(
 	{
+		lastRequest: {
+			type: Date,
+		},
 		phoneNumber: {
 			type: String,
 			required: true,
