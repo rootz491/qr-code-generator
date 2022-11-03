@@ -15,7 +15,7 @@ root.render(
       <Routes>
         <Route path="/" element={<Portal />} />
         <Route path="/:id" element={<DynamicJob />} />
-        <Route path="/list" element={<Jobs />} />
+        <Route path="/admin/list" element={<Jobs />} />
         {/* UNDER DEVELOPMENT */}
         <Route path="/auth" element={<AuthForm />} />
         {/* TESTING OMLY */}
