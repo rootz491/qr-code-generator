@@ -5,13 +5,27 @@ import { Box, Typography } from "@mui/material";
 
 const SalaryDiv = ({ current_ctc, current_inhand, expected_inhand, offered_ctc, formState }) => {
   const ResumeDiv = () => {
+    function base64PDFToBlobUrl(base64) {
+      //  get the base64 string only
+      const base64String = base64.split(",")[1];
+      const binStr = atob(base64String);
+      const len = binStr.length;
+      const arr = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+        arr[i] = binStr.charCodeAt(i);
+      }
+      const blob = new Blob([arr], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      return url;
+    }
+
     return (
       <>
         {formState.resume && (
           <div className="resumeDiv">
             <img src={resumeIcon} alt="resume" height="12px" width="12px" />
             <a
-              href={formState.resume.data}
+              href={base64PDFToBlobUrl(formState.resume.data)}
               target="_blank"
               rel="noreferrer"
               style={{

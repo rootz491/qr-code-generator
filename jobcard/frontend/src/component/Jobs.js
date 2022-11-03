@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import JobCard from "./JobCardComponent";
 
 function Jobs() {
   const [clientInfos, setClientInfos] = useState([]);
@@ -12,21 +13,21 @@ function Jobs() {
   return (
     <div
       style={{
-        display: "grid",
-        placeContent: "center",
-        height: "100vh",
-        width: "100vw",
+        display: "flex",
+        justifyContent: "flex-start",
+        minHeight: "auto",
+        gap: "176px",
+        flexWrap: "wrap",
+        padding: "120px 0",
+        marginLeft: "90px",
       }}
     >
       {clientInfos.length > 0 ? (
         clientInfos.map((client, index) => (
           // lists of all jobcards
-          <div key={index}>
-            <h1>{client.title}</h1>
-            <h3>{client.fullname}</h3>
-            <p>{client.description}</p>
-            <a href={`http://localhost:3000/${client.id}`}>Visit profile</a>
-          </div> 
+          <div key={index} style={{ minHeight: "60vh" }}>
+            <JobCard formState={client} />
+          </div>
         ))
       ) : (
         <h1>No jobs applicants available</h1>
