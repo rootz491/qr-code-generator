@@ -18,6 +18,7 @@ import { UploadFile } from "@mui/icons-material";
 
 function FormComponent({ setFormState, formState }) {
   const handleChange = (e) => {
+    console.log("working");
     setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
@@ -111,6 +112,7 @@ function FormComponent({ setFormState, formState }) {
               </Select>
             </FormControl>
           </Grid>
+
           <Grid item xs={12}>
             <TextField
               required
@@ -122,6 +124,21 @@ function FormComponent({ setFormState, formState }) {
               onChange={handleChange}
             />
           </Grid>
+          {formState.experience === "Fresher" ? (
+            <Grid item xs={12}>
+              <TextField
+                required
+                id="prevJobTitle"
+                name="prevJobTitle"
+                label="Current Company Job Title"
+                fullWidth
+                variant="outlined"
+                onChange={handleChange}
+              />
+            </Grid>
+          ) : (
+            <></>
+          )}
           <Grid item xs={12}>
             <TextField
               required
@@ -248,7 +265,7 @@ function FormComponent({ setFormState, formState }) {
                   label="Current CTC"
                   fullWidth
                   variant="outlined"
-                  type="number"
+                  value={formState.currCTC.toLocaleString()}
                   onChange={handleChange}
                 />
               </Grid>
@@ -260,7 +277,6 @@ function FormComponent({ setFormState, formState }) {
                   label="Current in hand salary"
                   fullWidth
                   variant="outlined"
-                  type="number"
                   onChange={handleChange}
                 />
               </Grid>
@@ -272,7 +288,6 @@ function FormComponent({ setFormState, formState }) {
                   label="Any offered CTC "
                   fullWidth
                   variant="outlined"
-                  type="number"
                   onChange={handleChange}
                 />
               </Grid>
@@ -286,11 +301,10 @@ function FormComponent({ setFormState, formState }) {
               label="Expected CTC"
               fullWidth
               variant="outlined"
-              type="number"
               onChange={handleChange}
             />
           </Grid>
-          {formState.experience !== "Fresher" ? (
+          {formState.experience !== "Fresher" && formState.experience !== "Experienced" ? (
             <>
               <Grid item xs={12}>
                 <Stack spacing={1}>
@@ -362,9 +376,9 @@ function FormComponent({ setFormState, formState }) {
               name="message"
               placeholder="Enter your message here"
               minRows={8}
-              cols={65}
-              style={{ padding: "5px", marginTop: "10px" }}
-              sx={{ background: "white", border: "1px solid gray", borderRadius: "2px", width: "100%" }}
+              cols={83}
+              style={{ padding: "5px", marginTop: "10px", width: "97%" }}
+              sx={{ background: "white", border: "1px solid gray", borderRadius: "2px" }}
               onChange={handleChange}
             />
           </Grid>

@@ -5,7 +5,6 @@ import JobCardComponent from "../component/JobCardComponent";
 import "../component/JobCardComponent/index.css";
 
 function Portal() {
-
   const [formState, setFormState] = useState({
     experience: "Fresher",
     jobtitle: "",
@@ -30,6 +29,7 @@ function Portal() {
     workingremote: "",
     resume: null,
     institute: "",
+    prevJobTitle: "",
   });
 
   return (
@@ -57,4 +57,3 @@ export default Portal;
 // rupees coma seprated.
 
 // fresher -> h: 200px mt: -70px .... exp -> h: 170px mt: 40px
-

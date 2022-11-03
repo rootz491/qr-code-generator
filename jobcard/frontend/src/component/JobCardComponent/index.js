@@ -13,6 +13,7 @@ import immediate_join from "../../icons/immediate_join.svg";
 import serving from "../../icons/serving.svg";
 import not_in_notice_period from "../../icons/not_in_notice_period.svg";
 import calender from "../../icons/calender.svg";
+import moment from "moment";
 
 export default function JobCard({ formState }) {
   const NoticePeriod = () => {
@@ -22,8 +23,9 @@ export default function JobCard({ formState }) {
   };
 
   const LastWorkDate = () => {
+    const stringLastDate = formState.lastWorkDay.replace(/-/g, "");
     if (
-      (formState.experience === "Experienced and already serving notice period" ||
+      (formState.experience === "Experienced and already served notice period" ||
         formState.experience === "Experienced and currently serving notice period") &&
       formState.lastWorkDay
     ) {
@@ -35,10 +37,10 @@ export default function JobCard({ formState }) {
           </div>
           <div className="datesRight">
             <div>
-              <span className="locationText">{formState.lastWorkDay}</span>
+              <span className="locationText">{moment(stringLastDate).format("D MMM YY")}</span>
             </div>
             <div>
-              <span className="dateText">(0 days from now)</span>
+              <span className="dateText">({moment(stringLastDate, "YYYYMMDD").fromNow()})</span>
             </div>
           </div>
         </div>
@@ -47,8 +49,10 @@ export default function JobCard({ formState }) {
   };
 
   const JoiningDate = () => {
+    const stringJoiningDate = formState.joiningDate.replace(/-/g, "");
+
     if (
-      (formState.experience === "Experienced and already serving notice period" ||
+      (formState.experience === "Experienced and already served notice period" ||
         formState.experience === "Experienced and currently serving notice period" ||
         formState.experience === "Fresher") &&
       formState.joiningDate
@@ -61,10 +65,10 @@ export default function JobCard({ formState }) {
           </div>
           <div className="datesRight">
             <div>
-              <span className="locationText">{formState.joiningDate}</span>
+              <span className="locationText">{moment(stringJoiningDate).format("D MMM YY")}</span>
             </div>
             <div>
-              <span className="dateText">(0 days from now)</span>
+              <span className="dateText">({moment(stringJoiningDate, "YYYYMMDD").fromNow()})</span>
             </div>
           </div>
         </div>
@@ -127,14 +131,14 @@ export default function JobCard({ formState }) {
       return (
         <div className="location">
           <img src={check_circle} alt="location" height="12px" width="12px" />
-          <span className="locationText">Work from Remote</span>
+          <span className="locationText">Working from Remote</span>
         </div>
       );
     } else if (formState.workingremote === "no") {
       return (
         <div className="location">
           <img src={circle} alt="location" height="12px" width="12px" />
-          <span>Work from Office/Hybrid</span>
+          <span>Working from Office/Hybrid</span>
         </div>
       );
     } else {
@@ -162,8 +166,8 @@ export default function JobCard({ formState }) {
   const salaryFormmater = (salary) => {
     let stringSalary = salary.toString();
     if (stringSalary.length === 4) {
-      console.log(stringSalary.slice(0, 1) + " K");
-      return stringSalary.slice(0, 1) + " K";
+      // round off to 1 decimal place
+      return stringSalary.slice(0, 1) + "." + stringSalary.slice(1, 2) + " K";
     } else if (stringSalary.length === 5) {
       return stringSalary.slice(0, 2) + " K";
     } else if (stringSalary.length === 6) {
@@ -171,6 +175,11 @@ export default function JobCard({ formState }) {
       return slicedSal.slice(0, 1) + "." + slicedSal.slice(1, 2) + " L";
     } else if (stringSalary.length === 7) {
       return stringSalary.slice(0, 2) + " L";
+    } else if (stringSalary.length === 8) {
+      const slicedSal = stringSalary.slice(0, 3);
+      return slicedSal.slice(0, 1) + "." + slicedSal.slice(1, 3) + " Cr";
+    } else if (stringSalary.length === 9) {
+      return stringSalary.slice(0, 3) + " Cr";
     } else {
       return salary;
     }
@@ -188,6 +197,7 @@ export default function JobCard({ formState }) {
         qualification={formState.qualification || "Qualification"}
         passing_year={formState.passingYear || "Passing Year"}
         institute={formState.institute}
+        current_company_jobTitle={formState.prevJobTitle || "Job title?"}
       />
 
       <div style={{ display: "flex" }}>
@@ -209,7 +219,7 @@ export default function JobCard({ formState }) {
             flexDirection: "column",
             gap: "5px",
             boxSizing: "border-box",
-            marginTop: formState.experience === "Fresher" ? "-60px" : "-50px",
+            marginTop: formState.experience === "Fresher" ? "-69px" : "-50px",
           }}
         >
           <CurrentOfficeCity current_office_city={formState.currLocation} />

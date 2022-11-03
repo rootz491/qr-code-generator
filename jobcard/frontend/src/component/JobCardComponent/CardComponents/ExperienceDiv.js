@@ -5,7 +5,15 @@ import educationIcon from "../../../icons/education.svg";
 import TypeLabel from "./TypeLabel";
 import { Box } from "@mui/material";
 
-const ExperienceDiv = ({ experience, fresher, current_company_name, qualification, passing_year, institute }) => {
+const ExperienceDiv = ({
+  experience,
+  fresher,
+  current_company_name,
+  current_company_jobTitle,
+  qualification,
+  passing_year,
+  institute,
+}) => {
   return (
     <Box
       sx={{
@@ -57,11 +65,11 @@ const ExperienceDiv = ({ experience, fresher, current_company_name, qualificatio
             <span>{current_company_name}</span>
           </>
         ) : (
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: "1px", width: "120px", border: "1px sollid red" }}
-          >
+          <div style={{ display: "flex", flexDirection: "column", gap: "1px", width: "120px", height: "30px" }}>
             <span style={{ fontSize: "7px", fontWeight: "600" }}>Internship</span>
-            <span>UI/UX designer at {current_company_name}</span>
+            <span>
+              {current_company_jobTitle} at {current_company_name}
+            </span>
           </div>
         )}
       </div>
@@ -74,7 +82,16 @@ const ExperienceDiv = ({ experience, fresher, current_company_name, qualificatio
         }}
       >
         <img src={educationIcon} alt="education" height="10px" width="10px" />
-        <div style={{ display: "flex", flexDirection: "column", gap: "1px", width: "120px", border: "1px sollid red" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1px",
+            width: "120px",
+            border: "1px sollid red",
+            height: "20px",
+          }}
+        >
           <span>
             {qualification} ({passing_year})
           </span>
