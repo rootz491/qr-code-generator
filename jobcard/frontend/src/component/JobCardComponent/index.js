@@ -177,9 +177,9 @@ export default function JobCard({ formState }) {
       return stringSalary.slice(0, 2) + " L";
     } else if (stringSalary.length === 8) {
       const slicedSal = stringSalary.slice(0, 3);
-      return slicedSal.slice(0, 1) + "." + slicedSal.slice(1, 3) + " Cr";
+      return slicedSal.slice(0, 1) + "." + slicedSal.slice(1, 2) + " Cr";
     } else if (stringSalary.length === 9) {
-      return stringSalary.slice(0, 3) + " Cr";
+      return stringSalary.slice(0, 2) + " Cr";
     } else {
       return salary;
     }
