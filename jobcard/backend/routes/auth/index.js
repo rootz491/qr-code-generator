@@ -2,13 +2,16 @@ const express = require("express");
 const router = express.Router();
 const config = require("../../config");
 const twilio = require("twilio");
-const client = new twilio(config.TWILIO_ACCOUNT_SID, config.TWILIO_AUTH_TOKEN);
 const Otp = require("../../models/otp_model");
 const User = require("../../models/user_model");
 const auth = require("../../middleware/auth");
 const jwt = require("jsonwebtoken");
 
-router.post("/request-otp", async (req, res) => {
+const client = new twilio(config.TWILIO_ACCOUNT_SID, config.TWILIO_AUTH_TOKEN);
+
+//TODO :ADD rate limitng
+//Login and signup means exactly same thing
+router.post("/request-login-via-otp", async (req, res) => {
 	try {
 		const { number } = req.body;
 		const otp = Math.floor(100000 + Math.random() * 900000);
@@ -20,16 +23,12 @@ router.post("/request-otp", async (req, res) => {
 		}
 		const savedOtp = await Otp.findOne({ phoneNumber: number });
 		//checking if otp was sent less then a minute ago
-		if (savedOtp && savedOtp.createdAt > Date.now() - 60000) {
+		if (savedOtp && savedOtp.updatedAt > Date.now() - 30000) {
 			throw {
 				status: 400,
-				message: "Otp was sent less then a minute ago",
-			};
-		}
-		if (savedOtp && savedOtp.status === "verified") {
-			throw {
-				status: 400,
-				message: "User already verified",
+				message: `Please wait ${Math.ceil(
+					(savedOtp.updatedAt - Date.now() + 30000) / 1000
+				)} seconds before requesting for another OTP`,
 			};
 		}
 
@@ -60,7 +59,7 @@ router.post("/request-otp", async (req, res) => {
 	}
 });
 
-router.post("/verify-otp", async (req, res) => {
+router.post("/verify-login-via-otp", async (req, res) => {
 	try {
 		const { number, otp } = req.body;
 		if (!number || !otp) {
@@ -75,8 +74,18 @@ router.post("/verify-otp", async (req, res) => {
 		if (!savedOtp)
 			throw {
 				status: 400,
-				message: "User not found",
+				message: "Phone number not found",
 			};
+		//checking if the last request was less then 5 seconds ago
+		if (savedOtp?.lastRequest > Date.now() - 5000) {
+			throw {
+				status: 400,
+				message: "Request too frequent",
+			};
+		}
+		savedOtp.lastRequest = Date.now();
+		await savedOtp.save();
+
 		//checking if the doc is already verified
 		if (savedOtp.status === "verified")
 			throw {
@@ -86,11 +95,14 @@ router.post("/verify-otp", async (req, res) => {
 
 		//checking if the otp is expired
 		//The Doc is TTL but we still time check it here cause mongo db run the TTL check every 60 seconds and can be inaccurate
-		if (savedOtp.createdAt < Date.now() - 300000)
+		if (savedOtp.createdAt < Date.now() - 300000) {
+			//removing the otp document
+			await savedOtp.remove();
 			throw {
 				status: 400,
 				message: "Otp is expired",
 			};
+		}
 
 		//checking if the otp is correct
 		if (savedOtp.otp !== otp) {
