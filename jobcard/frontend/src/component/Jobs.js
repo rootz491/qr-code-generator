@@ -15,15 +15,73 @@ function Jobs() {
     },
     {
       value: 5,
-      label: "20°C",
+      label: "5yr",
     },
     {
       value: 10,
-      label: "37°C",
+      label: "10yr",
     },
     {
       value: 15,
-      label: "100°C",
+      label: "15yr",
+    },
+    {
+      value: 20,
+      label: "20+yr",
+    },
+  ];
+
+  const joiningDate = [
+    {
+      value: 0,
+      label: "0",
+    },
+    {
+      value: 5,
+      label: "5days",
+    },
+    {
+      value: 15,
+      label: "10days",
+    },
+    {
+      value: 30,
+      label: "1month",
+    },
+    {
+      value: 60,
+      label: "2months",
+    },
+    {
+      value: 90,
+      label: "3+months",
+    }
+  ];
+
+  const ctc = [
+    {
+      value: 1,
+      label: "1L",
+    },
+    {
+      value: 5,
+      label: "5L",
+    },
+    {
+      value: 10,
+      label: "10L",
+    },
+    {
+      value: 20,
+      label: "20L",
+    },
+    {
+      value: 40,
+      label: "40L",
+    },
+    {
+      value: 50,
+      label: "50+L",
     },
   ];
 
@@ -124,7 +182,19 @@ function Jobs() {
             <Typography variant="button" display="block" gutterBottom sx={{ fontWeight: "bold" }}>
               Experience
             </Typography>
-            <Slider aria-label="Always visible" defaultValue={5} getAriaValueText={valuetext} step={20} marks={exp} valueLabelDisplay="on" />
+            <Slider size="small" aria-label="Always visible" defaultValue={15} getAriaValueText={valuetext} min={0} max={20} step={5} marks={exp} valueLabelDisplay="on" />
+          </div>
+          <div style={{ width: "100%" }}>
+            <Typography variant="button" display="block" gutterBottom sx={{ fontWeight: "bold" }}>
+              Joining Date
+            </Typography>
+            <Slider size="small" aria-label="Always visible" defaultValue={70} getAriaValueText={valuetext} min={0} max={90} step={5} marks={joiningDate} valueLabelDisplay="on" />
+          </div>
+          <div style={{ width: "100%" }}>
+            <Typography variant="button" display="block" gutterBottom sx={{ fontWeight: "bold" }}>
+              Expected CTC
+            </Typography>
+            <Slider size="small" aria-label="Always visible" defaultValue={35} getAriaValueText={valuetext} min={0} max={50} step={5} marks={ctc} valueLabelDisplay="on" />
           </div>
         </Paper>
       </div>
