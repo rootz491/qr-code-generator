@@ -2,11 +2,12 @@ const express = require("express");
 const router = express.Router();
 const config = require("../../config");
 const twilio = require("twilio");
-const client = new twilio(config.TWILIO_ACCOUNT_SID, config.TWILIO_AUTH_TOKEN);
 const Otp = require("../../models/otp_model");
 const User = require("../../models/user_model");
 const auth = require("../../middleware/auth");
 const jwt = require("jsonwebtoken");
+
+const client = new twilio(config.TWILIO_ACCOUNT_SID, config.TWILIO_AUTH_TOKEN);
 
 router.post("/request-otp", async (req, res) => {
 	try {
