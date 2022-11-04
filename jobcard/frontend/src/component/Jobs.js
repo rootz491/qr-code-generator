@@ -55,7 +55,7 @@ function Jobs() {
     {
       value: 90,
       label: "3+months",
-    }
+    },
   ];
 
   const ctc = [
@@ -90,8 +90,8 @@ function Jobs() {
   }
 
   const handleCategoryChange = (event) => {
-    setCategory(event.target.value)
-  }
+    setCategory(event.target.value);
+  };
 
   const handleJobTitleChange = (event) => {
     setJobTitle(event.target.value);
@@ -109,31 +109,31 @@ function Jobs() {
   return (
     <div
       style={{
-        height: "100%",
-        width: "100vw",
+        height: "100vh",
         display: "flex",
         boxSizing: "border-box",
+        overflow: "hidden",
       }}
     >
       <div
         style={{
-          width: "20%",
           display: "flex",
           gap: "10px",
           alignItems: "flex-start",
           boxSizing: "border-box",
-          padding: "20px 20px",
+          height: "100%",
+          width: "320px",
         }}
       >
         <Paper
           elevation="2"
           style={{
-            padding: "40px 20px 10px 20px",
-            width: "100%",
+            padding: "20px",
             height: "100%",
             display: "flex",
             flexDirection: "column",
             gap: "20px",
+            width: "100%",
             // border: "1px solid black",
           }}
         >
@@ -173,8 +173,12 @@ function Jobs() {
                 <MenuItem value="All">All</MenuItem>
                 <MenuItem value="Fresher">Fresher</MenuItem>
                 <MenuItem value="Experience">Experience</MenuItem>
-                <MenuItem value="Experienced and currently serving notice period">Experienced and currently serving notice period</MenuItem>
-                <MenuItem value="Experienced and already served notice period">Experienced and already served notice period</MenuItem>
+                <MenuItem value="Experienced and currently serving notice period">
+                  Experienced and currently serving notice period
+                </MenuItem>
+                <MenuItem value="Experienced and already served notice period">
+                  Experienced and already served notice period
+                </MenuItem>
               </Select>
             </FormControl>
           </div>
@@ -182,19 +186,49 @@ function Jobs() {
             <Typography variant="button" display="block" gutterBottom sx={{ fontWeight: "bold" }}>
               Experience
             </Typography>
-            <Slider size="small" aria-label="Always visible" defaultValue={15} getAriaValueText={valuetext} min={0} max={20} step={5} marks={exp} valueLabelDisplay="on" />
+            <Slider
+              size="small"
+              aria-label="Always visible"
+              defaultValue={15}
+              getAriaValueText={valuetext}
+              min={0}
+              max={20}
+              step={5}
+              marks={exp}
+              valueLabelDisplay="on"
+            />
           </div>
           <div style={{ width: "100%" }}>
             <Typography variant="button" display="block" gutterBottom sx={{ fontWeight: "bold" }}>
               Joining Date
             </Typography>
-            <Slider size="small" aria-label="Always visible" defaultValue={70} getAriaValueText={valuetext} min={0} max={90} step={5} marks={joiningDate} valueLabelDisplay="on" />
+            <Slider
+              size="small"
+              aria-label="Always visible"
+              defaultValue={70}
+              getAriaValueText={valuetext}
+              min={0}
+              max={90}
+              step={5}
+              marks={joiningDate}
+              valueLabelDisplay="on"
+            />
           </div>
           <div style={{ width: "100%" }}>
             <Typography variant="button" display="block" gutterBottom sx={{ fontWeight: "bold" }}>
               Expected CTC
             </Typography>
-            <Slider size="small" aria-label="Always visible" defaultValue={35} getAriaValueText={valuetext} min={0} max={50} step={5} marks={ctc} valueLabelDisplay="on" />
+            <Slider
+              size="small"
+              aria-label="Always visible"
+              defaultValue={35}
+              getAriaValueText={valuetext}
+              min={0}
+              max={50}
+              step={5}
+              marks={ctc}
+              valueLabelDisplay="on"
+            />
           </div>
         </Paper>
       </div>
@@ -205,7 +239,7 @@ function Jobs() {
             alignItems: "center",
             justifyContent: "flex-start",
             height: "max-content",
-            width: "80%",
+            flex: 1,
             gap: "100px",
             flexWrap: "wrap",
             paddingLeft: "50px",
