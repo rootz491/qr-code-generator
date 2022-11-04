@@ -47,13 +47,3 @@ function Portal() {
 }
 
 export default Portal;
-
-// todo
-//  message area -> text area
-//  show resume pdf in card if click can view the pdf
-//  notice period at render-experienced and onlyf for "experience" === "experienced"
-// qualification -> instute name
-//  if fresher -> internship current company name
-// rupees coma seprated.
-
-// fresher -> h: 200px mt: -70px .... exp -> h: 170px mt: 40px
