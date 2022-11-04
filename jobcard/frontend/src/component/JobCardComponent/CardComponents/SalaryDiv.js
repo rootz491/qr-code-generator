@@ -18,15 +18,20 @@ const SalaryDiv = ({ current_ctc, current_inhand, expected_inhand, offered_ctc, 
       const url = URL.createObjectURL(blob);
       return url;
     }
-
+    const handleOpen = (e) => {
+      console.log("working")
+      e.preventDefault();
+      window.open(base64PDFToBlobUrl(formState.resume.data), "popup");
+    };
     return (
       <>
         {formState.resume && (
           <div className="resumeDiv">
             <img src={resumeIcon} alt="resume" height="12px" width="12px" />
             <a
+              onClick={handleOpen}
               href={base64PDFToBlobUrl(formState.resume.data)}
-              target="_blank"
+              target="popup"
               rel="noreferrer"
               style={{
                 textDecoration: "none",

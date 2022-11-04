@@ -80,7 +80,6 @@ function Jobs() {
     return joiningvalue;
   }
 
-
   const ctc = [
     {
       value: 1,
@@ -127,7 +126,8 @@ function Jobs() {
   useEffect(() => {
     const fetchClientInfos = localStorage.getItem("clientInfos") ?? [];
     setClientInfos(JSON.parse(fetchClientInfos));
-  }, []);
+    // log all states
+  }, [category, jobTitle, type]);
 
   return (
     <div
@@ -149,7 +149,7 @@ function Jobs() {
         }}
       >
         <Paper
-          elevation="2"
+          elevation={2}
           style={{
             padding: "20px",
             height: "100%",
@@ -178,12 +178,18 @@ function Jobs() {
               Job Title
             </Typography>
             <FormControl fullWidth variant="filled" size="small">
-              <Select hiddenLabel id="demo-simple-select" value={jobTitle} onChange={handleJobTitleChange} label="Age">
+              <Select
+                hiddenLabel
+                id="demo-simple-select"
+                value={jobTitle}
+                onChange={handleJobTitleChange}
+                label="Age"
+                name="jobTitle"
+              >
                 <MenuItem value="All">All</MenuItem>
-                <MenuItem value="Frontend Developer">Frontend Developer</MenuItem>
-                <MenuItem value="Fullstack Developer">Fullstack Developer</MenuItem>
-                <MenuItem value="UI/UX Designer">UI/UX Designer</MenuItem>
-                <MenuItem value="Intern">Intern</MenuItem>
+                <MenuItem value="Frontend developer">Frontend developer</MenuItem>
+                <MenuItem value="Fullstack developer">Fullstack Developer</MenuItem>
+                <MenuItem value="UI/UX designer">UI/UX Designer</MenuItem>
               </Select>
             </FormControl>
           </div>
@@ -223,7 +229,7 @@ function Jobs() {
               max={20}
               step={1}
               marks={exp}
-              valueLabelDisplay="off"
+              valueLabelDisplay="auto"
             />
           </div>
           <div style={{ width: "100%" }}>
@@ -248,9 +254,14 @@ function Jobs() {
               max={90}
               step={5}
               marks={joiningDate}
-              valueLabelDisplay="off"
+              valueLabelDisplay="auto"
             />
-            <Typography variant="" display="block" gutterBottom sx={{ background: "#F0F0F0", width: "max-content", padding: "5px 10px" }}>
+            <Typography
+              variant=""
+              display="block"
+              gutterBottom
+              sx={{ background: "#F0F0F0", width: "max-content", padding: "5px 10px" }}
+            >
               {joiningLabelFormat(calculateValue(value))}
             </Typography>
           </div>
@@ -272,7 +283,7 @@ function Jobs() {
               max={50}
               step={5}
               marks={ctc}
-              valueLabelDisplay="off"
+              valueLabelDisplay="auto"
             />
           </div>
         </Paper>
@@ -283,22 +294,23 @@ function Jobs() {
             display: "flex",
             alignItems: "center",
             justifyContent: "flex-start",
-            height: "max-content",
             flex: 1,
-            gap: "100px",
+            gap: "20px",
             flexWrap: "wrap",
-            paddingLeft: "50px",
-            paddingTop: "60px",
-            paddingBottom: "60px",
-            paddingRight: "0px",
+            padding: "40px",
             // marginLeft: "90px",
             boxSizing: "border-box",
+            overflowY: "scroll",
+            height: "100%",
           }}
         >
           {clientInfos.map((client, index) => (
             // lists of all jobcards
-            <div key={index} style={{ minHeight: "60vh", transform: "scale(0.8)", margin: "0" }}>
-              <JobCard formState={client} />
+            // filter based on  jobtitle
+
+            <div key={index} style={{ margin: "0" }}>
+              {/* only show those jobcard whose client.jobtitle === Jobtitle or else show all jobcards */}
+              {client.jobtitle === jobTitle || jobTitle === "All" ? <JobCard formState={client} /> : null}
             </div>
           ))}
         </div>

@@ -39,7 +39,9 @@ function Portal() {
           <FormComponent setFormState={setFormState} formState={formState} />
         </Stack>
         <Stack sx={{ flex: 1, height: "100%", overflow: "hidden" }} justifyContent="center" alignItems="center">
-          <JobCardComponent formState={formState} />
+          <div style={{ width: "fit-content", scale: "1.5" }}>
+            <JobCardComponent formState={formState} />
+          </div>
         </Stack>
       </Stack>
     </>
