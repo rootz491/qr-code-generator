@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const UserSchema = mongoose.Schema(
 	{
-		phoneNumber: {
+		mobilenum: {
 			type: String,
 			required: true,
 			unique: true,
@@ -20,7 +20,6 @@ const UserSchema = mongoose.Schema(
 		joiningDate: { type: String },
 		lastWorkDay: { type: String },
 		message: { type: String },
-		mobilenum: { type: String },
 		noticePeriod: { type: String },
 		offeredCTC: { type: String },
 		passingYear: { type: String },

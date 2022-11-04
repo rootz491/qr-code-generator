@@ -18,9 +18,9 @@ const MONGO_PASSWORD = process.env.MONGO_PASSWORD || "password";
 let MONGO_HOST;
 
 if (process.env.NODE_ENV === "test") {
-	MONGO_HOST = `mongodb://localhost/${APP_NAME}-test`;
+	MONGO_HOST = `mongodb://localhost:27017/${APP_NAME}-test`;
 } else {
-	MONGO_HOST = `mongodb://localhost/${APP_NAME}`;
+	MONGO_HOST = `mongodb://localhost:27017/${APP_NAME}`;
 }
 //For server
 const SERVER_HOSTNAME = process.env.SERVER_HOSTNAME || "localhost";

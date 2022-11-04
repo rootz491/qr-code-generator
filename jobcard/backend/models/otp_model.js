@@ -5,7 +5,7 @@ const OtpSchema = mongoose.Schema(
 		lastRequest: {
 			type: Date,
 		},
-		phoneNumber: {
+		mobilenum: {
 			type: String,
 			required: true,
 			unique: true,
