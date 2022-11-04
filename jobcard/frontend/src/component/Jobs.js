@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { FormControl, MenuItem, Paper, Select, Slider, Typography } from "@mui/material";
+import { Button, FormControl, MenuItem, Paper, Select, Slider, Typography } from "@mui/material";
 import JobCard from "./JobCardComponent";
 import { isAuthenticated } from "../services/auth";
 import { errorToast } from "../utils/toast";
@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 
 function Jobs() {
   const [clientInfos, setClientInfos] = useState([]);
+  const [clientInfosCopy, setClientInfosCopy] = useState([]);
   const [category, setCategory] = React.useState("All");
   const [jobTitle, setJobTitle] = React.useState("All");
   const [type, setType] = React.useState("All");
@@ -28,6 +29,7 @@ function Jobs() {
         .then((res) => {
           console.log(res.data);
           setClientInfos(res.data);
+          setClientInfosCopy(res.data);
         })
         .catch((err) => {
           errorToast(err?.response?.data?.message);
@@ -104,6 +106,32 @@ function Jobs() {
     return joiningvalue;
   }
 
+  const filterByJobTitle = (title) => {
+    if (title.toLowerCase() === "all") setClientInfos(clientInfosCopy);
+    else {
+      setClientInfos(clientInfosCopy.filter((client) => client.jobtitle?.toLowerCase() === title.toLowerCase()));
+    }
+  };
+
+  const filterByCategory = (category) => {
+    if (category.toLowerCase() === "all") setClientInfos(clientInfosCopy);
+    else {
+      setClientInfos(
+        clientInfosCopy.filter((client) => client?.feedback?.status?.toLowerCase() === category?.toLowerCase())
+      );
+    }
+  };
+
+  const filterByExperience = (exp) => {
+    if (exp.toLowerCase() === "all") setClientInfos(clientInfosCopy);
+    else {
+      setClientInfos(clientInfosCopy.filter((client) => client?.experience?.toLowerCase() === exp?.toLowerCase()));
+    }
+  };
+  const resetFilters = () => {
+    setClientInfos(clientInfosCopy);
+  };
+
   const ctc = [
     {
       value: 1,
@@ -137,13 +165,16 @@ function Jobs() {
 
   const handleCategoryChange = (event) => {
     setCategory(event.target.value);
+    filterByCategory(event.target.value);
   };
 
   const handleJobTitleChange = (event) => {
     setJobTitle(event.target.value);
+    filterByJobTitle(event.target.value);
   };
 
   const handleTypeChange = (event) => {
+    filterByExperience(event.target.value);
     setType(event.target.value);
   };
 
@@ -189,11 +220,18 @@ function Jobs() {
               Category
             </Typography>
             <FormControl fullWidth variant="filled" size="small">
-              <Select hiddenLabel id="demo-simple-select" value={category} onChange={handleCategoryChange} label="Age">
+              <Select
+                hiddenLabel
+                id="demo-simple-select"
+                value={category}
+                onChange={handleCategoryChange}
+                label="Age"
+                name="category"
+              >
                 <MenuItem value="All">All</MenuItem>
-                <MenuItem value="Previewing">Previewing</MenuItem>
-                <MenuItem value="Selected">Selected</MenuItem>
-                <MenuItem value="Rejected">Rejected</MenuItem>
+                <MenuItem value="pending">Pending</MenuItem>
+                <MenuItem value="selected">Selected</MenuItem>
+                <MenuItem value="rejected">Rejected</MenuItem>
               </Select>
             </FormControl>
           </div>
@@ -225,7 +263,7 @@ function Jobs() {
               <Select hiddenLabel id="demo-simple-select" value={type} onChange={handleTypeChange} label="Age">
                 <MenuItem value="All">All</MenuItem>
                 <MenuItem value="Fresher">Fresher</MenuItem>
-                <MenuItem value="Experience">Experience</MenuItem>
+                <MenuItem value="Experienced">Experience</MenuItem>
                 <MenuItem value="Experienced and currently serving notice period">
                   Experienced and currently serving notice period
                 </MenuItem>
@@ -310,6 +348,16 @@ function Jobs() {
               valueLabelDisplay="auto"
             />
           </div>
+          {/* button for reset filter */}
+          <Button
+            variant="contained"
+            size="small"
+            sx={{ background: "#F0F0F0", color: "#000000" }}
+            onClick={resetFilters}
+          >
+            {" "}
+            Reset Filter{" "}
+          </Button>
         </Paper>
       </div>
       {clientInfos.length > 0 ? (
@@ -334,7 +382,7 @@ function Jobs() {
             <Link to={`/${client._id}`} key={index}>
               <div style={{ margin: "0" }}>
                 {/* only show those jobcard whose client.jobtitle === Jobtitle or else show all jobcards */}
-                {client.jobtitle === jobTitle || jobTitle === "All" ? <JobCard formState={client} /> : null}
+                <JobCard formState={client} />
               </div>
             </Link>
           ))}

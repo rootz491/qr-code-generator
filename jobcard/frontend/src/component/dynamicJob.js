@@ -18,7 +18,7 @@ const DynamicJob = () => {
     jobtitle: "",
     fullname: "",
     email: "",
-    mobilenum: "",
+    altmobilenum: "",
     qualification: "",
     passingYear: "",
     totalexperience: null,
@@ -50,12 +50,12 @@ const DynamicJob = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(adminData);
-    saveUserFeedback(adminData)
+    saveUserFeedback(adminData, formState._id);
   };
 
   function handelGetUser(id) {
     if (isAuthenticated()) {
-      if (getUserType() === "user") {
+      if (getUserType() === "admin") {
         http
           .get("/api/auth/user/" + id)
           .then((res) => {

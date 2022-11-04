@@ -190,7 +190,7 @@ router.get("/get-user", auth, async (req, res) => {
 router.get("/get-all-user", auth, async (req, res) => {
   try {
     //get all the user where expectedCtc is not null
-    const users = await User.find({ expectedSalary: { $ne: null } }).select("-accountType -feedback -__v");
+    const users = await User.find({ expectedSalary: { $ne: null } }).select("-accountType -__v");
     if (!users)
       throw {
         status: 400,
@@ -223,16 +223,15 @@ router.get("/user/:id", async (req, res) => {
   }
 });
 
-router.post("/save-user-feedback", [auth, isAdmin], async (req, res) => {
+router.post("/save-user-feedback/:id", [auth, isAdmin], async (req, res) => {
   try {
-    const user = req.user;
     if (!req.body)
       throw {
         status: 400,
         message: "Content can not be empty!",
       };
 
-    const savedUser = await User.findById(user.id);
+    const savedUser = await User.findById(req.params.id);
     if (!savedUser)
       throw {
         status: 400,

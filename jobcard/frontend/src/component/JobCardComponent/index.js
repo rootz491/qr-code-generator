@@ -189,11 +189,12 @@ export default function JobCard({ formState }) {
   const Salary = (value) => {
     // use Intl to format salary
 
-    const salary = new Intl.NumberFormat("en-IN", {
+    const salary = new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "INR",
+      notation: "compact",
       maximumFractionDigits: 0,
-    }).format(parseInt( value || 0));
+    }).format(parseInt(value || 0));
     return salary;
   };
 
@@ -201,7 +202,7 @@ export default function JobCard({ formState }) {
     <Card className="jobCard">
       <CardHeader name={formState.fullname || "Applicant Name"} />
       <JobTitle />
-      <ContactDiv email={formState.email || "Email"} mobile={formState.mobilenum || "Mobile Number"} />
+      <ContactDiv email={formState.email || "Email"} mobile={formState.altmobilenum || "Mobile Number"} />
       <ExperienceDiv
         experience={formState.totalexperience || "Total Exp."}
         fresher={formState.experience === "Fresher" ? "yes" : "no"}

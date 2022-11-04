@@ -10,7 +10,7 @@ function Portal() {
     jobtitle: "",
     fullname: "",
     email: "",
-    mobilenum: "",
+    altmobilenum: "",
     qualification: "",
     passingYear: "",
     totalexperience: null,

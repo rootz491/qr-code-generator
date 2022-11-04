@@ -14,11 +14,12 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
+    <Toaster />
     <Router>
       <Routes>
         <Route path="/" element={<Portal />} />
         <Route path="/:id" element={<DynamicJob />} />
-        {/* <Route
+        <Route
           path="/admin/list"
           element={
             <Protected>
@@ -26,8 +27,7 @@ root.render(
               <Jobs />{" "}
             </Protected>
           }
-        /> */}
-        <Route path="/admin/list" element={<Jobs />} />
+        />
         {/* UNDER DEVELOPMENT */}
         <Route path="/auth" element={<AuthForm />} />
         {/* TESTING OMLY */}

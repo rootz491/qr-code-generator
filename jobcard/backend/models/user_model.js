@@ -28,13 +28,16 @@ const UserSchema = mongoose.Schema(
 		resume: { type: String },
 		totalexperience: { type: String },
 		workingremote: { type: String },
+		altmobilenum:{
+			type: String,
+		},
 		feedback: {
 			status: {
 				type: String,
 				enum: ["pending", "accepted", "rejected"],
 				default: "pending",
 			},
-			comments: { type: String, default: "" },
+			comment: { type: String, default: "" },
 		},
 		accountType: {
 			type: String,
