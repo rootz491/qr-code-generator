@@ -10,7 +10,7 @@ module.exports = async function auth(req, res, next) {
 	if (!token) return res.status(401).send({ message: "Access Denied." });
 	try {
 		const decoded = await jwt.verify(token, config.SECRET_KEY);
-		let user = await User.findById(decoded._id);
+		let user = await User.findById(decoded.id);
 		if (!user)
 			return res.status(401).send({ message: "Access Denied. User not found" });
 		req.user = decoded;

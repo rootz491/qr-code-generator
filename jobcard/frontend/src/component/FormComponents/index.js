@@ -15,6 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import { UploadFile } from "@mui/icons-material";
+import { handelSaveUser } from "../../services/user";
 
 function FormComponent({ setFormState, formState }) {
   const handleChange = (e) => {
@@ -421,7 +422,12 @@ function FormComponent({ setFormState, formState }) {
           </Grid>
         </Grid>
       </Stack>
-      <Button variant="contained" type="submit" sx={{ mt: 3, mb: 2, width: "200px" }} onClick={saveFormData}>
+      <Button
+        variant="contained"
+        type="submit"
+        sx={{ mt: 3, mb: 2, width: "200px" }}
+        onClick={() => handelSaveUser(formState)}
+      >
         Save
       </Button>
     </>

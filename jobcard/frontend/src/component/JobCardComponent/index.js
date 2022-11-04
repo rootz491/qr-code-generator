@@ -162,27 +162,39 @@ export default function JobCard({ formState }) {
       </div>
     );
   };
+  // Nikhil not deleting legacy code
+  // const salaryFormmater = (salary) => {
+  //     let stringSalary = salary.toString();
+  //     if (stringSalary.length === 4) {
+  //       // round off to 1 decimal place
+  //       return stringSalary.slice(0, 1) + "." + stringSalary.slice(1, 2) + " K";
+  //     } else if (stringSalary.length === 5) {
+  //       return stringSalary.slice(0, 2) + " K";
+  //     } else if (stringSalary.length === 6) {
+  //       const slicedSal = stringSalary.slice(0, 2);
+  //       return slicedSal.slice(0, 1) + "." + slicedSal.slice(1, 2) + " L";
+  //     } else if (stringSalary.length === 7) {
+  //       return stringSalary.slice(0, 2) + " L";
+  //     } else if (stringSalary.length === 8) {
+  //       const slicedSal = stringSalary.slice(0, 3);
+  //       return slicedSal.slice(0, 1) + "." + slicedSal.slice(1, 2) + " Cr";
+  //     } else if (stringSalary.length === 9) {
+  //       return stringSalary.slice(0, 2) + " Cr";
+  //     } else {
+  //       return salary;
+  //     }
+  //   }
+  // };
 
-  const salaryFormmater = (salary) => {
-    let stringSalary = salary.toString();
-    if (stringSalary.length === 4) {
-      // round off to 1 decimal place
-      return stringSalary.slice(0, 1) + "." + stringSalary.slice(1, 2) + " K";
-    } else if (stringSalary.length === 5) {
-      return stringSalary.slice(0, 2) + " K";
-    } else if (stringSalary.length === 6) {
-      const slicedSal = stringSalary.slice(0, 2);
-      return slicedSal.slice(0, 1) + "." + slicedSal.slice(1, 2) + " L";
-    } else if (stringSalary.length === 7) {
-      return stringSalary.slice(0, 2) + " L";
-    } else if (stringSalary.length === 8) {
-      const slicedSal = stringSalary.slice(0, 3);
-      return slicedSal.slice(0, 1) + "." + slicedSal.slice(1, 2) + " Cr";
-    } else if (stringSalary.length === 9) {
-      return stringSalary.slice(0, 2) + " Cr";
-    } else {
-      return salary;
-    }
+  const Salary = (value) => {
+    // use Intl to format salary
+
+    const salary = new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      maximumFractionDigits: 0,
+    }).format(parseInt( value || 0));
+    return salary;
   };
 
   return (
@@ -203,10 +215,10 @@ export default function JobCard({ formState }) {
       <div style={{ display: "flex" }}>
         <SalaryDiv
           formState={formState}
-          current_ctc={salaryFormmater(formState.currCTC)}
-          current_inhand={salaryFormmater(formState.currInHandCTC)}
-          expected_inhand={salaryFormmater(formState.expectedSalary)}
-          offered_ctc={salaryFormmater(formState.offeredCTC)}
+          current_ctc={Salary(formState.currCTC)}
+          current_inhand={Salary(formState.currInHandCTC)}
+          expected_inhand={Salary(formState.expectedSalary)}
+          offered_ctc={Salary(formState.offeredCTC)}
         />
         <Divider />
 

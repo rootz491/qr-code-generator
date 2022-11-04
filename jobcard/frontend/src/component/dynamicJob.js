@@ -7,6 +7,10 @@ import { InputLabel } from "@mui/material";
 import { Select } from "@mui/material";
 import { MenuItem } from "@mui/material";
 import { Button } from "@mui/material";
+import { handelGetUser,saveUserFeedback } from "../services/user";
+import { getUserType, isAuthenticated } from "../services/auth";
+import { errorToast } from "../utils/toast";
+import http from "../services/http";
 
 const DynamicJob = () => {
   const [formState, setFormState] = useState({
@@ -46,20 +50,35 @@ const DynamicJob = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(adminData);
+    saveUserFeedback(adminData)
   };
+
+  function handelGetUser(id) {
+    if (isAuthenticated()) {
+      if (getUserType() === "user") {
+        http
+          .get("/api/auth/user/" + id)
+          .then((res) => {
+            console.log(res);
+            setFormState(res.data);
+            // successToast("User Saved Successfully");
+          })
+          .catch((err) => {
+            errorToast(err?.response?.data?.message);
+            console.log(err);
+          });
+      } else {
+        errorToast("You are not authorized to perform this action");
+      }
+    }
+  }
 
   useEffect(() => {
     //  get the job id from the url
     const id = window.location.pathname.split("/")[1];
     console.log(id);
-    //  TODO fetch from API
-    const clientInfos = localStorage.getItem("clientInfos");
-    const clientInfosParsed = JSON.parse(clientInfos);
-    const job = clientInfosParsed.find((job) => job.id === Number(id));
-    setFormState(job);
-    // console.log(job);
-    console.log(adminData);
-  }, [adminData]);
+    handelGetUser(id);
+  }, []);
 
   return (
     <Stack
@@ -92,9 +111,9 @@ const DynamicJob = () => {
             name="status"
             value={adminData.status}
           >
-            <MenuItem value={"Rejected"}>Rejected</MenuItem>
-            <MenuItem value={"Selected"}>Selected</MenuItem>
-            <MenuItem value={"Previewing"}>Previewing</MenuItem>
+            <MenuItem value={"rejected"}>Rejected</MenuItem>
+            <MenuItem value={"selected"}>Selected</MenuItem>
+            <MenuItem value={"pending"}>Pending</MenuItem>
           </Select>
         </FormControl>
         <Button variant="contained" color="primary" onClick={handleSubmit}>

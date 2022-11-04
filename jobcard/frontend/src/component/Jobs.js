@@ -2,6 +2,10 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { FormControl, MenuItem, Paper, Select, Slider, Typography } from "@mui/material";
 import JobCard from "./JobCardComponent";
+import { isAuthenticated } from "../services/auth";
+import { errorToast } from "../utils/toast";
+import http from "../services/http";
+import { Link } from "react-router-dom";
 
 function Jobs() {
   const [clientInfos, setClientInfos] = useState([]);
@@ -15,6 +19,26 @@ function Jobs() {
       setValue(newValue);
     }
   };
+
+  function handleGetAllUser() {
+    const isAuth = isAuthenticated();
+    if (isAuth) {
+      http
+        .get("/api/auth/get-all-user")
+        .then((res) => {
+          console.log(res.data);
+          setClientInfos(res.data);
+        })
+        .catch((err) => {
+          errorToast(err?.response?.data?.message);
+          console.log(err);
+        });
+    }
+  }
+
+  useEffect(() => {
+    handleGetAllUser();
+  }, []);
 
   const exp = [
     {
@@ -123,11 +147,11 @@ function Jobs() {
     setType(event.target.value);
   };
 
-  useEffect(() => {
-    const fetchClientInfos = localStorage.getItem("clientInfos") ?? [];
-    setClientInfos(JSON.parse(fetchClientInfos));
-    // log all states
-  }, [category, jobTitle, type]);
+  // useEffect(() => {
+  // const fetchClientInfos = localStorage.getItem("clientInfos") ?? [];
+  // setClientInfos(JSON.parse(fetchClientInfos));
+  // log all states
+  // }, [category, jobTitle, type]);
 
   return (
     <div
@@ -307,11 +331,12 @@ function Jobs() {
           {clientInfos.map((client, index) => (
             // lists of all jobcards
             // filter based on  jobtitle
-
-            <div key={index} style={{ margin: "0" }}>
-              {/* only show those jobcard whose client.jobtitle === Jobtitle or else show all jobcards */}
-              {client.jobtitle === jobTitle || jobTitle === "All" ? <JobCard formState={client} /> : null}
-            </div>
+            <Link to={`/${client._id}`} key={index}>
+              <div style={{ margin: "0" }}>
+                {/* only show those jobcard whose client.jobtitle === Jobtitle or else show all jobcards */}
+                {client.jobtitle === jobTitle || jobTitle === "All" ? <JobCard formState={client} /> : null}
+              </div>
+            </Link>
           ))}
         </div>
       ) : (

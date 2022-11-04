@@ -1,13 +1,10 @@
 import { Navigate } from "react-router-dom";
-
-const Protected = ({children }) => {
-  
-  const isAdmin = false;
-  if (!isAdmin) {
+import { getUserType } from "../services/auth";
+const Protected = ({ children }) => {
+  if (getUserType() !== "admin") {
     return <Navigate to="/" />;
   }
   return children;
-}
+};
 
 export default Protected;
-
