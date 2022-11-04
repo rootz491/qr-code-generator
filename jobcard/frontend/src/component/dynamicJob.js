@@ -1,5 +1,12 @@
 import JobCard from "./JobCardComponent";
 import { useEffect, useState } from "react";
+import { Stack } from "@mui/material";
+import { TextareaAutosize } from "@mui/material";
+import { FormControl } from "@mui/material";
+import { InputLabel } from "@mui/material";
+import { Select } from "@mui/material";
+import { MenuItem } from "@mui/material";
+import { Button } from "@mui/material";
 
 const DynamicJob = () => {
   const [formState, setFormState] = useState({
@@ -27,6 +34,20 @@ const DynamicJob = () => {
     resume: null,
   });
 
+  const [adminData, setAdminData] = useState({
+    comment: "",
+    status: "",
+  });
+
+  const handleChange = (e) => {
+    setAdminData({ ...adminData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(adminData);
+  };
+
   useEffect(() => {
     //  get the job id from the url
     const id = window.location.pathname.split("/")[1];
@@ -37,19 +58,51 @@ const DynamicJob = () => {
     const job = clientInfosParsed.find((job) => job.id === Number(id));
     setFormState(job);
     // console.log(job);
-  }, []);
+    console.log(adminData);
+  }, [adminData]);
 
   return (
-    <div
+    <Stack
       style={{
-        display: "grid",
-        placeContent: "center",
+        display: "flex",
         height: "100vh",
-        width: "100vw",
       }}
+      direction="row"
     >
-      <JobCard formState={formState} />
-    </div>
+      <Stack sx={{ height: "100%", overflow: "auto", width: "50%" }} justifyContent="center" alignItems="center">
+        <JobCard formState={formState} />
+      </Stack>
+      <Stack sx={{ height: "100%", overflow: "auto", flex: 1, padding: "0 20px" }} justifyContent="center" spacing={5}>
+        <TextareaAutosize
+          aria-label="minimum height"
+          minRows={10}
+          placeholder="any comments"
+          onChange={handleChange}
+          name="comment"
+          value={adminData.comment}
+        />
+        {/* mui select */}
+        <FormControl fullWidth>
+          <InputLabel id="status">Status</InputLabel>
+          <Select
+            labelId="status"
+            id="status"
+            label="status"
+            onChange={handleChange}
+            name="status"
+            value={adminData.status}
+          >
+            <MenuItem value={"Rejected"}>Rejected</MenuItem>
+            <MenuItem value={"Selected"}>Selected</MenuItem>
+            <MenuItem value={"Previewing"}>Previewing</MenuItem>
+          </Select>
+        </FormControl>
+        <Button variant="contained" color="primary" onClick={handleSubmit}>
+          {" "}
+          Save{" "}
+        </Button>
+      </Stack>
+    </Stack>
   );
 };
 
