@@ -8,14 +8,32 @@ import JobCard from "./pages/Jobcard";
 import AuthForm from "./pages/signin";
 import DynamicJob from "./component/dynamicJob";
 import Jobs from "./component/Jobs";
+import Protected from "./component/Protected";
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <React.StrictMode>
     <Router>
       <Routes>
         <Route path="/" element={<Portal />} />
-        <Route path="/:id" element={<DynamicJob />} />
-        <Route path="/admin/list" element={<Jobs />} />
+        <Route
+          path="/:id"
+          element={
+            <Protected>
+              {" "}
+              <DynamicJob />{" "}
+            </Protected>
+          }
+        />
+        <Route
+          path="/admin/list"
+          element={
+            <Protected>
+              {" "}
+              <Jobs />{" "}
+            </Protected>
+          }
+        />
         {/* UNDER DEVELOPMENT */}
         <Route path="/auth" element={<AuthForm />} />
         {/* TESTING OMLY */}
