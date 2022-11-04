@@ -35,7 +35,7 @@ router.post("/request-login-via-otp", async (req, res) => {
 		const message = await client.messages.create({
 			body: `Your OTP for Yugam job portal is ${otp}. The Otp is valid for 5 minutes. Please do not share this OTP with anyone.`,
 			from: config.TWILIO_PHONE_NUMBER,
-			to: mobilenum,
+			to: `+91${mobilenum}`,
 		});
 		if (savedOtp) {
 			savedOtp.otp = otp;

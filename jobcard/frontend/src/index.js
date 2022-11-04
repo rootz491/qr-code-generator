@@ -9,6 +9,7 @@ import AuthForm from "./pages/signin";
 import DynamicJob from "./component/dynamicJob";
 import Jobs from "./component/Jobs";
 import Protected from "./component/Protected";
+import { Toaster } from "react-hot-toast";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
