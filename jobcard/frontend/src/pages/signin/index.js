@@ -1,6 +1,7 @@
 import { Avatar, Box, Button, Stack, TextField, Typography } from "@mui/material";
 import React from "react";
 import { handelGetOtp, handelVerifyOtp } from "../../services/otpService";
+
 function AuthForm() {
 	const [data, setData] = React.useState({
 		mobile: "",
@@ -20,12 +21,10 @@ function AuthForm() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setShowMobile((prev) => !prev);
-    setShowOTP( ( prev ) => !prev );
-    handelGetOtp(data.mobile);
+		setShowOTP((prev) => !prev);
+		handelGetOtp(data.mobile);
 		console.log(data);
 	};
-
-  
 
 	return (
 		<Box
@@ -134,11 +133,10 @@ function AuthForm() {
 							id="otp"
 						/>
 						<Button
-							type="submit"
 							fullWidth
 							variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={handelVerifyOtp}
+							sx={{ mt: 3, mb: 2 }}
+							onClick={() => handelVerifyOtp(data.mobile, data.otp)}
 						>
 							Verify OTP
 						</Button>

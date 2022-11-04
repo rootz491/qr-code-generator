@@ -1,5 +1,5 @@
 import { errorToast, successToast } from "../utils/toast";
-import http from "./httpService";
+import http from "./http";
 export function handelGetOtp(mobilenum) {
 	http
 		.post("/api/auth/request-login-via-otp", { mobilenum })
@@ -19,6 +19,8 @@ export function handelVerifyOtp(mobilenum, otp) {
 		.then((res) => {
 			console.log(res);
 			successToast(res.data.message);
+			//saving the token will
+			localStorage.setItem("access_token", res.data.access_token);
 		})
 		.catch((err) => {
 			errorToast(err.response.data.message);
