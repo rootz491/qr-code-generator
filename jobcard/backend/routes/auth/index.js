@@ -13,15 +13,15 @@ const client = new twilio(config.TWILIO_ACCOUNT_SID, config.TWILIO_AUTH_TOKEN);
 //Login and signup means exactly same thing
 router.post("/request-login-via-otp", async (req, res) => {
 	try {
-		const { number } = req.body;
+		const { mobilenum } = req.body;
 		const otp = Math.floor(100000 + Math.random() * 900000);
-		if (!number) {
+		if (!mobilenum) {
 			throw {
 				status: 400,
 				message: "Phone number is required",
 			};
 		}
-		const savedOtp = await Otp.findOne({ phoneNumber: number });
+		const savedOtp = await Otp.findOne({ mobilenum: mobilenum });
 		//checking if otp was sent less then a minute ago
 		if (savedOtp && savedOtp.updatedAt > Date.now() - 30000) {
 			throw {
@@ -35,7 +35,7 @@ router.post("/request-login-via-otp", async (req, res) => {
 		const message = await client.messages.create({
 			body: `Your OTP for Yugam job portal is ${otp}. The Otp is valid for 5 minutes. Please do not share this OTP with anyone.`,
 			from: config.TWILIO_PHONE_NUMBER,
-			to: number,
+			to: mobilenum,
 		});
 		if (savedOtp) {
 			savedOtp.otp = otp;
@@ -44,7 +44,7 @@ router.post("/request-login-via-otp", async (req, res) => {
 			res.status(200).json({ message: "OTP sent successfully" });
 		} else {
 			const newOtp = new Otp({
-				phoneNumber: number,
+				mobilenum: mobilenum,
 				otp: otp,
 				sid: message.sid,
 			});
@@ -68,7 +68,7 @@ router.post("/verify-login-via-otp", async (req, res) => {
 				message: "Phone number and OTP are required",
 			};
 		}
-		const savedOtp = await Otp.findOne({ phoneNumber: number });
+		const savedOtp = await Otp.findOne({ mobilenum: number });
 
 		//checking if the phone number exists
 		if (!savedOtp)
@@ -114,12 +114,13 @@ router.post("/verify-login-via-otp", async (req, res) => {
 		savedOtp.status = "verified";
 		await savedOtp.save();
 		const user = await new User({
-			phoneNumber: number,
+			mobilenum: number,
 		}).save();
 		const token = jwt.sign(
 			{
 				_id: user._id,
-				phoneNumber: user.phoneNumber,
+				mobilenum: user.mobilenum,
+				accountType: user.accountType,
 			},
 			config.SECRET_KEY
 		);
@@ -174,5 +175,52 @@ router.get("/get-user", auth, async (req, res) => {
 		res.status(e.status || 500).send({ message: e.message || "Server Error" });
 	}
 });
+
+router.get("/user/:id", async (req, res) => {
+	try {
+		if (!req.query.params)
+			throw {
+				status: 400,
+				message: "Params not found",
+			};
+		const user = await User.findById(req.params.id);
+		if (!user)
+			throw {
+				status: 400,
+				message: "User not found",
+			};
+		res.status(200).json(user);
+	} catch (e) {
+		console.log(e);
+		res.status(e.status || 500).send({ message: e.message || "Server Error" });
+	}
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = router;

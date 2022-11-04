@@ -8,6 +8,14 @@ function Jobs() {
   const [category, setCategory] = React.useState("All");
   const [jobTitle, setJobTitle] = React.useState("All");
   const [type, setType] = React.useState("All");
+  const [value, setValue] = React.useState(5);
+
+  const handleSliderChange = (event, newValue) => {
+    if (typeof newValue === "number") {
+      setValue(newValue);
+    }
+  };
+
   const exp = [
     {
       value: 0,
@@ -33,10 +41,6 @@ function Jobs() {
 
   const joiningDate = [
     {
-      value: 0,
-      label: "0",
-    },
-    {
       value: 5,
       label: "5days",
     },
@@ -57,6 +61,25 @@ function Jobs() {
       label: "3+months",
     },
   ];
+
+  function joiningLabelFormat(joiningvalue) {
+    const units = ["days", "month"];
+
+    let unitIndex = 0;
+    let scaledValue = joiningvalue;
+
+    while (scaledValue >= 90 && unitIndex < units.length - 1) {
+      unitIndex += 1;
+      scaledValue /= 30;
+    }
+
+    return `${Math.round(scaledValue * 10) / 10} ${units[unitIndex]}`;
+  }
+
+  function calculateValue(joiningvalue) {
+    return joiningvalue;
+  }
+
 
   const ctc = [
     {
@@ -86,7 +109,7 @@ function Jobs() {
   ];
 
   function valuetext(value) {
-    return `${value}°C`;
+    return `${value}`;
   }
 
   const handleCategoryChange = (event) => {
@@ -187,47 +210,69 @@ function Jobs() {
               Experience
             </Typography>
             <Slider
+              sx={{
+                "& .MuiSlider-markLabel": {
+                  fontSize: "12px",
+                },
+              }}
               size="small"
-              aria-label="Always visible"
+              aria-label="Experience"
               defaultValue={15}
               getAriaValueText={valuetext}
               min={0}
               max={20}
-              step={5}
+              step={1}
               marks={exp}
-              valueLabelDisplay="on"
+              valueLabelDisplay="off"
             />
           </div>
           <div style={{ width: "100%" }}>
             <Typography variant="button" display="block" gutterBottom sx={{ fontWeight: "bold" }}>
-              Joining Date
+              Can join within
             </Typography>
             <Slider
+              value={value}
+              onChange={handleSliderChange}
+              sx={{
+                "& .MuiSlider-markLabel": {
+                  display: "none",
+                },
+              }}
               size="small"
-              aria-label="Always visible"
+              aria-label="Joining Date"
               defaultValue={70}
-              getAriaValueText={valuetext}
+              scale={calculateValue}
+              getAriaValueText={joiningLabelFormat}
+              valueLabelFormat={joiningLabelFormat}
               min={0}
               max={90}
               step={5}
               marks={joiningDate}
-              valueLabelDisplay="on"
+              valueLabelDisplay="off"
             />
+            <Typography variant="" display="block" gutterBottom sx={{ background: "#F0F0F0", width: "max-content", padding: "5px 10px" }}>
+              {joiningLabelFormat(calculateValue(value))}
+            </Typography>
           </div>
           <div style={{ width: "100%" }}>
             <Typography variant="button" display="block" gutterBottom sx={{ fontWeight: "bold" }}>
               Expected CTC
             </Typography>
             <Slider
+              sx={{
+                "& .MuiSlider-markLabel": {
+                  fontSize: "12px",
+                },
+              }}
               size="small"
-              aria-label="Always visible"
+              aria-label="Expected CTC"
               defaultValue={35}
               getAriaValueText={valuetext}
               min={0}
               max={50}
               step={5}
               marks={ctc}
-              valueLabelDisplay="on"
+              valueLabelDisplay="off"
             />
           </div>
         </Paper>

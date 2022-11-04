@@ -2,18 +2,14 @@ const mongoose = require("mongoose");
 
 const UserSchema = mongoose.Schema(
 	{
-		phoneNumber: {
+		mobilenum: {
 			type: String,
 			required: true,
 			unique: true,
 		},
-
 		currCTC: { type: String },
 		currCompany: { type: String },
-		currInHandCTC: {
-			type: String,
-		},
-
+		currInHandCTC: { type: String },
 		currLocation: { type: String },
 		currWFHLocation: { type: String },
 		email: { type: String },
@@ -24,7 +20,6 @@ const UserSchema = mongoose.Schema(
 		joiningDate: { type: String },
 		lastWorkDay: { type: String },
 		message: { type: String },
-		mobilenum: { type: String },
 		noticePeriod: { type: String },
 		offeredCTC: { type: String },
 		passingYear: { type: String },
@@ -33,6 +28,19 @@ const UserSchema = mongoose.Schema(
 		resume: { type: String },
 		totalexperience: { type: String },
 		workingremote: { type: String },
+		feedback: {
+			status: {
+				type: String,
+				enum: ["pending", "accepted", "rejected"],
+				default: "pending",
+			},
+			comments: { type: String, default: "" },
+		},
+		accountType: {
+			type: String,
+			default: "user",
+			enum: ["user", "admin", "dev"],
+		},
 	},
 	{
 		timestamps: true,
