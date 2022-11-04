@@ -120,6 +120,7 @@ router.post("/verify-login-via-otp", async (req, res) => {
 			{
 				_id: user._id,
 				phoneNumber: user.phoneNumber,
+				accountType: user.accountType,
 			},
 			config.SECRET_KEY
 		);
@@ -174,5 +175,52 @@ router.get("/get-user", auth, async (req, res) => {
 		res.status(e.status || 500).send({ message: e.message || "Server Error" });
 	}
 });
+
+router.get("/user/:id", async (req, res) => {
+	try {
+		if (!req.query.params)
+			throw {
+				status: 400,
+				message: "Params not found",
+			};
+		const user = await User.findById(req.params.id);
+		if (!user)
+			throw {
+				status: 400,
+				message: "User not found",
+			};
+		res.status(200).json(user);
+	} catch (e) {
+		console.log(e);
+		res.status(e.status || 500).send({ message: e.message || "Server Error" });
+	}
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = router;
