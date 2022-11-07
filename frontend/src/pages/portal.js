@@ -30,6 +30,7 @@ function Portal() {
     resume: null,
     institute: "",
     prevJobTitle: "",
+    doingIntern: "",
   });
 
   return (

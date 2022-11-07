@@ -1,0 +1,24 @@
+{
+	"name": "jobcard",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "cd frontend && npm start && cd .. && cd backend && npm start",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/yugam-tech/jobcard.git"
+	},
+	"keywords": [
+		"jobcard",
+		"portalForresume"
+	],
+	"author": "yugam",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/yugam-tech/jobcard/issues"
+	},
+	"homepage": "https://github.com/yugam-tech/jobcard#readme"
+}
