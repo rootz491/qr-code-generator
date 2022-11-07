@@ -21,9 +21,9 @@ root.render(
 				<Route
 					path="/"
 					element={
-						<UserProtected>
+						// <UserProtected>
 							<Portal />
-						</UserProtected>
+						// </UserProtected>
 					}
 				/>
 				<Route

@@ -19,6 +19,9 @@ export function getUserType() {
   const token = localStorage.getItem("access_token");
   if (token) {
     const decoded = jwt_decode(token);
+    console.log(decoded.accountType);
     return decoded.accountType;
+  } else {
+    return null;
   }
 }

@@ -18,6 +18,7 @@ import { UploadFile } from "@mui/icons-material";
 import { handelSaveUser } from "../../services/user";
 
 function FormComponent({ setFormState, formState }) {
+  console.log(formState);
   const handleChange = (e) => {
     //removing commas from the data
     let value;
