@@ -9,12 +9,14 @@ import AuthForm from "./pages/signin";
 import DynamicJob from "./component/dynamicJob";
 import Jobs from "./component/Jobs";
 import AdminProtected from "./component/AdminProtected";
-import UserProtected from "./component/UserProtected";
+// import UserProtected from "./component/UserProtected";
 import { Toaster } from "react-hot-toast";
+import Header from './component/HeaderComponent/index';
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <React.StrictMode>
+	<React.StrictMode>
+		<Header/>
     <Toaster />
     <Router>
       <Routes>

@@ -13,6 +13,7 @@ const ExperienceDiv = ({
   qualification,
   passing_year,
   institute,
+  doingIntern,
 }) => {
   return (
     <Box
@@ -59,20 +60,30 @@ const ExperienceDiv = ({
           // justifyContent: "center",
         }}
       >
-        <img src={officeIcon} alt="office" height="10px" width="10px" />
         {fresher === "no" ? (
           <>
+            <img src={officeIcon} alt="office" height="10px" width="10px" />
             <span>{current_company_name}</span>
           </>
         ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: "1px", width: "120px", height: "30px" }}>
-            <span style={{ fontSize: "7px", fontWeight: "600" }}>Internship</span>
-            <span>
-              {current_company_jobTitle} at {current_company_name}
-            </span>
-          </div>
+          <>
+            {doingIntern === "yes" ? (
+              <>
+                <img src={officeIcon} alt="office" height="10px" width="10px" />
+                <div style={{ display: "flex", flexDirection: "column", gap: "1px", width: "120px", height: "30px" }}>
+                  <span style={{ fontSize: "7px", fontWeight: "600" }}>Internship</span>
+                  <span>
+                    {current_company_jobTitle} at {current_company_name}
+                  </span>
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
+          </>
         )}
       </div>
+
       <div
         style={{
           display: "flex",

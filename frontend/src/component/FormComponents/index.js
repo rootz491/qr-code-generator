@@ -18,6 +18,7 @@ import { UploadFile } from "@mui/icons-material";
 import { handelSaveUser } from "../../services/user";
 
 function FormComponent({ setFormState, formState }) {
+  console.log(formState);
   const handleChange = (e) => {
     //removing commas from the data
     let value;
@@ -166,7 +167,7 @@ function FormComponent({ setFormState, formState }) {
           )}
           <Grid item xs={12}>
             <FormControl fullWidth>
-              <InputLabel id="jobtitle">Job Title</InputLabel>
+              <InputLabel id="jobtitle">Domain</InputLabel>
               <Select labelId="jobtitle" id="jobtitle" label="jobtitle" onChange={handleChange} name="jobtitle">
                 <MenuItem value={"Frontend developer"}>Frontend developer</MenuItem>
                 <MenuItem value={"Fullstack developer"}>Fullstack developer</MenuItem>
@@ -175,31 +176,68 @@ function FormComponent({ setFormState, formState }) {
             </FormControl>
           </Grid>
 
-          <Grid item xs={12}>
-            <TextField
-              required
-              id="currCompany"
-              name="currCompany"
-              label="Current Company Name"
-              fullWidth
-              variant="outlined"
-              onChange={handleChange}
-            />
-          </Grid>
           {formState.experience === "Fresher" ? (
+            <>
+              {/* a field to ask if he worked as intern before */}
+              <Grid item xs={12}>
+                <FormControl>
+                  <FormLabel id="workingremote" required>
+                    Have you done internship?
+                  </FormLabel>
+                  <RadioGroup row aria-labelledby="doingIntern" name="doingIntern" onChange={handleChange}>
+                    <FormControlLabel value="yes" control={<Radio />} label="Yes" />
+                    <FormControlLabel value="no" control={<Radio />} label="No" />
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
+              {formState.doingIntern === "yes" ? (
+                <>
+                  <Grid item xs={12}>
+                    <FormControl fullWidth>
+                      <InputLabel id="prevJobTitle">Internship Period</InputLabel>
+                      <Select
+                        labelId="prevJobTitle"
+                        id="prevJobTitle"
+                        label="Internship Period"
+                        onChange={handleChange}
+                        name="prevJobTitle"
+                      >
+                        <MenuItem value={"1 - 2 months"}>1 - 2 Months</MenuItem>
+                        <MenuItem value={"2 - 5 Months"}>2 - 5 Months</MenuItem>
+                        <MenuItem value={"5 - 8 Months"}>5 - 8 Months</MenuItem>
+                        <MenuItem value={"8 - 11 Months"}>8 - 11 Months</MenuItem>
+                        <MenuItem value={"1 year"}>1 year</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      id="currCompany"
+                      name="currCompany"
+                      label="Company Name"
+                      fullWidth
+                      variant="outlined"
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                </>
+              ) : (
+                <></>
+              )}
+            </>
+          ) : (
             <Grid item xs={12}>
               <TextField
                 required
-                id="prevJobTitle"
-                name="prevJobTitle"
-                label="Current Company Job Title"
+                id="currCompany"
+                name="currCompany"
+                label="Current Company Name"
                 fullWidth
                 variant="outlined"
                 onChange={handleChange}
               />
             </Grid>
-          ) : (
-            <></>
           )}
 
           <Grid item xs={4}>
