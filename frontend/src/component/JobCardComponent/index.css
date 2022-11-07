@@ -8,7 +8,7 @@
   overflow: hidden;
   font-family: "Poppins", sans-serif;
   font-size: 8px;
-  line-height: 10px;
+  line-height: 8px;
   font-weight: 300;
 }
 
@@ -16,7 +16,7 @@
   margin: 10px 8px;
   font-size: 13px;
   font-weight: 700;
-  line-height: 15px;
+  line-height: 13px;
   color: rgba(0, 0, 0, 0.4);
 }
 
@@ -28,13 +28,13 @@
 
 .location {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 7px;
 }
 .locationText {
   font-size: 9px;
   font-weight: 700;
-  line-height: 10px;
+  line-height: 9px;
 }
 
 .contactDiv {
@@ -49,7 +49,7 @@
   padding-left: 18px;
   font-size: 7px;
   font-weight: 600;
-  line-height: 8px;
+  line-height: 7px;
   color: rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
@@ -60,13 +60,13 @@
 .noticePeriodText {
   font-size: 8px;
   font-weight: 700;
-  line-height: 10px;
+  line-height: 8px;
 }
 
 .resumeDiv {
   font-size: 7px;
   font-weight: 600;
-  line-height: 8px;
+  line-height: 7px;
   color: rgba(0, 0, 0, 0.6);
   display: flex;
   gap: 6px;
@@ -79,6 +79,7 @@
   margin-top: 5px;
   display: flex;
   align-items: flex-start;
+  /* justify-content: flex-start; */
   gap: 10px;
 }
 .datesLeft {
@@ -92,11 +93,17 @@
   align-items: flex-end;
   gap: 3px;
 }
+.date{
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 12px;
+}
 .dateLabel {
   font-size: 7.2px;
+  line-height: 10px;
 }
 .dateText {
   font-size: 7px;
   font-weight: 600;
-  line-height: 10px;
+  line-height: 7px;
 }

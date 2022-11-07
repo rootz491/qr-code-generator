@@ -29,7 +29,7 @@ function AuthForm() {
 	return (
 		<Box
 			sx={{
-				marginTop: 8,
+				// marginTop: 8,
 				display: "flex",
 				flexDirection: "column",
 				alignItems: "center",
@@ -55,7 +55,7 @@ function AuthForm() {
 				color="textPrimary"
 				fontWeight="bolder"
 			>
-				Signup/Login by Mobile Number
+				Signup/Login
 			</Typography>
 			<Typography fontWeight="thin" color="black">
 				Enter your Mobile Number to signup or login

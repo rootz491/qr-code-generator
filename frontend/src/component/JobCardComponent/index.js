@@ -43,7 +43,7 @@ export default function JobCard({ formState }) {
 					</div>
 					<div className="datesRight">
 						<div>
-							<span className="locationText">
+							<span className="date">
 								{moment(stringLastDate).format("D MMM YY")}
 							</span>
 						</div>
@@ -77,7 +77,7 @@ export default function JobCard({ formState }) {
 					</div>
 					<div className="datesRight">
 						<div>
-							<span className="locationText">
+							<span className="date">
 								{moment(stringJoiningDate).format("D MMM YY")}
 							</span>
 						</div>
@@ -203,6 +203,7 @@ export default function JobCard({ formState }) {
 			</div>
 		);
 	};
+
 	// Nikhil not deleting legacy code
 	// const salaryFormmater = (salary) => {
 	//     let stringSalary = salary.toString();
