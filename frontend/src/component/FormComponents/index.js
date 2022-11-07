@@ -87,9 +87,8 @@ function FormComponent({ setFormState, formState }) {
           margin: "20px",
         }}
       >
-        
         <Grid container spacing={5} sx={{ height: "auto", overflow: "hidden" }}>
-        <Grid item xs={12}>
+          <Grid item xs={12}>
             <TextField
               required
               id="fullname"
@@ -100,7 +99,9 @@ function FormComponent({ setFormState, formState }) {
               variant="outlined"
               onChange={handleChange}
             />
-             <Grid item xs={12}>
+          </Grid>
+
+          <Grid item xs={12}>
             <TextField
               required
               id="altmobilenum"
@@ -123,7 +124,7 @@ function FormComponent({ setFormState, formState }) {
               onChange={handleChange}
             />
           </Grid>
-          </Grid>
+
           <Grid item xs={12}>
             <FormControl fullWidth>
               <InputLabel id="experience">Experience</InputLabel>
@@ -200,7 +201,7 @@ function FormComponent({ setFormState, formState }) {
           ) : (
             <></>
           )}
-         
+
           <Grid item xs={4}>
             <Stack spacing={2}>
               <Typography>Resume (pdf only)</Typography>
@@ -224,7 +225,7 @@ function FormComponent({ setFormState, formState }) {
               </Button>
             </Stack>
           </Grid>
-         
+
           <Grid item xs={12}>
             <TextField
               required
