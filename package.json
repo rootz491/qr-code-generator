@@ -1,23 +1,29 @@
 {
-  "name": "jobcard",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/yugam-tech/jobcard.git"
-  },
-  "keywords": [
-    "jobcard",
-    "portalForresume"
-  ],
-  "author": "yugam",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/yugam-tech/jobcard/issues"
-  },
-  "homepage": "https://github.com/yugam-tech/jobcard#readme"
+	"name": "jobcard",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "npm-run-all --parallel frontend backend",
+		"frontend": "cd frontend & npm start ",
+		"backend": "cd backend & npm run dev",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/yugam-tech/jobcard.git"
+	},
+	"keywords": [
+		"jobcard",
+		"portalForresume"
+	],
+	"author": "yugam",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/yugam-tech/jobcard/issues"
+	},
+	"homepage": "https://github.com/yugam-tech/jobcard#readme",
+	"devDependencies": {
+		"npm-run-all": "^4.1.5"
+	}
 }
