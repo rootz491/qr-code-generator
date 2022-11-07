@@ -88,7 +88,43 @@ function FormComponent({ setFormState, formState }) {
           margin: "20px",
         }}
       >
+        
         <Grid container spacing={5} sx={{ height: "auto", overflow: "hidden" }}>
+        <Grid item xs={12}>
+            <TextField
+              required
+              id="fullname"
+              name="fullname"
+              label="Full Name"
+              fullWidth
+              autoComplete="given-name"
+              variant="outlined"
+              onChange={handleChange}
+            />
+             <Grid item xs={12}>
+            <TextField
+              required
+              id="altmobilenum"
+              name="altmobilenum"
+              label="Mobile Number"
+              fullWidth
+              variant="outlined"
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              id="email"
+              name="email"
+              label="Email"
+              fullWidth
+              autoComplete="email"
+              variant="outlined"
+              required
+              onChange={handleChange}
+            />
+          </Grid>
+          </Grid>
           <Grid item xs={12}>
             <FormControl fullWidth>
               <InputLabel id="experience">Experience</InputLabel>
@@ -165,18 +201,7 @@ function FormComponent({ setFormState, formState }) {
           ) : (
             <></>
           )}
-          <Grid item xs={12}>
-            <TextField
-              required
-              id="fullname"
-              name="fullname"
-              label="Full Name"
-              fullWidth
-              autoComplete="given-name"
-              variant="outlined"
-              onChange={handleChange}
-            />
-          </Grid>
+         
           <Grid item xs={4}>
             <Stack spacing={2}>
               <Typography>Resume (pdf only)</Typography>
@@ -200,29 +225,7 @@ function FormComponent({ setFormState, formState }) {
               </Button>
             </Stack>
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              id="altmobilenum"
-              name="altmobilenum"
-              label="Mobile Number"
-              fullWidth
-              variant="outlined"
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              id="email"
-              name="email"
-              label="Email"
-              fullWidth
-              autoComplete="email"
-              variant="outlined"
-              required
-              onChange={handleChange}
-            />
-          </Grid>
+         
           <Grid item xs={12}>
             <TextField
               required

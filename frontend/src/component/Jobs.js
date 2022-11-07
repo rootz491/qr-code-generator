@@ -379,7 +379,7 @@ function Jobs() {
           {clientInfos.map((client, index) => (
             // lists of all jobcards
             // filter based on  jobtitle
-            <Link to={`/${client._id}`} key={index}>
+            <Link to={`/${client._id}`} key={index} style={{textDecoration: "none"}}>
               <div style={{ margin: "0" }}>
                 {/* only show those jobcard whose client.jobtitle === Jobtitle or else show all jobcards */}
                 <JobCard formState={client} />

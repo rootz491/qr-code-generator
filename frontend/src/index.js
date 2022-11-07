@@ -9,45 +9,40 @@ import AuthForm from "./pages/signin";
 import DynamicJob from "./component/dynamicJob";
 import Jobs from "./component/Jobs";
 import AdminProtected from "./component/AdminProtected";
-import UserProtected from "./component/UserProtected";
+// import UserProtected from "./component/UserProtected";
 import { Toaster } from "react-hot-toast";
+import Header from './component/HeaderComponent/index';
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
 	<React.StrictMode>
-		<Toaster />
-		<Router>
-			<Routes>
-				<Route
-					path="/"
-					element={
-						// <UserProtected>
-							<Portal />
-						// </UserProtected>
-					}
-				/>
-				<Route
-					path="/:id"
-					element={
-						<AdminProtected>
-							<DynamicJob />
-						</AdminProtected>
-					}
-				/>
-				<Route
-					path="/admin/list"
-					element={
-						<AdminProtected>
-							{" "}
-							<Jobs />{" "}
-						</AdminProtected>
-					}
-				/>
-				<Route path="/auth" element={<AuthForm />} />
-				{/* TESTING OMLY */}
-				<Route path="/form" element={<Form />} />
-				<Route path="/jobcard/" element={<JobCard />} />
-			</Routes>
-		</Router>
-	</React.StrictMode>
+		<Header/>
+    <Toaster />
+    <Router>
+      <Routes>
+        <Route path="/" element={<Portal />} />
+        <Route
+          path="/:id"
+          element={
+            <AdminProtected>
+              <DynamicJob />
+            </AdminProtected>
+          }
+        />
+        <Route
+          path="/admin/list"
+          element={
+            <AdminProtected>
+              {" "}
+              <Jobs />{" "}
+            </AdminProtected>
+          }
+        />
+        <Route path="/auth" element={<AuthForm />} />
+        {/* TESTING OMLY */}
+        <Route path="/form" element={<Form />} />
+        <Route path="/jobcard/" element={<JobCard />} />
+      </Routes>
+    </Router>
+  </React.StrictMode>
 );
