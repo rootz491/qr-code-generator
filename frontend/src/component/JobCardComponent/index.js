@@ -171,40 +171,40 @@ export default function JobCard({ formState }) {
   };
 
   // Nikhil not deleting legacy code
-  // const salaryFormmater = (salary) => {
-  //     let stringSalary = salary.toString();
-  //     if (stringSalary.length === 4) {
-  //       // round off to 1 decimal place
-  //       return stringSalary.slice(0, 1) + "." + stringSalary.slice(1, 2) + " K";
-  //     } else if (stringSalary.length === 5) {
-  //       return stringSalary.slice(0, 2) + " K";
-  //     } else if (stringSalary.length === 6) {
-  //       const slicedSal = stringSalary.slice(0, 2);
-  //       return slicedSal.slice(0, 1) + "." + slicedSal.slice(1, 2) + " L";
-  //     } else if (stringSalary.length === 7) {
-  //       return stringSalary.slice(0, 2) + " L";
-  //     } else if (stringSalary.length === 8) {
-  //       const slicedSal = stringSalary.slice(0, 3);
-  //       return slicedSal.slice(0, 1) + "." + slicedSal.slice(1, 2) + " Cr";
-  //     } else if (stringSalary.length === 9) {
-  //       return stringSalary.slice(0, 2) + " Cr";
-  //     } else {
-  //       return salary;
-  //     }
-  //   }
-  // };
-
-  const Salary = (value) => {
-    // use Intl to format salary
-
-    const salary = new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      notation: "compact",
-      maximumFractionDigits: 0,
-    }).format(parseInt(value || 0));
-    return salary;
+  const Salary = (salary) => {
+    // replace all commas with in salary
+    let stringSalary = salary.replace(/,/g, "").toString();
+    if (stringSalary.length === 4) {
+      // round off to 1 decimal place
+      return stringSalary.slice(0, 1) + "." + stringSalary.slice(1, 2) + " K";
+    } else if (stringSalary.length === 5) {
+      return stringSalary.slice(0, 2) + " K";
+    } else if (stringSalary.length === 6) {
+      const slicedSal = stringSalary.slice(0, 2);
+      return slicedSal.slice(0, 1) + "." + slicedSal.slice(1, 2) + " L";
+    } else if (stringSalary.length === 7) {
+      return stringSalary.slice(0, 2) + " L";
+    } else if (stringSalary.length === 8) {
+      const slicedSal = stringSalary.slice(0, 3);
+      return slicedSal.slice(0, 1) + "." + slicedSal.slice(1, 2) + " Cr";
+    } else if (stringSalary.length === 9) {
+      return stringSalary.slice(0, 2) + " Cr";
+    } else {
+      return salary;
+    }
   };
+
+  // const Salary = (value) => {
+  //   // use Intl to format salary
+
+  //   const salary = new Intl.NumberFormat("en-IN", {
+  //     style: "currency",
+  //     currency: "INR",
+  //     notation: "compact",
+  //     maximumFractionDigits: 0,
+  //   }).format(parseInt(value || 0));
+  //   return salary;
+  // };
 
   return (
     <Card className="jobCard">
@@ -241,7 +241,7 @@ export default function JobCard({ formState }) {
             flexDirection: "column",
             gap: "5px",
             boxSizing: "border-box",
-            marginTop: formState.experience === "Fresher" ? "-69px" : "-50px",
+            marginTop: formState.experience === "Fresher" && formState.doingIntern === "yes" ? "-69px" : "-38px",
           }}
         >
           <CurrentOfficeCity current_office_city={formState.currLocation} />
