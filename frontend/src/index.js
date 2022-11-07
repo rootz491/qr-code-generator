@@ -14,40 +14,33 @@ import { Toaster } from "react-hot-toast";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-	<React.StrictMode>
-		<Toaster />
-		<Router>
-			<Routes>
-				<Route
-					path="/"
-					element={
-						<UserProtected>
-							<Portal />
-						</UserProtected>
-					}
-				/>
-				<Route
-					path="/:id"
-					element={
-						<AdminProtected>
-							<DynamicJob />
-						</AdminProtected>
-					}
-				/>
-				<Route
-					path="/admin/list"
-					element={
-						<AdminProtected>
-							{" "}
-							<Jobs />{" "}
-						</AdminProtected>
-					}
-				/>
-				<Route path="/auth" element={<AuthForm />} />
-				{/* TESTING OMLY */}
-				<Route path="/form" element={<Form />} />
-				<Route path="/jobcard/" element={<JobCard />} />
-			</Routes>
-		</Router>
-	</React.StrictMode>
+  <React.StrictMode>
+    <Toaster />
+    <Router>
+      <Routes>
+        <Route path="/" element={<Portal />} />
+        <Route
+          path="/:id"
+          element={
+            <AdminProtected>
+              <DynamicJob />
+            </AdminProtected>
+          }
+        />
+        <Route
+          path="/admin/list"
+          element={
+            <AdminProtected>
+              {" "}
+              <Jobs />{" "}
+            </AdminProtected>
+          }
+        />
+        <Route path="/auth" element={<AuthForm />} />
+        {/* TESTING OMLY */}
+        <Route path="/form" element={<Form />} />
+        <Route path="/jobcard/" element={<JobCard />} />
+      </Routes>
+    </Router>
+  </React.StrictMode>
 );
