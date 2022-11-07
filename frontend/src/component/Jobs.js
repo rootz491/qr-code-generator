@@ -10,10 +10,10 @@ import { Link } from "react-router-dom";
 function Jobs() {
   const [clientInfos, setClientInfos] = useState([]);
   const [clientInfosCopy, setClientInfosCopy] = useState([]);
-  const [category, setCategory] = React.useState("All");
-  const [jobTitle, setJobTitle] = React.useState("All");
+  const [candidateStage, setCandidateStage] = React.useState("All");
+  const [domain, setDomain] = React.useState("All");
   const [type, setType] = React.useState("All");
-  const [value, setValue] = React.useState(5);
+  const [value, setValue] = React.useState(30);
 
   const handleSliderChange = (event, newValue) => {
     if (typeof newValue === "number") {
@@ -65,6 +65,46 @@ function Jobs() {
     },
   ];
 
+  const [expValue, setExpValue] = React.useState([10, 15]);
+  const handleExpValueChange = (event, newValue, activeThumb) => {
+    const minDistance = 2;
+    if (!Array.isArray(newValue)) {
+      return;
+    }
+
+    if (newValue[1] - newValue[0] < minDistance) {
+      if (activeThumb === 0) {
+        const clamped = Math.min(newValue[0], 100 - minDistance);
+        setExpValue([clamped, clamped + minDistance]);
+      } else {
+        const clamped = Math.max(newValue[1], minDistance);
+        setExpValue([clamped - minDistance, clamped]);
+      }
+    } else {
+      setExpValue(newValue);
+    }
+  };
+
+  const [ctcValue, setCtcValue] = React.useState([20, 35]);
+  const handleCtcValueChange = (event, newValue, activeThumb) => {
+    const minDistance = 2;
+    if (!Array.isArray(newValue)) {
+      return;
+    }
+
+    if (newValue[1] - newValue[0] < minDistance) {
+      if (activeThumb === 0) {
+        const clamped = Math.min(newValue[0], 100 - minDistance);
+        setCtcValue([clamped, clamped + minDistance]);
+      } else {
+        const clamped = Math.max(newValue[1], minDistance);
+        setCtcValue([clamped - minDistance, clamped]);
+      }
+    } else {
+      setCtcValue(newValue);
+    }
+  };
+
   const joiningDate = [
     {
       value: 5,
@@ -106,19 +146,17 @@ function Jobs() {
     return joiningvalue;
   }
 
-  const filterByJobTitle = (title) => {
+  const filterByDomain = (title) => {
     if (title.toLowerCase() === "all") setClientInfos(clientInfosCopy);
     else {
       setClientInfos(clientInfosCopy.filter((client) => client.jobtitle?.toLowerCase() === title.toLowerCase()));
     }
   };
 
-  const filterByCategory = (category) => {
-    if (category.toLowerCase() === "all") setClientInfos(clientInfosCopy);
+  const filterByCandidateStage = (stage) => {
+    if (stage.toLowerCase() === "all") setClientInfos(clientInfosCopy);
     else {
-      setClientInfos(
-        clientInfosCopy.filter((client) => client?.feedback?.status?.toLowerCase() === category?.toLowerCase())
-      );
+      setClientInfos(clientInfosCopy.filter((client) => client?.feedback?.status?.toLowerCase() === candidateStage?.toLowerCase()));
     }
   };
 
@@ -128,6 +166,7 @@ function Jobs() {
       setClientInfos(clientInfosCopy.filter((client) => client?.experience?.toLowerCase() === exp?.toLowerCase()));
     }
   };
+
   const resetFilters = () => {
     setClientInfos(clientInfosCopy);
   };
@@ -163,14 +202,14 @@ function Jobs() {
     return `${value}`;
   }
 
-  const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
-    filterByCategory(event.target.value);
+  const handleCandidateStageChange = (event) => {
+    setCandidateStage(event.target.value);
+    filterByCandidateStage(event.target.value);
   };
 
-  const handleJobTitleChange = (event) => {
-    setJobTitle(event.target.value);
-    filterByJobTitle(event.target.value);
+  const handleDomainChange = (event) => {
+    setDomain(event.target.value);
+    filterByDomain(event.target.value);
   };
 
   const handleTypeChange = (event) => {
@@ -182,7 +221,7 @@ function Jobs() {
   // const fetchClientInfos = localStorage.getItem("clientInfos") ?? [];
   // setClientInfos(JSON.parse(fetchClientInfos));
   // log all states
-  // }, [category, jobTitle, type]);
+  // }, [category, domain, type]);
 
   return (
     <div
@@ -216,38 +255,26 @@ function Jobs() {
           }}
         >
           <div style={{ width: "100%" }}>
-            <Typography variant="button" display="block" gutterBottom sx={{ fontWeight: "bold" }}>
-              Category
+            <Typography variant="body2" display="block" gutterBottom sx={{ fontWeight: "bold" }}>
+              Candidate Stages
             </Typography>
             <FormControl fullWidth variant="filled" size="small">
-              <Select
-                hiddenLabel
-                id="demo-simple-select"
-                value={category}
-                onChange={handleCategoryChange}
-                label="Age"
-                name="category"
-              >
+              <Select hiddenLabel id="demo-simple-select" value={candidateStage} onChange={handleCandidateStageChange} label="candidateStage" name="candidateStage">
                 <MenuItem value="All">All</MenuItem>
-                <MenuItem value="pending">Pending</MenuItem>
-                <MenuItem value="selected">Selected</MenuItem>
+                <MenuItem value="pending">Applied</MenuItem>
+                <MenuItem value="selected">Review In Progress</MenuItem>
+                <MenuItem value="rejected">Okay To Interview</MenuItem>
+                <MenuItem value="rejected">Selected</MenuItem>
                 <MenuItem value="rejected">Rejected</MenuItem>
               </Select>
             </FormControl>
           </div>
           <div style={{ width: "100%" }}>
-            <Typography variant="button" display="block" gutterBottom sx={{ fontWeight: "bold" }}>
-              Job Title
+            <Typography variant="body2" display="block" gutterBottom sx={{ fontWeight: "bold" }}>
+              Domain
             </Typography>
             <FormControl fullWidth variant="filled" size="small">
-              <Select
-                hiddenLabel
-                id="demo-simple-select"
-                value={jobTitle}
-                onChange={handleJobTitleChange}
-                label="Age"
-                name="jobTitle"
-              >
+              <Select hiddenLabel id="demo-simple-select" value={domain} onChange={handleDomainChange} label="domain" name="domain">
                 <MenuItem value="All">All</MenuItem>
                 <MenuItem value="Frontend developer">Frontend developer</MenuItem>
                 <MenuItem value="Fullstack developer">Fullstack Developer</MenuItem>
@@ -256,7 +283,7 @@ function Jobs() {
             </FormControl>
           </div>
           <div style={{ width: "100%" }}>
-            <Typography variant="button" display="block" gutterBottom sx={{ fontWeight: "bold" }}>
+            <Typography variant="body2" display="block" gutterBottom sx={{ fontWeight: "bold" }}>
               Type
             </Typography>
             <FormControl fullWidth variant="filled" size="small">
@@ -264,25 +291,24 @@ function Jobs() {
                 <MenuItem value="All">All</MenuItem>
                 <MenuItem value="Fresher">Fresher</MenuItem>
                 <MenuItem value="Experienced">Experience</MenuItem>
-                <MenuItem value="Experienced and currently serving notice period">
-                  Experienced and currently serving notice period
-                </MenuItem>
-                <MenuItem value="Experienced and already served notice period">
-                  Experienced and already served notice period
-                </MenuItem>
+                <MenuItem value="Experienced and currently serving notice period">Experienced and currently serving notice period</MenuItem>
+                <MenuItem value="Experienced and already served notice period">Experienced and already served notice period</MenuItem>
               </Select>
             </FormControl>
           </div>
           <div style={{ width: "100%" }}>
-            <Typography variant="button" display="block" gutterBottom sx={{ fontWeight: "bold" }}>
+            <Typography variant="body2" display="block" gutterBottom sx={{ fontWeight: "bold" }}>
               Experience
             </Typography>
             <Slider
               sx={{
+                marginTop: "20px",
                 "& .MuiSlider-markLabel": {
                   fontSize: "12px",
                 },
               }}
+              value={expValue}
+              onChange={handleExpValueChange}
               size="small"
               aria-label="Experience"
               defaultValue={15}
@@ -291,17 +317,23 @@ function Jobs() {
               max={20}
               step={1}
               marks={exp}
-              valueLabelDisplay="auto"
+              valueLabelDisplay="on"
             />
           </div>
           <div style={{ width: "100%" }}>
-            <Typography variant="button" display="block" gutterBottom sx={{ fontWeight: "bold" }}>
-              Can join within
-            </Typography>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <Typography variant="body2" display="block" gutterBottom sx={{ fontWeight: "bold" }}>
+                Can join within
+              </Typography>
+              <Typography variant="" display="block" gutterBottom sx={{ background: "#F0F0F0", width: "max-content", padding: "5px 10px" }}>
+                {joiningLabelFormat(calculateValue(value))}
+              </Typography>
+            </div>
             <Slider
               value={value}
               onChange={handleSliderChange}
               sx={{
+                marginTop: "25px",
                 "& .MuiSlider-markLabel": {
                   display: "none",
                 },
@@ -314,47 +346,37 @@ function Jobs() {
               valueLabelFormat={joiningLabelFormat}
               min={0}
               max={90}
-              step={5}
+              step={1}
               marks={joiningDate}
-              valueLabelDisplay="auto"
+              valueLabelDisplay="on"
             />
-            <Typography
-              variant=""
-              display="block"
-              gutterBottom
-              sx={{ background: "#F0F0F0", width: "max-content", padding: "5px 10px" }}
-            >
-              {joiningLabelFormat(calculateValue(value))}
-            </Typography>
           </div>
           <div style={{ width: "100%" }}>
-            <Typography variant="button" display="block" gutterBottom sx={{ fontWeight: "bold" }}>
+            <Typography variant="body2" display="block" gutterBottom sx={{ fontWeight: "bold" }}>
               Expected CTC
             </Typography>
             <Slider
               sx={{
+                marginTop: "20px",
                 "& .MuiSlider-markLabel": {
                   fontSize: "12px",
                 },
               }}
+              value={ctcValue}
+              onChange={handleCtcValueChange}
               size="small"
               aria-label="Expected CTC"
               defaultValue={35}
               getAriaValueText={valuetext}
               min={0}
               max={50}
-              step={5}
+              step={1}
               marks={ctc}
-              valueLabelDisplay="auto"
+              valueLabelDisplay="on"
             />
           </div>
           {/* button for reset filter */}
-          <Button
-            variant="contained"
-            size="small"
-            sx={{ background: "#F0F0F0", color: "#000000" }}
-            onClick={resetFilters}
-          >
+          <Button variant="contained" size="small" sx={{ background: "#F0F0F0", color: "#000000" }} onClick={resetFilters}>
             {" "}
             Reset Filter{" "}
           </Button>
@@ -379,7 +401,7 @@ function Jobs() {
           {clientInfos.map((client, index) => (
             // lists of all jobcards
             // filter based on  jobtitle
-            <Link to={`/${client._id}`} key={index} style={{textDecoration: "none"}}>
+            <Link to={`/${client._id}`} key={index} style={{ textDecoration: "none" }}>
               <div style={{ margin: "0" }}>
                 {/* only show those jobcard whose client.jobtitle === Jobtitle or else show all jobcards */}
                 <JobCard formState={client} />
