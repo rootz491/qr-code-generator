@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-<<<<<<< HEAD
 import {
   Button,
   FormControl,
@@ -13,39 +12,16 @@ import {
   Stack,
   TextareaAutosize,
 } from "@mui/material";
-=======
-import { Box, Button, FormControl, InputLabel, MenuItem, Modal, Paper, Select, Slider, TextareaAutosize, Typography } from "@mui/material";
->>>>>>> 290cbcbf78fb2b5b88efd6b8f3c60e98d64656e3
 import JobCard from "./JobCardComponent";
 import { isAuthenticated } from "../services/auth";
 import { errorToast } from "../utils/toast";
 import http from "../services/http";
-<<<<<<< HEAD
 import { Link } from "react-router-dom";
 import { Cancel, CheckCircle, OfflinePin, Preview, RadioButtonChecked } from "@mui/icons-material";
 import { Box } from "@mui/system";
 import { saveUserFeedback } from "../services/user";
-=======
-import CancelIcon from "@mui/icons-material/Cancel";
-// import { Link } from "react-router-dom";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  // border: "2px solid #000",
-  boxShadow: 20,
-  p: 4,
-};
->>>>>>> 290cbcbf78fb2b5b88efd6b8f3c60e98d64656e3
 
 function Jobs() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   const [adminData, setAdminData] = useState({
     comment: "",
