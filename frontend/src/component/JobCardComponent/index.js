@@ -179,27 +179,27 @@ export default function JobCard({ formState }) {
 
   // Nikhil not deleting legacy code
   const Salary = (salary) => {
-    // replace all commas with in salary
-    let stringSalary = salary.replace(/,/g, "").toString();
-    if (stringSalary.length === 4) {
-      // round off to 1 decimal place
-      return stringSalary.slice(0, 1) + "." + stringSalary.slice(1, 2) + " K";
-    } else if (stringSalary.length === 5) {
-      return stringSalary.slice(0, 2) + "." + stringSalary.slice(2, 3) + " K";
-    } else if (stringSalary.length === 6) {
-      const slicedSal = stringSalary.slice(0, 2);
-      return slicedSal.slice(0, 1) + "." + slicedSal.slice(1, 2) + " L";
-    } else if (stringSalary.length === 7) {
-      return stringSalary.slice(0, 2) + "." + stringSalary.slice(2, 3) + " L";
-    } else if (stringSalary.length === 8) {
-      const slicedSal = stringSalary.slice(0, 3);
-      return slicedSal.slice(0, 1) + "." + slicedSal.slice(1, 2) + " Cr";
-    } else if (stringSalary.length === 9) {
-      return stringSalary.slice(0, 2) + " Cr";
-    } else {
-      return salary;
-    }
-  };
+		// replace all commas with in salary
+		let stringSalary = salary?.replace(/,/g, "").toString();
+		if (stringSalary?.length === 4) {
+			// round off to 1 decimal place
+			return stringSalary?.slice(0, 1) + "." + stringSalary?.slice(1, 2) + " K";
+		} else if (stringSalary?.length === 5) {
+			return stringSalary?.slice(0, 2) + "." + stringSalary?.slice(2, 3) + " K";
+		} else if (stringSalary?.length === 6) {
+			const slicedSal = stringSalary?.slice(0, 2);
+			return slicedSal.slice(0, 1) + "." + slicedSal?.slice(1, 2) + " L";
+		} else if (stringSalary?.length === 7) {
+			return stringSalary?.slice(0, 2) + "." + stringSalary?.slice(2, 3) + " L";
+		} else if (stringSalary?.length === 8) {
+			const slicedSal = stringSalary?.slice(0, 3);
+			return slicedSal?.slice(0, 1) + "." + slicedSal?.slice(1, 2) + " Cr";
+		} else if (stringSalary?.length === 9) {
+			return stringSalary?.slice(0, 2) + " Cr";
+		} else {
+			return salary;
+		}
+	};
 
   return (
     <Card className="jobCard">

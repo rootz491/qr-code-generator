@@ -137,54 +137,54 @@ router.post("/verify-login-via-otp", async (req, res) => {
 });
 
 router.post("/save-user", auth, async (req, res) => {
-  try {
-    const user = req.user;
+	try {
+		const user = req.user;
 
-    if (!req.body)
-      throw {
-        status: 400,
-        message: "Content can not be empty!",
-      };
+		if (!req.body)
+			throw {
+				status: 400,
+				message: "Content can not be empty!",
+			};
 
-    if (req.body?.feedback)
-      throw {
-        status: 400,
-        message: "Malformed request",
-      };
-    if (!req.body?.expectedSalary)
-      throw {
-        status: 400,
-        message: "User must have an expected salary",
-      };
+		// if (req.body?.feedback)
+		//   throw {
+		//     status: 400,
+		//     message: "Malformed request",
+		//   };
+		if (!req.body?.expectedSalary)
+			throw {
+				status: 400,
+				message: "User must have an expected salary",
+			};
 
-    const savedUser = await User.findById(user.id);
-    if (!savedUser)
-      throw {
-        status: 400,
-        message: "User not found",
-      };
-    await savedUser.updateOne(req.body);
-    res.status(200).json({ message: "User saved successfully" });
-  } catch (e) {
-    console.log(e);
-    res.status(e.status || 500).send({ message: e.message || "Server Error" });
-  }
+		const savedUser = await User.findById(user.id);
+		if (!savedUser)
+			throw {
+				status: 400,
+				message: "User not found",
+			};
+		await savedUser.updateOne(req.body);
+		res.status(200).json({ message: "User saved successfully" });
+	} catch (e) {
+		console.log(e);
+		res.status(e.status || 500).send({ message: e.message || "Server Error" });
+	}
 });
 
-router.get("/get-user", auth, async (req, res) => {
-  try {
-    const user = req.user;
-    const savedUser = await User.findById(user.id);
-    if (!savedUser)
-      throw {
-        status: 400,
-        message: "User not found",
-      };
-    res.status(200).json(savedUser);
-  } catch (e) {
-    console.log(e);
-    res.status(e.status || 500).send({ message: e.message || "Server Error" });
-  }
+router.get("/get-user-data", auth, async (req, res) => {
+	try {
+		const user = req.user;
+		const savedUser = await User.findById(user.id);
+		if (!savedUser)
+			throw {
+				status: 400,
+				message: "User not found",
+			};
+		res.status(200).json(savedUser);
+	} catch (e) {
+		console.log(e);
+		res.status(e.status || 500).send({ message: e.message || "Server Error" });
+	}
 });
 
 router.get("/get-all-user", auth, async (req, res) => {

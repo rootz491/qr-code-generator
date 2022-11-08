@@ -8,6 +8,7 @@ module.exports = async function auth(req, res, next) {
 
 	const token = req.header("Authorization")?.split(" ")[1];
 	if (!token) return res.status(401).send({ message: "Access Denied." });
+
 	try {
 		const decoded = await jwt.verify(token, config.SECRET_KEY);
 		let user = await User.findById(decoded.id);
