@@ -64,7 +64,7 @@ const ExperienceDiv = ({
           <>
             <img src={officeIcon} alt="office" height="10px" width="10px" />
             {/* span with opacity 0.5 on focus 1 */}
-            {console.log("current_company_name", current_company_name)}
+
             <span className={current_company_name === "Company Name" ? "lowOpacity" : "normalOpacity"}>
               {current_company_name}
             </span>
@@ -114,7 +114,8 @@ const ExperienceDiv = ({
           }}
         >
           <span>
-            <span className={qualification === "Qualification" ? "lowOpacity" : "normalOpacity"}>{qualification}</span> <span  className={passing_year === "Passing Year" ? "lowOpacity" : "normalOpacity"}>({passing_year})</span>
+            <span className={qualification === "Qualification" ? "lowOpacity" : "normalOpacity"}>{qualification}</span>{" "}
+            <span className={passing_year === "Passing Year" ? "lowOpacity" : "normalOpacity"}>({passing_year})</span>
           </span>
           <span style={{ fontSize: "8px", fontWeight: "600", wordBreak: "break-all" }}>{institute}</span>
         </div>

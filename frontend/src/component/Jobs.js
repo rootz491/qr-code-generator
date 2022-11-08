@@ -17,8 +17,9 @@ import { isAuthenticated } from "../services/auth";
 import { errorToast } from "../utils/toast";
 import http from "../services/http";
 import { Link } from "react-router-dom";
-import { Cancel, Check, CheckCircle, OfflinePin, Preview, RadioButtonChecked, Settings } from "@mui/icons-material";
+import { Cancel, CheckCircle, OfflinePin, Preview, RadioButtonChecked } from "@mui/icons-material";
 import { Box } from "@mui/system";
+import { saveUserFeedback } from "../services/user";
 
 function Jobs() {
   const [clientInfos, setClientInfos] = useState([]);
@@ -168,11 +169,14 @@ function Jobs() {
   };
 
   const filterByCandidateStage = (stage) => {
+    console.log(stage);
     if (stage.toLowerCase() === "all") setClientInfos(clientInfosCopy);
     else {
+      console.log(clientInfosCopy);
       setClientInfos(
         clientInfosCopy.filter((client) => client?.feedback?.status?.toLowerCase() === candidateStage?.toLowerCase())
       );
+      console.log({ clientInfos });
     }
   };
 
@@ -289,11 +293,11 @@ function Jobs() {
                 name="candidateStage"
               >
                 <MenuItem value="All">All</MenuItem>
-                <MenuItem value="pending">Applied</MenuItem>
-                <MenuItem value="selected">Review In Progress</MenuItem>
-                <MenuItem value="rejected">Okay To Interview</MenuItem>
-                <MenuItem value="rejected">Selected</MenuItem>
-                <MenuItem value="rejected">Rejected</MenuItem>
+                <MenuItem value="Applied">Applied</MenuItem>
+                <MenuItem value="Review In Progress">Review In Progress</MenuItem>
+                <MenuItem value="Okay To Interview">Okay To Interview</MenuItem>
+                <MenuItem value="Selected">Selected</MenuItem>
+                <MenuItem value="Rejected">Rejected</MenuItem>
               </Select>
             </FormControl>
           </div>
@@ -349,7 +353,6 @@ function Jobs() {
               value={expValue}
               onChange={handleExpValueChange}
               size="small"
-              aria-label="Experience"
               defaultValue={15}
               getAriaValueText={valuetext}
               min={0}
@@ -383,7 +386,6 @@ function Jobs() {
                 },
               }}
               size="small"
-              aria-label="Joining Date"
               defaultValue={70}
               scale={calculateValue}
               getAriaValueText={joiningLabelFormat}
@@ -409,7 +411,6 @@ function Jobs() {
               value={ctcValue}
               onChange={handleCtcValueChange}
               size="small"
-              aria-label="Expected CTC"
               defaultValue={35}
               getAriaValueText={valuetext}
               min={0}
@@ -454,46 +455,7 @@ function Jobs() {
           {clientInfos.map((client, index) => (
             // lists of all jobcards
             // filter based on  jobtitle
-            <Box spacing={2} key={index}>
-              <Link to={`/${client._id}`} key={index} style={{ textDecoration: "none" }}>
-                <div style={{ margin: "0" }}>
-                  {/* only show those jobcard whose client.jobtitle === Jobtitle or else show all jobcards */}
-                  <JobCard formState={client} />
-                </div>
-              </Link>
-              <Stack overflow="auto" direction="row" sx={{ marginTop: "10px" }} justifyContent="space-between">
-                <IconButton aria-label="selected" title="Rejected">
-                  <Cancel />
-                </IconButton>
-                <IconButton aria-label="selected" title="Selected">
-                  <OfflinePin />
-                </IconButton>
-                <IconButton aria-label="selected" title="Okay to interview">
-                  <CheckCircle />
-                </IconButton>
-                <IconButton aria-label="selected" title="Review in progress">
-                  <Preview />
-                </IconButton>
-                <IconButton aria-label="selected" title="Applied">
-                  <RadioButtonChecked />
-                </IconButton>
-              </Stack>
-              {open && (
-                <Box>
-                  <TextareaAutosize
-                    aria-label="minimum height"
-                    minRows={10}
-                    placeholder="any comments"
-                    name="comment"
-                    style={{ width: "100%" }}
-                    value={client.feedback.comment}
-                  />
-                  <Button variant="contained" size="small" sx={{ fontSize: "12px" }}>
-                    Post comment
-                  </Button>
-                </Box>
-              )}
-            </Box>
+            <JobCardLocal key={index} client={client} open={open} />
           ))}
         </div>
       ) : (
@@ -504,3 +466,64 @@ function Jobs() {
 }
 
 export default Jobs;
+
+const JobCardLocal = ({ client, index, open }) => {
+  const [comment, setComment] = React.useState(client.feedback.comment);
+  const [status, setStatus] = React.useState(client.feedback.status);
+
+  return (
+    <Box spacing={2} key={index}>
+      <Link to={`/${client._id}`} key={index} style={{ textDecoration: "none" }}>
+        <div style={{ margin: "0" }}>
+          {/* only show those jobcard whose client.jobtitle === Jobtitle or else show all jobcards */}
+          <JobCard formState={client} />
+        </div>
+      </Link>
+      <Stack overflow="auto" direction="row" sx={{ marginTop: "10px" }} justifyContent="space-between">
+        <IconButton title="Rejected" onClick={() => setStatus("Rejected")}>
+          <Cancel />
+        </IconButton>
+        <IconButton title="Selected" onClick={() => setStatus("Selected")}>
+          <OfflinePin />
+        </IconButton>
+        <IconButton title="Okay to interview" onClick={() => setStatus("Okay To Interview")}>
+          <CheckCircle />
+        </IconButton>
+        <IconButton title="Review in progress" onClick={() => setStatus("Review In Progress")}>
+          <Preview />
+        </IconButton>
+        <IconButton title="Applied" onClick={() => setStatus("Applied")}>
+          <RadioButtonChecked />
+        </IconButton>
+      </Stack>
+      {open && (
+        <Box>
+          <TextareaAutosize
+            minRows={10}
+            placeholder="any comments"
+            name="comment"
+            style={{ width: "100%" }}
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
+          <Button
+            variant="contained"
+            size="small"
+            sx={{ fontSize: "12px" }}
+            onClick={() =>
+              saveUserFeedback(
+                {
+                  comment,
+                  status,
+                },
+                client._id
+              )
+            }
+          >
+            Save and Post
+          </Button>
+        </Box>
+      )}
+    </Box>
+  );
+};

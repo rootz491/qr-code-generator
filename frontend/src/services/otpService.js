@@ -1,20 +1,17 @@
 import { errorToast, successToast } from "../utils/toast";
 import http from "./http";
-export function handelGetOtp(mobilenum) {
-  http
-    .post("/api/auth/request-login-via-otp", { mobilenum })
-    .then((res) => {
-      console.log(res);
-      let flag = false;
-      // if res.data.success is true, then show success toast
-      successToast(res?.data?.message);
-      flag = true;
-      return flag;
-    })
-    .catch((err) => {
-      errorToast(err?.response?.data?.message);
-      console.log(err);
-    });
+
+export async function handelGetOtp(mobilenum, callback) {
+  const res = await http.post("/api/auth/request-login-via-otp", { mobilenum }).catch((err) => {
+    errorToast(err?.response?.data?.message);
+    console.log(err);
+    return false;
+  });
+  if (res) {
+    successToast(res?.data?.message);
+    callback();
+    return true;
+  }
 }
 
 export function handelVerifyOtp(mobilenum, otp) {
@@ -26,10 +23,7 @@ export function handelVerifyOtp(mobilenum, otp) {
       //saving the token will
       localStorage.setItem("access_token", res.data.access_token);
       // navigate to the route /
-      // settime out for 1 second
-      setTimeout(() => {
-        window.location = "/";
-      }, 1000);
+      window.location = "/";
     })
     .catch((err) => {
       errorToast(err.response.data.message);

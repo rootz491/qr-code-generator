@@ -1,19 +1,19 @@
 import {
-
+  Avatar,
   Box,
   Button,
-  
+  FilledInput,
   FormControl,
-
-  Link,
+  FormHelperText,
+  InputLabel,
   MenuItem,
   Select,
   Stack,
-  
+  TextField,
   Typography,
 } from "@mui/material";
 import AuthCode from "react-auth-code-input";
-import React from "react";
+import React, { useCallback } from "react";
 import { handelGetOtp, handelVerifyOtp } from "../../services/otpService";
 import "./index.css";
 
@@ -39,7 +39,6 @@ function AuthForm() {
       ...data,
       otp: res,
     });
-
     console.log(data.otp);
   };
 
@@ -50,20 +49,12 @@ function AuthForm() {
     }
   }, [data]);
 
-  const handleSubmit = () => {
-    setShowMobile((prev) => !prev);
-    setShowOTP((prev) => !prev);
-    // if handelGetOtp returns true, setshowotp to true and showmobile to false
-    if (handelGetOtp(data.mobile)) {
-      setShowOTP(true);
-      setShowMobile(false);
-      handelGetOtp(data.mobile);
-    }
-  };
-
-  const handleChangeView = () => {
-    setShowMobile((prev) => !prev);
-    setShowOTP((prev) => !prev);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handelGetOtp(data.mobile, () => {
+      setShowMobile((prev) => !prev);
+      setShowOTP((prev) => !prev);
+    });
   };
 
   return (
@@ -84,9 +75,9 @@ function AuthForm() {
         <Typography component="h1" variant="h4" align="center" color="textPrimary" fontWeight="bolder">
           Signup/Login
         </Typography>
-        <Stack mt="50px" direction="column" spacing={1} maxWidth="400px" width="100%">
+        <Stack mt="50px" direction="column" spacing={1} width="70%" alignItems="center">
           {showMobile && (
-            <Box component="form" noValidate sx={{ mt: 1 }}>
+            <Box component="form" noValidate sx={{ mt: 1, width: "70%" }}>
               <Stack
                 sx={{
                   display: "flex",
@@ -95,8 +86,8 @@ function AuthForm() {
                   justifyContent: "center",
                 }}
               >
-                <Stack direction="row" alignItems="stretch" width="100%">
-                  <FormControl sx={{ minWidth: 120, width: "20%" }} disabled>
+                <Stack id="someid" direction="row" alignItems="stretch" width="100%">
+                  <FormControl sx={{}} disabled>
                     <Select
                       sx={{ borderTopRightRadius: "0", borderBottomRightRadius: "0" }}
                       labelId="demo-simple-select-disabled-label"
@@ -121,7 +112,10 @@ function AuthForm() {
                       borderLeft: "none",
                       border: "1px solid #bdbdbd",
                       flex: 1,
-                      fontSize: "1rem",
+                      fontSize: "1.5rem",
+                      minWidth: "60%",
+                      letterSpacing: "4px",
+                      padding: "0 0.5rem",
                     }}
                     label="Mobile number"
                     onChange={handleChange}
@@ -134,7 +128,7 @@ function AuthForm() {
                 </Stack>
               </Stack>
               <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={handleSubmit}>
-                Login
+                Get OTP
               </Button>
             </Box>
           )}
@@ -159,9 +153,6 @@ function AuthForm() {
                   Verify OTP
                 </Button>
               </Stack>
-              <Link variant="body2" onClick={handleChangeView} sx={{ width: "fit-content", textDecoration: "none" }}>
-                Change Mobile Number
-              </Link>
             </>
           )}
         </Stack>
