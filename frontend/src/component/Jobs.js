@@ -1,13 +1,45 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Button, FormControl, MenuItem, Paper, Select, Slider, Typography } from "@mui/material";
+import { Box, Button, FormControl, InputLabel, MenuItem, Modal, Paper, Select, Slider, TextareaAutosize, Typography } from "@mui/material";
 import JobCard from "./JobCardComponent";
 import { isAuthenticated } from "../services/auth";
 import { errorToast } from "../utils/toast";
 import http from "../services/http";
-import { Link } from "react-router-dom";
+import CancelIcon from "@mui/icons-material/Cancel";
+// import { Link } from "react-router-dom";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  // border: "2px solid #000",
+  boxShadow: 20,
+  p: 4,
+};
 
 function Jobs() {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const [adminData, setAdminData] = useState({
+    comment: "",
+    status: "",
+  });
+
+  const handleAdminControlsChange = (e) => {
+    setAdminData({ ...adminData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(adminData);
+    // saveUserFeedback(adminData, formState._id);
+  };
+
   const [clientInfos, setClientInfos] = useState([]);
   const [clientInfosCopy, setClientInfosCopy] = useState([]);
   const [candidateStage, setCandidateStage] = React.useState("All");
@@ -401,12 +433,77 @@ function Jobs() {
           {clientInfos.map((client, index) => (
             // lists of all jobcards
             // filter based on  jobtitle
-            <Link to={`/${client._id}`} key={index} style={{ textDecoration: "none" }}>
+            // <Link to={`/${client._id}`} key={index} style={{ textDecoration: "none" }}>
+            //   <div style={{ margin: "0" }}>
+            //     {/* only show those jobcard whose client.jobtitle === Jobtitle or else show all jobcards */}
+            //     <JobCard formState={client} />
+            //   </div>
+            // </Link>
+            <div key={index}>
               <div style={{ margin: "0" }}>
                 {/* only show those jobcard whose client.jobtitle === Jobtitle or else show all jobcards */}
-                <JobCard formState={client} />
+                <JobCard formState={client} onClick={handleOpen} />
               </div>
-            </Link>
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: 400,
+                    backgroundColor: "#ffffff",
+                    padding: "10px 20px 20px 20px",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "15px",
+                  }}
+                >
+                  <Button
+                    disableRipple
+                    sx={{
+                      position: "absolute",
+                      right: "0",
+                      padding: "0px !important",
+                      height: "30px !important",
+                      width: "30px !important",
+                    }}
+                    onClick={handleClose}
+                  >
+                    <CancelIcon />
+                  </Button>
+                  <TextareaAutosize
+                    aria-label="minimum height"
+                    minRows={10}
+                    placeholder="any comments"
+                    onChange={handleAdminControlsChange}
+                    name="comment"
+                    value={adminData.comment}
+                    style={{ marginTop: "40px" }}
+                  />
+                  {/* mui select */}
+                  <FormControl fullWidth>
+                    <InputLabel id="status">Status</InputLabel>
+                    <Select labelId="status" id="status" label="status" onChange={handleAdminControlsChange} name="status" value={adminData.status}>
+                      <MenuItem value="pending">Applied</MenuItem>
+                      <MenuItem value="selected">Review In Progress</MenuItem>
+                      <MenuItem value="rejected">Okay To Interview</MenuItem>
+                      <MenuItem value="rejected">Selected</MenuItem>
+                      <MenuItem value="rejected">Rejected</MenuItem>
+                    </Select>
+                  </FormControl>
+                  <Button variant="contained" color="primary" onClick={handleSubmit}>
+                    {" "}
+                    Save{" "}
+                  </Button>
+                </div>
+              </Modal>
+            </div>
           ))}
         </div>
       ) : (

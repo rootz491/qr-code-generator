@@ -15,7 +15,7 @@ import not_in_notice_period from "../../icons/not_in_notice_period.svg";
 import calender from "../../icons/calender.svg";
 import moment from "moment";
 
-export default function JobCard({ formState }) {
+export default function JobCard({ formState, onClick }) {
 	const NoticePeriod = () => {
 		if (formState.experience && formState.noticePeriod) {
 			return (
@@ -225,7 +225,7 @@ export default function JobCard({ formState }) {
 	};
 
 	return (
-		<Card className="jobCard">
+		<Card className="jobCard" onClick={onClick}>
 			<CardHeader name={formState.fullname || "Name"} />
 			<JobTitle />
 			<ContactDiv
