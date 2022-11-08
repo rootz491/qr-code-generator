@@ -6,6 +6,7 @@ import {
   FormControl,
   FormHelperText,
   InputLabel,
+  Link,
   MenuItem,
   Select,
   Stack,
@@ -13,7 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import AuthCode from "react-auth-code-input";
-import React, { useCallback } from "react";
+import React from "react";
 import { handelGetOtp, handelVerifyOtp } from "../../services/otpService";
 import "./index.css";
 
@@ -45,7 +46,10 @@ function AuthForm() {
   React.useEffect(() => {
     // handleOnChange(data);
     if (data.otp.length === 6) {
-      handelVerifyOtp(data.mobile, data.otp);
+      // settimeout for 1sec
+      setTimeout(() => {
+        handelVerifyOtp(data.mobile, data.otp);
+      }, 1000);
     }
   }, [data]);
 
@@ -55,6 +59,11 @@ function AuthForm() {
       setShowMobile((prev) => !prev);
       setShowOTP((prev) => !prev);
     });
+  };
+
+  const handleChangeMobile = () => {
+    setShowMobile((prev) => !prev);
+    setShowOTP((prev) => !prev);
   };
 
   return (
@@ -152,6 +161,16 @@ function AuthForm() {
                 >
                   Verify OTP
                 </Button>
+                <Link
+                  // flexstart item
+                  variant="body2"
+                  onClick={handleChangeMobile}
+                  width="fit-content"
+                  sx={{ textDecoration: "none", cursor: "pointer"}}
+                >
+                  {" "}
+                  Change Mobile Number{" "}
+                </Link>
               </Stack>
             </>
           )}
