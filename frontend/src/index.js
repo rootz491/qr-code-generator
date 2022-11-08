@@ -11,16 +11,25 @@ import Jobs from "./component/Jobs";
 import AdminProtected from "./component/AdminProtected";
 // import UserProtected from "./component/UserProtected";
 import { Toaster } from "react-hot-toast";
-import Header from './component/HeaderComponent/index';
+import Header from "./component/HeaderComponent/index";
+import UserProtected from "./component/UserProtected";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-	<React.StrictMode>
-		<Header/>
+  <React.StrictMode>
+    <Header />
     <Toaster />
     <Router>
       <Routes>
-        <Route path="/" element={<Portal />} />
+        <Route
+          path="/"
+          element={
+            <UserProtected>
+              <Portal />{" "}
+            </UserProtected>
+          }
+        />
+
         <Route
           path="/:id"
           element={

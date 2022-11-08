@@ -4,7 +4,7 @@ import officeIcon from "../../../icons/office.svg";
 import educationIcon from "../../../icons/education.svg";
 import TypeLabel from "./TypeLabel";
 import { Box } from "@mui/material";
-
+import "./styles.css";
 const ExperienceDiv = ({
   experience,
   fresher,
@@ -41,7 +41,7 @@ const ExperienceDiv = ({
           <>
             <img src={timeIcon} alt="time" height="10px" width="10px" />
 
-            <span>
+            <span className={experience === "Total Exp." ? "lowOpacity" : "normalOpacity"}>
               {experience}
               {Number(experience) ? " yrs" : ""}
             </span>
@@ -63,7 +63,11 @@ const ExperienceDiv = ({
         {fresher === "no" ? (
           <>
             <img src={officeIcon} alt="office" height="10px" width="10px" />
-            <span>{current_company_name}</span>
+            {/* span with opacity 0.5 on focus 1 */}
+            {console.log("current_company_name", current_company_name)}
+            <span className={current_company_name === "Company Name" ? "lowOpacity" : "normalOpacity"}>
+              {current_company_name}
+            </span>
           </>
         ) : (
           <>
@@ -73,7 +77,13 @@ const ExperienceDiv = ({
                 <div style={{ display: "flex", flexDirection: "column", gap: "1px", width: "120px", height: "30px" }}>
                   <span style={{ fontSize: "7px", fontWeight: "600" }}>Internship</span>
                   <span>
-                    {current_company_jobTitle} at {current_company_name}
+                    <span className={current_company_jobTitle === "Months" ? "lowOpacity" : "normalOpacity"}>
+                      {current_company_jobTitle}
+                    </span>{" "}
+                    at{" "}
+                    <span className={current_company_name === "Company Name" ? "lowOpacity" : "normalOpacity"}>
+                      {current_company_name}
+                    </span>
                   </span>
                 </div>
               </>
@@ -104,7 +114,7 @@ const ExperienceDiv = ({
           }}
         >
           <span>
-            {qualification} ({passing_year})
+            <span className={qualification === "Qualification" ? "lowOpacity" : "normalOpacity"}>{qualification}</span> <span  className={passing_year === "Passing Year" ? "lowOpacity" : "normalOpacity"}>({passing_year})</span>
           </span>
           <span style={{ fontSize: "8px", fontWeight: "600", wordBreak: "break-all" }}>{institute}</span>
         </div>

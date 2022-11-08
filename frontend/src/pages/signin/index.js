@@ -1,19 +1,19 @@
 import {
-  Avatar,
+
   Box,
   Button,
-  FilledInput,
+  
   FormControl,
-  FormHelperText,
-  InputLabel,
+
+  Link,
   MenuItem,
   Select,
   Stack,
-  TextField,
+  
   Typography,
 } from "@mui/material";
 import AuthCode from "react-auth-code-input";
-import React, { useCallback } from "react";
+import React from "react";
 import { handelGetOtp, handelVerifyOtp } from "../../services/otpService";
 import "./index.css";
 
@@ -39,6 +39,7 @@ function AuthForm() {
       ...data,
       otp: res,
     });
+
     console.log(data.otp);
   };
 
@@ -52,7 +53,17 @@ function AuthForm() {
   const handleSubmit = () => {
     setShowMobile((prev) => !prev);
     setShowOTP((prev) => !prev);
-    handelGetOtp(data.mobile);
+    // if handelGetOtp returns true, setshowotp to true and showmobile to false
+    if (handelGetOtp(data.mobile)) {
+      setShowOTP(true);
+      setShowMobile(false);
+      handelGetOtp(data.mobile);
+    }
+  };
+
+  const handleChangeView = () => {
+    setShowMobile((prev) => !prev);
+    setShowOTP((prev) => !prev);
   };
 
   return (
@@ -148,6 +159,9 @@ function AuthForm() {
                   Verify OTP
                 </Button>
               </Stack>
+              <Link variant="body2" onClick={handleChangeView} sx={{ width: "fit-content", textDecoration: "none" }}>
+                Change Mobile Number
+              </Link>
             </>
           )}
         </Stack>

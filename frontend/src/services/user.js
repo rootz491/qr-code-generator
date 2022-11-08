@@ -48,7 +48,6 @@ export function handelSaveUser(user) {
 }
 
 // get id of user from token and get the uesr from database
-
 export function saveUserFeedback(feedback, id) {
   http
     .post("/api/auth/save-user-feedback/" + id, feedback)
@@ -60,4 +59,10 @@ export function saveUserFeedback(feedback, id) {
       console.log(err);
       errorToast(err?.response?.data?.message);
     });
+}
+
+// logout user without posting to backend
+export function logout() {
+  localStorage.removeItem("access_token");
+  window.location = "/auth";
 }

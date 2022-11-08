@@ -42,19 +42,19 @@ function FormComponent({ setFormState, formState }) {
 		setFormState((prev) => ({ ...prev, [e.target.name]: value }));
 	};
 
-	const saveFormData = () => {
-		console.log(formState);
+	// const saveFormData = () => {
+	// 	console.log(formState);
 
-		const id = Math.floor(Math.random() * 100000000);
-		const clientInfos = JSON.parse(localStorage.getItem("clientInfos")) || [];
-		console.log(id);
-		clientInfos.push({
-			id,
-			...formState,
-		});
+	// 	const id = Math.floor(Math.random() * 100000000);
+	// 	const clientInfos = JSON.parse(localStorage.getItem("clientInfos")) || [];
+	// 	console.log(id);
+	// 	clientInfos.push({
+	// 		id,
+	// 		...formState,
+	// 	});
 
-		localStorage.setItem("clientInfos", JSON.stringify(clientInfos));
-	};
+	// 	localStorage.setItem("clientInfos", JSON.stringify(clientInfos));
+	// };
 
 	const handleFile = (e) => {
 		console.log(e.target.files[0]);
@@ -405,6 +405,7 @@ function FormComponent({ setFormState, formState }) {
 							</Grid>
 						</>
 					)}
+					{formState.experience === "Fresher" ? ( 
 					<Grid item xs={12}>
 						<TextField
 							required
@@ -416,7 +417,21 @@ function FormComponent({ setFormState, formState }) {
 							value={numberFormat(formState.expectedSalary)}
 							onChange={handleChange}
 						/>
-					</Grid>
+						</Grid>
+					) : (
+						<Grid item xs={12}>
+						<TextField
+							required
+							id="expectedSalary"
+							name="expectedSalary"
+							label="Expected CTC"
+							fullWidth
+							variant="outlined"
+							value={numberFormat(formState.expectedSalary)}
+							onChange={handleChange}
+						/>
+						</Grid>
+					)}
 					{formState.experience !== "Fresher" &&
 					formState.experience !== "Experienced" ? (
 						<>

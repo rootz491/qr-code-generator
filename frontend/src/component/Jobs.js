@@ -1,11 +1,24 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Button, FormControl, MenuItem, Paper, Select, Slider, Typography } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  IconButton,
+  MenuItem,
+  Paper,
+  Select,
+  Slider,
+  Typography,
+  Stack,
+  TextareaAutosize,
+} from "@mui/material";
 import JobCard from "./JobCardComponent";
 import { isAuthenticated } from "../services/auth";
 import { errorToast } from "../utils/toast";
 import http from "../services/http";
 import { Link } from "react-router-dom";
+import { Cancel, Check, CheckCircle, OfflinePin, Preview, RadioButtonChecked, Settings } from "@mui/icons-material";
+import { Box } from "@mui/system";
 
 function Jobs() {
   const [clientInfos, setClientInfos] = useState([]);
@@ -14,6 +27,7 @@ function Jobs() {
   const [domain, setDomain] = React.useState("All");
   const [type, setType] = React.useState("All");
   const [value, setValue] = React.useState(30);
+  const [open, setOpen] = React.useState(false);
 
   const handleSliderChange = (event, newValue) => {
     if (typeof newValue === "number") {
@@ -156,7 +170,9 @@ function Jobs() {
   const filterByCandidateStage = (stage) => {
     if (stage.toLowerCase() === "all") setClientInfos(clientInfosCopy);
     else {
-      setClientInfos(clientInfosCopy.filter((client) => client?.feedback?.status?.toLowerCase() === candidateStage?.toLowerCase()));
+      setClientInfos(
+        clientInfosCopy.filter((client) => client?.feedback?.status?.toLowerCase() === candidateStage?.toLowerCase())
+      );
     }
   };
 
@@ -217,6 +233,11 @@ function Jobs() {
     setType(event.target.value);
   };
 
+  const handleOpenClose = () => {
+    // only open the one which is clicked and close the other
+    setOpen(!open);
+  };
+
   // useEffect(() => {
   // const fetchClientInfos = localStorage.getItem("clientInfos") ?? [];
   // setClientInfos(JSON.parse(fetchClientInfos));
@@ -259,7 +280,14 @@ function Jobs() {
               Candidate Stages
             </Typography>
             <FormControl fullWidth variant="filled" size="small">
-              <Select hiddenLabel id="demo-simple-select" value={candidateStage} onChange={handleCandidateStageChange} label="candidateStage" name="candidateStage">
+              <Select
+                hiddenLabel
+                id="demo-simple-select"
+                value={candidateStage}
+                onChange={handleCandidateStageChange}
+                label="candidateStage"
+                name="candidateStage"
+              >
                 <MenuItem value="All">All</MenuItem>
                 <MenuItem value="pending">Applied</MenuItem>
                 <MenuItem value="selected">Review In Progress</MenuItem>
@@ -274,7 +302,14 @@ function Jobs() {
               Domain
             </Typography>
             <FormControl fullWidth variant="filled" size="small">
-              <Select hiddenLabel id="demo-simple-select" value={domain} onChange={handleDomainChange} label="domain" name="domain">
+              <Select
+                hiddenLabel
+                id="demo-simple-select"
+                value={domain}
+                onChange={handleDomainChange}
+                label="domain"
+                name="domain"
+              >
                 <MenuItem value="All">All</MenuItem>
                 <MenuItem value="Frontend developer">Frontend developer</MenuItem>
                 <MenuItem value="Fullstack developer">Fullstack Developer</MenuItem>
@@ -291,8 +326,12 @@ function Jobs() {
                 <MenuItem value="All">All</MenuItem>
                 <MenuItem value="Fresher">Fresher</MenuItem>
                 <MenuItem value="Experienced">Experience</MenuItem>
-                <MenuItem value="Experienced and currently serving notice period">Experienced and currently serving notice period</MenuItem>
-                <MenuItem value="Experienced and already served notice period">Experienced and already served notice period</MenuItem>
+                <MenuItem value="Experienced and currently serving notice period">
+                  Experienced and currently serving notice period
+                </MenuItem>
+                <MenuItem value="Experienced and already served notice period">
+                  Experienced and already served notice period
+                </MenuItem>
               </Select>
             </FormControl>
           </div>
@@ -325,7 +364,12 @@ function Jobs() {
               <Typography variant="body2" display="block" gutterBottom sx={{ fontWeight: "bold" }}>
                 Can join within
               </Typography>
-              <Typography variant="" display="block" gutterBottom sx={{ background: "#F0F0F0", width: "max-content", padding: "5px 10px" }}>
+              <Typography
+                variant=""
+                display="block"
+                gutterBottom
+                sx={{ background: "#F0F0F0", width: "max-content", padding: "5px 10px" }}
+              >
                 {joiningLabelFormat(calculateValue(value))}
               </Typography>
             </div>
@@ -376,7 +420,16 @@ function Jobs() {
             />
           </div>
           {/* button for reset filter */}
-          <Button variant="contained" size="small" sx={{ background: "#F0F0F0", color: "#000000" }} onClick={resetFilters}>
+          <Button variant="outlined" size="small" sx={{ width: "100%" }} onClick={handleOpenClose}>
+            {" "}
+            Toggle Comments Section{" "}
+          </Button>
+          <Button
+            variant="contained"
+            size="small"
+            sx={{ background: "#F0F0F0", color: "#000000" }}
+            onClick={resetFilters}
+          >
             {" "}
             Reset Filter{" "}
           </Button>
@@ -401,12 +454,46 @@ function Jobs() {
           {clientInfos.map((client, index) => (
             // lists of all jobcards
             // filter based on  jobtitle
-            <Link to={`/${client._id}`} key={index} style={{ textDecoration: "none" }}>
-              <div style={{ margin: "0" }}>
-                {/* only show those jobcard whose client.jobtitle === Jobtitle or else show all jobcards */}
-                <JobCard formState={client} />
-              </div>
-            </Link>
+            <Box spacing={2} key={index}>
+              <Link to={`/${client._id}`} key={index} style={{ textDecoration: "none" }}>
+                <div style={{ margin: "0" }}>
+                  {/* only show those jobcard whose client.jobtitle === Jobtitle or else show all jobcards */}
+                  <JobCard formState={client} />
+                </div>
+              </Link>
+              <Stack overflow="auto" direction="row" sx={{ marginTop: "10px" }} justifyContent="space-between">
+                <IconButton aria-label="selected" title="Rejected">
+                  <Cancel />
+                </IconButton>
+                <IconButton aria-label="selected" title="Selected">
+                  <OfflinePin />
+                </IconButton>
+                <IconButton aria-label="selected" title="Okay to interview">
+                  <CheckCircle />
+                </IconButton>
+                <IconButton aria-label="selected" title="Review in progress">
+                  <Preview />
+                </IconButton>
+                <IconButton aria-label="selected" title="Applied">
+                  <RadioButtonChecked />
+                </IconButton>
+              </Stack>
+              {open && (
+                <Box>
+                  <TextareaAutosize
+                    aria-label="minimum height"
+                    minRows={10}
+                    placeholder="any comments"
+                    name="comment"
+                    style={{ width: "100%" }}
+                    value={client.feedback.comment}
+                  />
+                  <Button variant="contained" size="small" sx={{ fontSize: "12px" }}>
+                    Post comment
+                  </Button>
+                </Box>
+              )}
+            </Box>
           ))}
         </div>
       ) : (

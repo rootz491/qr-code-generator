@@ -1,12 +1,15 @@
 import { errorToast, successToast } from "../utils/toast";
 import http from "./http";
-import { Navigate } from "react-router-dom";
 export function handelGetOtp(mobilenum) {
   http
     .post("/api/auth/request-login-via-otp", { mobilenum })
     .then((res) => {
       console.log(res);
+      let flag = false;
+      // if res.data.success is true, then show success toast
       successToast(res?.data?.message);
+      flag = true;
+      return flag;
     })
     .catch((err) => {
       errorToast(err?.response?.data?.message);
@@ -23,7 +26,10 @@ export function handelVerifyOtp(mobilenum, otp) {
       //saving the token will
       localStorage.setItem("access_token", res.data.access_token);
       // navigate to the route /
-      window.location = "/";
+      // settime out for 1 second
+      setTimeout(() => {
+        window.location = "/";
+      }, 1000);
     })
     .catch((err) => {
       errorToast(err.response.data.message);

@@ -6,8 +6,9 @@ import { Box } from "@mui/material";
 import { Avatar } from "@mui/material";
 import { MenuItem } from "@mui/material";
 import YugamLogo from "../../icons/yugamLogo.png";
+import { logout } from "../../services/user";
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Profile", "Logout"];
 
 export default function Header() {
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -18,6 +19,14 @@ export default function Header() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+    settings.map((setting) => {
+      if (setting === "Logout") {
+        logout();
+      } else {
+        console.log("some erroe occured, can't logout");
+      }
+      return 0;
+    });
   };
 
   return (
@@ -78,6 +87,7 @@ export default function Header() {
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
+                  {/* if settigs is logout then run function logout() */}
                 </MenuItem>
               ))}
             </Menu>

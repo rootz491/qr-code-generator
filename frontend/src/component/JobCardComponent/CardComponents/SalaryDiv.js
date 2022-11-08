@@ -19,7 +19,7 @@ const SalaryDiv = ({ current_ctc, current_inhand, expected_inhand, offered_ctc, 
       return url;
     }
     const handleOpen = (e) => {
-      console.log("working")
+      console.log("working");
       e.preventDefault();
       window.open(base64PDFToBlobUrl(formState.resume.data), "popup");
     };
@@ -101,7 +101,7 @@ const SalaryDiv = ({ current_ctc, current_inhand, expected_inhand, offered_ctc, 
       <div style={{ display: "flex", gap: "3px" }}>
         <div style={{ display: "flex", gap: "7px", width: "105px" }}>
           <img src={moneyIcon} alt="money" height="10px" width="10px" />
-          <span>Expected CTC</span>
+          {formState.experience === "Fresher" ? <span>Expected in-hand</span> : <span>Expected CTC</span>}
         </div>
         <Typography sx={{ fontWeight: "700", letterSpacing: "0.2px", fontSize: "8px", lineHeight: "10px" }}>
           {expected_inhand}

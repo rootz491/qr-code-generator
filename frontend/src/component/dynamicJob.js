@@ -7,7 +7,7 @@ import { InputLabel } from "@mui/material";
 import { Select } from "@mui/material";
 import { MenuItem } from "@mui/material";
 import { Button } from "@mui/material";
-import { handelGetUser,saveUserFeedback } from "../services/user";
+import { saveUserFeedback } from "../services/user";
 import { getUserType, isAuthenticated } from "../services/auth";
 import { errorToast } from "../utils/toast";
 import http from "../services/http";
