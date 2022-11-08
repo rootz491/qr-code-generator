@@ -16,12 +16,25 @@ import calender from "../../icons/calender.svg";
 import moment from "moment";
 import "../JobCardComponent/CardComponents/styles.css";
 
+<<<<<<< HEAD
 export default function JobCard({ formState }) {
   const NoticePeriod = () => {
     if (formState.experience && formState.noticePeriod) {
       return <span className="noticePeriodText">({formState.noticePeriod} months)</span>;
     }
   };
+=======
+export default function JobCard({ formState, onClick }) {
+	const NoticePeriod = () => {
+		if (formState.experience && formState.noticePeriod) {
+			return (
+				<span className="noticePeriodText">
+					({formState.noticePeriod} months)
+				</span>
+			);
+		}
+	};
+>>>>>>> 290cbcbf78fb2b5b88efd6b8f3c60e98d64656e3
 
   const LastWorkDate = () => {
     const stringLastDate = formState.lastWorkDay.replace(/-/g, "");
