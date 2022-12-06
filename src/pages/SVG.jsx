@@ -6,6 +6,7 @@ import svgJson from '../json/svg.json';
 export default function SVG() {
   const { width, height, viewBox, fill } = svgJson;
   const [qrCords, setQrCords] = React.useState([]);
+  const [qrCodeWithRects, setRects] = React.useState([]);
 
   // A function to genrate a 22x22 matrix of random 0 and 1
   const genrateMatrix = () => {
@@ -43,22 +44,67 @@ export default function SVG() {
     return svgPath;
   };
 
+  const pathToRect = (path) => {
+    const rect = [];
+    for (let i = 0; i < path.length; i++) {
+      const [x, y] = path[i].split('_');
+      rect.push(
+        <rect
+          x={x * 10}
+          rx='5'
+          ry='5'
+          y={y * 10}
+          width='10'
+          height='10'
+          fill={fill}
+          key={i}
+        />
+      );
+    }
+    return rect;
+  };
+
   React.useEffect(() => {
     const matrix = genrateMatrix();
     const path = matrixToPath(matrix);
     const svgPath = pathToSvgPath(path);
+    const rects = pathToRect(path);
+    setRects(rects);
     setQrCords(svgPath);
   }, []);
 
+  const genrateNew = () => {
+    const matrix = genrateMatrix();
+    const path = matrixToPath(matrix);
+    const svgPath = pathToSvgPath(path);
+    const rects = pathToRect(path);
+    setRects(rects);
+    setQrCords(svgPath);
+  };
+
   return (
-    <svg xmlns='http://www.w3.org/2000/svg'>
-      {qrCords.map((cord, index) => (
-        <path
-          key={index}
-          d={cord}
-          fill={fill}
-        />
-      ))}
-    </svg>
+    <>
+      <svg xmlns='http://www.w3.org/2000/svg'>
+        {qrCords.map((cord, index) => (
+          <path
+            strokeLinecap='round'
+            key={index}
+            d={cord}
+            fill={fill}
+          />
+        ))}
+      </svg>
+      <svg xmlns='http://www.w3.org/2000/svg'>
+        {qrCodeWithRects.map((rect, index) => rect)}
+      </svg>
+      <button
+        style={{
+          color: 'white',
+        }}
+        onClick={genrateNew}
+      >
+        Generate New
+      </button>
+    </>
   );
 }
