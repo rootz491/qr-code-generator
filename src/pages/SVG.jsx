@@ -9,12 +9,15 @@ export default function SVG() {
   const [qrCodeWithRects, setRects] = React.useState([]);
   const [connectedCords, setConnectedCords] = React.useState([]);
 
+  //TODO:
+  // !
+
   // A function to generate a 22x22 matrix of random 0 and 1
-  const generateMatrix = () => {
+  const generateMatrix = (height = 21, width = 21) => {
     const matrix = [];
-    for (let i = 0; i < 22; i++) {
+    for (let i = 0; i < height; i++) {
       const row = [];
-      for (let j = 0; j < 22; j++) {
+      for (let j = 0; j < width; j++) {
         row.push(Math.round(Math.random()));
       }
       matrix.push(row);
@@ -74,8 +77,6 @@ export default function SVG() {
 
     return result;
   };
-
-
   const filterEye = (arr) => {
     //removing 7x7 eye from start end and bottom
     for (let i = 0; i < arr.length; i++) {
@@ -180,8 +181,88 @@ export default function SVG() {
     
    */
 
+  // Dynamic island algorithm to find all the connected Ones
+  const connectedOnes = (arr) => {
+    const result = [];
+    const visited = [];
+    const rows = arr.length;
+    const cols = arr[0].length;
+
+    // Initialize the visited array
+    for (let i = 0; i < rows; i++) {
+      visited[i] = [];
+      for (let j = 0; j < cols; j++) {
+        visited[i][j] = false;
+      }
+    }
+
+    // Loop through the array and find all the connected ones
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        if (arr[i][j] === 1 && !visited[i][j]) {
+          const path = [];
+          dfs(arr, i, j, visited, path);
+          result.push(path);
+        }
+      }
+    }
+    return result;
+  };
+
+  // Depth first search to find all the connected ones
+  const dfs = (arr, i, j, visited, path) => {
+    const rows = arr.length;
+    const cols = arr[0].length;
+    const rowNbr = [-1, -1, -1, 0, 0, 1, 1, 1];
+    const colNbr = [-1, 0, 1, -1, 1, -1, 0, 1];
+
+    // Mark this cell as visited
+    visited[i][j] = true;
+
+    // Recur for all connected neighbours
+    for (let k = 0; k < 8; k++) {
+      if (isSafe(arr, i + rowNbr[k], j + colNbr[k], visited)) {
+        dfs(arr, i + rowNbr[k], j + colNbr[k], visited, path);
+      }
+    }
+    path.push(`${i}_${j}`);
+  };
+
+  // A function to check if a given cell (row, col) can be included in DFS
+  const isSafe = (arr, row, col, visited) => {
+    const rows = arr.length;
+    const cols = arr[0].length;
+
+    // row number is in range, column number is in range and value is 1 and not yet visited
+    return (
+      row >= 0 &&
+      row < rows &&
+      col >= 0 &&
+      col < cols &&
+      arr[row][col] === 1 &&
+      !visited[row][col]
+    );
+  };
+
+  // A function to convert the path to svg path
+  const pathToConnectedSvgPath = (coords) => {
+    const svgPath = [];
+
+    for (let i = 0; i < coords.length; i++) {
+      const { line, start, end } = coords[i];
+
+      svgPath.push(
+        `M${start * 10} ${line * 10} h${(end - start) * 10 + 10} v10 h-${
+          (end - start) * 10 + 10
+        } z`
+      );
+    }
+    return svgPath;
+  };
+
   const pathToConnectedRect = (coords) => {
     const rect = [];
+
     for (let i = 0; i < coords.length; i++) {
       const { line, start, end } = coords[i];
 
@@ -232,7 +313,7 @@ export default function SVG() {
 
   return (
     <>
-      <svg
+      {/* <svg
         width={300}
         height={300}
         xmlns='http://www.w3.org/2000/svg'
@@ -245,7 +326,7 @@ export default function SVG() {
             fill={fill}
           />
         ))}
-      </svg>
+      </svg> */}
       {/* <svg
         width={300}
         height={300}
