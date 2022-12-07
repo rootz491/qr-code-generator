@@ -75,7 +75,28 @@ export default function SVG() {
     return result;
   };
 
+
+  const filterEye = (arr) => {
+    //removing 7x7 eye from start end and bottom
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < arr[i].length; j++) {
+        if (i < 7 && j < 7) {
+          arr[i][j] = 0;
+        }
+        if (i < 7 && j > 14) {
+          arr[i][j] = 0;
+        }
+
+        if (i > 14 && j > 14) {
+          arr[i][j] = 0;
+        }
+      }
+    }
+    return arr;
+  };
+
   function convertOnes(arr) {
+    arr = filterEye(arr);
     let result = [];
     let start = -1;
     let end = -1;
