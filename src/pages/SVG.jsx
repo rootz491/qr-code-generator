@@ -3,18 +3,38 @@
 import React from "react";
 import svgJson from "../json/svg.json";
 
+const removeBorders = (matrix) => {
+	const result = [];
+
+	for (let i = 1; i < matrix.length - 1; i++) {
+		const row = matrix[i];
+		const newRow = [];
+
+		for (let j = 1; j < row.length - 1; j++) {
+			newRow.push(row[j]);
+		}
+
+		result.push(newRow);
+	}
+
+	return result;
+};
+
 export default function SVG() {
 	const { width, height, viewBox, fill } = svgJson;
 	const [qrCords, setQrCords] = React.useState([]);
 	const [qrCodeWithRects, setRects] = React.useState([]);
 	const [connectedCords, setConnectedCords] = React.useState([]);
 	const [ronnysAlgo, setRonnysAlgo] = React.useState([]);
+	const [matrix, setMatrix] = React.useState([]);
 
 	//TODO:
 	// !
 
+	const SIZE = 6;
+
 	// A function to generate a 22x22 matrix of random 0 and 1
-	const generateMatrix = (height = 21, width = 21) => {
+	const generateMatrix = (height = SIZE, width = SIZE) => {
 		const matrix = [];
 		for (let i = 0; i < height; i++) {
 			const row = [];
@@ -161,7 +181,6 @@ export default function SVG() {
 	//   }
 	//   return svgPath;
 	// };
-
 	const pathToRect = (path) => {
 		const rect = [];
 		for (let i = 0; i < path.length; i++) {
@@ -181,10 +200,6 @@ export default function SVG() {
 		}
 		return rect;
 	};
-
-	/*
-    
-   */
 
 	// Dynamic island algorithm to find all the connected Ones
 	const connectedOnes = (arr) => {
@@ -392,24 +407,25 @@ export default function SVG() {
 
 	React.useEffect(() => {
 		const matrix = generateMatrix();
-		const path = matrixToPath(matrix);
-		const svgPath = pathToSvgPath(path);
-		const rects = pathToRect(path);
-		console.log(path);
-		const arrObj = convertOnes(matrix);
-		const connectedRects = pathToConnectedRect(arrObj);
-		setConnectedCords(connectedRects);
+		setMatrix(matrix);
+		// const path = matrixToPath(matrix);
+		// const svgPath = pathToSvgPath(path);
+		// const rects = pathToRect(path);
+		// console.log(path);
+		// const arrObj = convertOnes(matrix);
+		// const connectedRects = pathToConnectedRect(arrObj);
+		// setConnectedCords(connectedRects);
 
-		const dynamicisland = connectedOnes(matrix);
+		// const dynamicisland = connectedOnes(matrix);
 		const data = ROOTZAlgo(matrix);
 		setRonnysAlgo(data);
-		console.log("dslsssssssssssssssss", data);
-		pathToConnectedSvgPath(arrObj);
+		// console.log("dslsssssssssssssssss", data);
+		// pathToConnectedSvgPath(arrObj);
 
-		setRects(rects);
-		console.log(convertOnes(generateMatrix()));
+		// setRects(rects);
+		// console.log(convertOnes(generateMatrix()));
 
-		setQrCords(svgPath);
+		// setQrCords(svgPath);
 	}, []);
 
 	const generateNew = () => {
@@ -554,17 +570,61 @@ export default function SVG() {
 					) {
 						data.curved.BL = 1;
 					}
+
+					/* tryna connect the dots here ^_^ */
+					/*
+					//  check if top & right are 1
+					//  if yes then curved = 1
+					if (
+						i > 0 &&
+						j < arr[0].length - 1 &&
+						arr[i - 1][j] === 1 &&
+						arr[i][j + 1] === 1
+					) {
+						data.curved.TR = 1;
+					}
+
+					//  top left
+					if (i > 0 && j > 0 && arr[i - 1][j] === 1 && arr[i][j - 1] === 1) {
+						data.curved.TL = 1;
+					}
+
+					//  bottom right
+					if (
+						i < arr.length - 1 &&
+						j < arr[0].length - 1 &&
+						arr[i + 1][j] === 1 &&
+						arr[i][j + 1] === 1
+					) {
+						data.curved.BR = 1;
+					}
+
+					//  bottom left
+					if (
+						i < arr.length - 1 &&
+						j > 0 &&
+						arr[i + 1][j] === 1 &&
+						arr[i][j - 1] === 1
+					) {
+						data.curved.BL = 1;
+          }
+          */
 				}
 
 				mat.push(data);
 			}
 			result.push(mat);
 		}
-		return result;
+
+		return removeBorders(result);
 	};
 
 	return (
 		<div style={{ padding: "50px", display: "flex" }}>
+			<MatrixToTable matrix={matrix} />
+
+			<MatrixToJSONTable matrix={ronnysAlgo} />
+
 			<div
 				style={{
 					width: "300px",
@@ -728,3 +788,35 @@ export default function SVG() {
 		</div>
 	);
 }
+
+const MatrixToTable = ({ matrix }) => {
+	return (
+		<table border={1}>
+			<tbody>
+				{matrix.map((row, rowIndex) => (
+					<tr key={rowIndex}>
+						{row.map((cell, cellIndex) => (
+							<td key={cellIndex}>{cell}</td>
+						))}
+					</tr>
+				))}
+			</tbody>
+		</table>
+	);
+};
+
+const MatrixToJSONTable = ({ matrix }) => {
+	return (
+		<table border={1}>
+			<tbody>
+				{matrix.map((row, rowIndex) => (
+					<tr key={rowIndex}>
+						{row.map((cell, cellIndex) => (
+							<td key={cellIndex}>{JSON.stringify(cell)}</td>
+						))}
+					</tr>
+				))}
+			</tbody>
+		</table>
+	);
+};
