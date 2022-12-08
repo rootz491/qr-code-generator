@@ -8,6 +8,7 @@ export default function SVG() {
   const [qrCords, setQrCords] = React.useState([]);
   const [qrCodeWithRects, setRects] = React.useState([]);
   const [connectedCords, setConnectedCords] = React.useState([]);
+  const [ronnysAlgo, setRonnysAlgo] = React.useState([]);
 
   //TODO:
   // !
@@ -88,9 +89,13 @@ export default function SVG() {
           arr[i][j] = 0;
         }
 
-        if (i > 14 && j > 14) {
+        if (i > 14 && j < 7) {
           arr[i][j] = 0;
         }
+
+        // if (i > 14 && j > 14) {
+        //   arr[i][j] = 0;
+        // }
       }
     }
     return arr;
@@ -148,14 +153,14 @@ export default function SVG() {
   }
 
   // A function to convert the path to svg path
-  const pathToSvgPath = (path) => {
-    const svgPath = [];
-    for (let i = 0; i < path.length; i++) {
-      const [x, y] = path[i].split('_');
-      svgPath.push(`M${x * 10} ${y * 10} h10 v10 h-10 z`);
-    }
-    return svgPath;
-  };
+  // const pathToSvgPath = (path) => {
+  //   const svgPath = [];
+  //   for (let i = 0; i < path.length; i++) {
+  //     const [x, y] = path[i].split('_');
+  //     svgPath.push(`M${x * 10} ${y * 10} h10 v10 h-10 z`);
+  //   }
+  //   return svgPath;
+  // };
 
   const pathToRect = (path) => {
     const rect = [];
@@ -244,6 +249,69 @@ export default function SVG() {
     );
   };
 
+  //connecting all the surrounding ones into a single path
+  const connectedPath = (arr) => {
+    const result = [];
+    const rows = arr.length;
+    const cols = arr[0].length;
+
+    // Loop through the array and find all the connected ones
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        if (arr[i][j] === 1) {
+          const path = [];
+          dfsPath(arr, i, j, path);
+          result.push(path);
+        }
+      }
+    }
+    return result;
+  };
+
+  // Depth first search to find all the connected ones
+  const dfsPath = (arr, i, j, path) => {
+    const rows = arr.length;
+    const cols = arr[0].length;
+    const rowNbr = [-1, -1, -1, 0, 0, 1, 1, 1];
+    const colNbr = [-1, 0, 1, -1, 1, -1, 0, 1];
+
+    // Mark this cell as visited
+    arr[i][j] = 0;
+
+    // Recur for all connected neighbours
+    for (let k = 0; k < 8; k++) {
+      if (isSafePath(arr, i + rowNbr[k], j + colNbr[k])) {
+        dfsPath(arr, i + rowNbr[k], j + colNbr[k], path);
+      }
+    }
+    path.push(`${i}_${j}`);
+  };
+
+  // A function to check if a given cell (row, col) can be included in DFS
+  const isSafePath = (arr, row, col) => {
+    const rows = arr.length;
+    const cols = arr[0].length;
+
+    // row number is in range, column number is in range and value is 1 and not yet visited
+    return (
+      row >= 0 && row < rows && col >= 0 && col < cols && arr[row][col] === 1
+    );
+  };
+
+  // A function to convert the path to svg path
+  const pathToSvgPath = (path) => {
+    const svgPath = [];
+    for (let i = 0; i < path.length; i++) {
+      const [x, y, z] = path[i].split('_');
+      svgPath.push(
+        `M${x * 10} ${y * 10} h${(z - y) * 10 + 10} v10 h-${
+          (z - y) * 10 + 10
+        } z`
+      );
+    }
+    return svgPath;
+  };
+
   // A function to convert the path to svg path
   const pathToConnectedSvgPath = (coords) => {
     const svgPath = [];
@@ -259,6 +327,86 @@ export default function SVG() {
     }
     return svgPath;
   };
+
+  const ronyAlgo = (arr) => {
+    const result = [];
+    for (let i = 0; i < arr.length; i++) {
+      const mat = [];
+      for (let j = 0; j < arr[0].length; j++) {
+        const data = {
+          pixel: 0,
+          curved: {
+            R: 0,
+            L: 0,
+            T: 0,
+            B: 0,
+            TR: 0,
+            TL: 0,
+            BR: 0,
+            BL: 0,
+          },
+        };
+        if (arr[i][j] === 1) {
+          data.pixel = 'black';
+          if (j < arr[0].length - 1 && arr[i][j + 1] === 0) {
+            data.curved.R = 1;
+          }
+          if (i < arr.length - 1 && arr[i + 1][j] === 0) {
+            data.curved.B = 1;
+          }
+          if (i > 1 && arr[i - 1][j] === 0) {
+            data.curved.T = 1;
+          }
+          if (j > 1 && arr[i][j - 1] === 0) {
+            data.curved.L = 1;
+          }
+          if (j < arr[0].length - 1 && i > 0 && arr[i - 1][j + 1] === 0) {
+            data.curved.TR = 1;
+          }
+          if (i < arr.length - 1 && j > 0 && arr[i + 1][j - 1] === 0) {
+            data.curved.BR = 1;
+          }
+          if (i > 1 && j > 0 && arr[i - 1][j - 1] === 0) {
+            data.curved.BL = 1;
+          }
+          if (j > 1 && i > 0 && arr[i - 1][j - 1] === 0) {
+            data.curved.TL = 1;
+          }
+        } else {
+          data.pixel = 'white';
+          if (j < arr[0].length - 1 && arr[i][j + 1] === 1) {
+            data.curved.R = 1;
+          }
+          if (i < arr.length - 1 && arr[i + 1][j] === 1) {
+            data.curved.B = 1;
+          }
+          if (i > 1 && arr[i - 1][j] === 1) {
+            data.curved.T = 1;
+          }
+          if (j > 1 && arr[i][j - 1] === 1) {
+            data.curved.L = 1;
+          }
+          if (j < arr[0].length - 1 && i > 0 && arr[i - 1][j + 1] === 1) {
+            data.curved.TR = 1;
+          }
+          if (i < arr.length - 1 && j > 0 && arr[i + 1][j - 1] === 1) {
+            data.curved.BR = 1;
+          }
+          if (i > 1 && j > 0 && arr[i - 1][j - 1] === 1) {
+            data.curved.BL = 1;
+          }
+          if (j > 1 && i > 0 && arr[i - 1][j - 1] === 1) {
+            data.curved.TL = 1;
+          }
+        }
+        mat.push(data);
+      }
+      result.push(mat);
+    }
+    return result;
+  };
+
+  //finding all the connected ones vertically and horizontally and drawing a path through it
 
   const pathToConnectedRect = (coords) => {
     const rect = [];
@@ -280,6 +428,43 @@ export default function SVG() {
         />
       );
     }
+    //placing 3 rects in top left and right and bottom right 7*7
+    rect.push(
+      <rect
+        x={0}
+        rx='5'
+        ry='5'
+        y={0}
+        width={60}
+        height={60}
+        fill={fill}
+        key={coords.length}
+      />
+    );
+
+    rect.push(
+      <rect
+        x={0}
+        rx='5'
+        ry='5'
+        y={7 * 28}
+        width={60}
+        height={60}
+        key={coords.length + 1}
+      />
+    );
+    rect.push(
+      <rect
+        x={7 * 22}
+        rx='5'
+        ry='5'
+        y={0}
+        width={60}
+        height={60}
+        fill={fill}
+        key={coords.length + 2}
+      />
+    );
     return rect;
   };
 
@@ -292,6 +477,12 @@ export default function SVG() {
     const arrObj = convertOnes(matrix);
     const connectedRects = pathToConnectedRect(arrObj);
     setConnectedCords(connectedRects);
+
+    const dynamicisland = connectedOnes(matrix);
+    const data = ronyAlgo(matrix);
+    setRonnysAlgo(data);
+    console.log('dslsssssssssssssssss', data);
+    pathToConnectedSvgPath(arrObj);
 
     setRects(rects);
     console.log(convertOnes(generateMatrix()));
@@ -312,7 +503,7 @@ export default function SVG() {
   };
 
   return (
-    <>
+    <div style={{ padding: '50px' }}>
       {/* <svg
         width={300}
         height={300}
@@ -334,13 +525,48 @@ export default function SVG() {
       >
         {qrCodeWithRects.map((rect, index) => rect)}
       </svg> */}
-      <svg
+      {/* <svg
         width={300}
         height={300}
         xmlns='http://www.w3.org/2000/svg'
       >
         {connectedCords.map((rect, index) => rect)}
-      </svg>
+      </svg> */}
+
+      <div
+        style={{
+          width: '300px',
+          height: '300px',
+
+          position: 'relative',
+
+          border: '0',
+        }}
+      >
+        {ronnysAlgo.map((rect, x) => {
+          console.log('rect', rect);
+          return rect.map((data, y) => (
+            <div
+              style={{
+                width: '10px',
+                height: '10px',
+                backgroundColor: data.pixel,
+                position: 'absolute',
+                top: x * 10 + 2,
+                left: y * 10 + 5,
+                border: '0',
+                borderTopLeftRadius: data.curved.T * 5,
+                borderTopRightRadius: data.curved.R * 5,
+                borderBottomLeftRadius: data.curved.L * 5,
+                borderBottomRightRadius: data.curved.R * 5,
+              }}
+              key={x + y}
+            >
+              {' '}
+            </div>
+          ));
+        })}
+      </div>
       <button
         style={{
           color: 'white',
@@ -349,6 +575,6 @@ export default function SVG() {
       >
         Generate New
       </button>
-    </>
+    </div>
   );
 }
