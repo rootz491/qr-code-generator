@@ -564,7 +564,7 @@ export default function SVG() {
 	};
 
 	return (
-		<div style={{ padding: "50px" }}>
+		<div style={{ padding: "50px", display: "flex" }}>
 			<div
 				style={{
 					width: "300px",
@@ -573,6 +573,7 @@ export default function SVG() {
 					position: "relative",
 				}}
 			>
+				{/* curved */}
 				{ronnysAlgo.map((rect, x) => {
 					console.log("rect", rect);
 					return rect.map((data, y) =>
@@ -605,7 +606,6 @@ export default function SVG() {
 										position: "absolute",
 										top: x * 10,
 										left: y * 10,
-										// backgroundColor: "red",
 										zIndex: 2,
 										borderTopLeftRadius: data.curved.TL * 5,
 										borderTopRightRadius: data.curved.TR * 5,
@@ -636,14 +636,95 @@ export default function SVG() {
 					);
 				})}
 			</div>
-			<button
+
+			<div
 				style={{
-					color: "white",
+					width: "300px",
+					height: "300px",
+
+					position: "relative",
 				}}
-				onClick={generateNew}
 			>
-				Generate New
-			</button>
+				{/* plane */}
+				{ronnysAlgo.map((rect, x) => {
+					console.log("rect", rect);
+					return rect.map((data, y) =>
+						data.pixel === "black" ? (
+							<div
+								style={{
+									width: "10px",
+									height: "10px",
+									backgroundColor: data.pixel,
+									position: "absolute",
+									top: x * 10,
+									left: y * 10,
+									backgroundColor: "black",
+									// borderTopLeftRadius: data.curved.TL * 5,
+									// borderTopRightRadius: data.curved.TR * 5,
+									// borderBottomLeftRadius: data.curved.BL * 5,
+									// borderBottomRightRadius: data.curved.BR * 5,
+								}}
+								key={x + y}
+							>
+								{" "}
+							</div>
+						) : (
+							<>
+								<div
+									style={{
+										width: "10px",
+										height: "10px",
+										backgroundColor: data.pixel,
+										position: "absolute",
+										top: x * 10,
+										left: y * 10,
+										zIndex: 2,
+										// borderTopLeftRadius: data.curved.TL * 5,
+										// borderTopRightRadius: data.curved.TR * 5,
+										// borderBottomLeftRadius: data.curved.BL * 5,
+										// borderBottomRightRadius: data.curved.BR * 5,
+									}}
+									key={x + y}
+								>
+									{" "}
+								</div>
+								{/* <div
+									style={{
+										width: "10px",
+										height: "10px",
+										backgroundColor: data.pixel,
+										position: "absolute",
+										top: x * 100,
+										left: y * 100,
+										backgroundColor: "black",
+										zIndex: 1,
+									}}
+									key={x + y}
+								>
+									{" "}
+								</div> */}
+							</>
+						)
+					);
+				})}
+			</div>
+			<div
+				style={{
+					display: "flex",
+					justifyContent: "center",
+					alignItems: "center",
+				}}
+			>
+				<button
+					style={{
+						color: "white",
+						margin: "auto",
+					}}
+					onClick={generateNew}
+				>
+					Generate New
+				</button>
+			</div>
 		</div>
 	);
 }
