@@ -424,7 +424,21 @@ export default function SVG() {
 		setQrCords(svgPath);
 	};
 
+	const paddingBoundaries = (matrix) => {
+		//adding 0s in the boundries of the matrix
+		for (let i = 0; i < matrix.length; i++) {
+			matrix[i].unshift(0);
+			matrix[i].push(0);
+		}
+		const zeroRow = new Array(matrix[0].length).fill(0);
+		matrix.unshift(zeroRow);
+		matrix.push(zeroRow);
+		return matrix;
+	};
+
 	const ROOTZAlgo = (arr) => {
+		arr = paddingBoundaries(arr);
+
 		const result = [];
 		for (let i = 0; i < arr.length; i++) {
 			const mat = [];
@@ -493,17 +507,53 @@ export default function SVG() {
 						data.curved.BR = 1;
 					}
 				} else {
-          data.pixel = "white";
-          
-          //  top right
-          if (
-            i > 0 &&
-            j < arr[0].length - 1 &&
-            arr[i - 1][j] === 1 &&
-            arr[i][j + 1] === 1
-          ) {
-            data.curved.TR = 1;
-          }
+					data.pixel = "white";
+
+					//  top right
+					//  check if top & top right & right are 1
+					//  if yes then curved = 1
+					if (
+						i > 0 &&
+						j < arr[0].length - 1 &&
+						arr[i - 1][j] === 1 &&
+						arr[i - 1][j + 1] === 1 &&
+						arr[i][j + 1] === 1
+					) {
+						data.curved.TR = 1;
+					}
+
+					//  top left
+					if (
+						i > 0 &&
+						j > 0 &&
+						arr[i - 1][j] === 1 &&
+						arr[i - 1][j - 1] === 1 &&
+						arr[i][j - 1] === 1
+					) {
+						data.curved.TL = 1;
+					}
+
+					//  bottom right
+					if (
+						i < arr.length - 1 &&
+						j < arr[0].length - 1 &&
+						arr[i + 1][j] === 1 &&
+						arr[i + 1][j + 1] === 1 &&
+						arr[i][j + 1] === 1
+					) {
+						data.curved.BR = 1;
+					}
+
+					//  bottom left
+					if (
+						i < arr.length - 1 &&
+						j > 0 &&
+						arr[i + 1][j] === 1 &&
+						arr[i + 1][j - 1] === 1 &&
+						arr[i][j - 1] === 1
+					) {
+						data.curved.BL = 1;
+					}
 				}
 
 				mat.push(data);
@@ -521,32 +571,69 @@ export default function SVG() {
 					height: "300px",
 
 					position: "relative",
-
-					border: "0",
 				}}
 			>
 				{ronnysAlgo.map((rect, x) => {
 					console.log("rect", rect);
-					return rect.map((data, y) => (
-						<div
-							style={{
-								width: "10px",
-								height: "10px",
-								backgroundColor: data.pixel,
-								position: "absolute",
-								top: x * 10,
-								left: y * 10,
-
-								borderTopLeftRadius: data.curved.TL * 5,
-								borderTopRightRadius: data.curved.TR * 5,
-								borderBottomLeftRadius: data.curved.BL * 5,
-								borderBottomRightRadius: data.curved.BR * 5,
-							}}
-							key={x + y}
-						>
-							{" "}
-						</div>
-					));
+					return rect.map((data, y) =>
+						data.pixel === "black" ? (
+							<div
+								style={{
+									width: "10px",
+									height: "10px",
+									backgroundColor: data.pixel,
+									position: "absolute",
+									top: x * 10,
+									left: y * 10,
+									backgroundColor: "black",
+									borderTopLeftRadius: data.curved.TL * 5,
+									borderTopRightRadius: data.curved.TR * 5,
+									borderBottomLeftRadius: data.curved.BL * 5,
+									borderBottomRightRadius: data.curved.BR * 5,
+								}}
+								key={x + y}
+							>
+								{" "}
+							</div>
+						) : (
+							<>
+								<div
+									style={{
+										width: "10px",
+										height: "10px",
+										backgroundColor: data.pixel,
+										position: "absolute",
+										top: x * 10,
+										left: y * 10,
+										// backgroundColor: "red",
+										zIndex: 2,
+										borderTopLeftRadius: data.curved.TL * 5,
+										borderTopRightRadius: data.curved.TR * 5,
+										borderBottomLeftRadius: data.curved.BL * 5,
+										borderBottomRightRadius: data.curved.BR * 5,
+									}}
+									key={x + y}
+								>
+									{" "}
+								</div>
+								<div
+									style={{
+										width: "10px",
+										height: "10px",
+										backgroundColor: data.pixel,
+										position: "absolute",
+										top: x * 10,
+										left: y * 10,
+										backgroundColor: "black",
+										zIndex: 1,
+									}}
+									key={x + y}
+								>
+									{" "}
+								</div>
+							</>
+						)
+					);
 				})}
 			</div>
 			<button
