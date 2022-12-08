@@ -354,7 +354,7 @@ export default function SVG() {
           if (i < arr.length - 1 && arr[i + 1][j] === 0) {
             data.curved.B = 1;
           }
-          if (i > 1 && arr[i - 1][j] === 0) {
+          if (i > 0 && arr[i - 1][j] === 0) {
             data.curved.T = 1;
           }
           if (j > 1 && arr[i][j - 1] === 0) {
@@ -552,13 +552,13 @@ export default function SVG() {
                 height: '10px',
                 backgroundColor: data.pixel,
                 position: 'absolute',
-                top: x * 10 + 2,
-                left: y * 10 + 5,
-                border: '0',
+                top: x * 10,
+                left: y * 10,
+
                 borderTopLeftRadius: data.curved.T * 5,
-                borderTopRightRadius: data.curved.R * 5,
-                borderBottomLeftRadius: data.curved.L * 5,
-                borderBottomRightRadius: data.curved.R * 5,
+                borderTopRightRadius: data.curved.L * 5,
+                borderBottomLeftRadius: data.curved.B * 5,
+                borderBottomRightRadius: data.curved.BR * 5,
               }}
               key={x + y}
             >
