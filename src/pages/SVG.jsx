@@ -455,7 +455,8 @@ export default function SVG() {
 	const ROOTZAlgo = (arr) => {
 		arr = paddingBoundaries(arr);
 
-		const result = [];
+    const result = [];
+
 		for (let i = 0; i < arr.length; i++) {
 			const mat = [];
 			for (let j = 0; j < arr[0].length; j++) {
@@ -470,7 +471,11 @@ export default function SVG() {
 				};
 
 				if (arr[i][j] === 1) {
-					data.pixel = "black";
+          data.pixel = "black";
+          
+          //  right & left & i == 0 or i == arr.length - 1
+
+          //  top  &  bottom  &  j == 0 or j == arr[0].length - 1
 
 					//  top right
 					if (
