@@ -31,7 +31,7 @@ export default function SVG() {
 	//TODO:
 	// !
 
-	const SIZE = 6;
+	const SIZE = 15;
 
 	// A function to generate a 22x22 matrix of random 0 and 1
 	const generateMatrix = (height = SIZE, width = SIZE) => {
@@ -73,31 +73,11 @@ export default function SVG() {
 					end = -1;
 				}
 			}
-			// console.log('hi');
-			// if (arr[i] === 1) {
-			//   if (start === -1) {
-			//     // This is the first 1 in a potential sequence
-			//     start = i;
-			//   }
-			//   // Update the end of the sequence to the current index
-			//   end = i;
-			// } else if (start !== -1) {
-			//   // This is the end of the sequence, so add it to the result
-			//   result.push({ start, end });
-			//   // Reset the start and end of the sequence
-			//   start = -1;
-			//   end = -1;
-			// }
 		}
-
-		// Check if there is a sequence that hasn't been added to the result yet
-		// if (start !== -1) {
-		//   result.push(`${i}_${start}`);
-		//   result.push(`${i}_${end}`);
-		// }
 
 		return result;
 	};
+
 	const filterEye = (arr) => {
 		//removing 7x7 eye from start end and bottom
 		for (let i = 0; i < arr.length; i++) {
@@ -112,10 +92,6 @@ export default function SVG() {
 				if (i > 14 && j < 7) {
 					arr[i][j] = 0;
 				}
-
-				// if (i > 14 && j > 14) {
-				//   arr[i][j] = 0;
-				// }
 			}
 		}
 		return arr;
@@ -147,21 +123,6 @@ export default function SVG() {
 					line = i;
 				}
 			}
-			// console.log('hi');
-			// if (arr[i] === 1) {
-			//   if (start === -1) {
-			//     // This is the first 1 in a potential sequence
-			//     start = i;
-			//   }
-			//   // Update the end of the sequence to the current index
-			//   end = i;
-			// } else if (start !== -1) {
-			//   // This is the end of the sequence, so add it to the result
-			//   result.push({ start, end });
-			//   // Reset the start and end of the sequence
-			//   start = -1;
-			//   end = -1;
-			// }
 		}
 
 		// Check if there is a sequence that hasn't been added to the result yet
@@ -201,34 +162,6 @@ export default function SVG() {
 		return rect;
 	};
 
-	// Dynamic island algorithm to find all the connected Ones
-	const connectedOnes = (arr) => {
-		const result = [];
-		const visited = [];
-		const rows = arr.length;
-		const cols = arr[0].length;
-
-		// Initialize the visited array
-		for (let i = 0; i < rows; i++) {
-			visited[i] = [];
-			for (let j = 0; j < cols; j++) {
-				visited[i][j] = false;
-			}
-		}
-
-		// Loop through the array and find all the connected ones
-		for (let i = 0; i < rows; i++) {
-			for (let j = 0; j < cols; j++) {
-				if (arr[i][j] === 1 && !visited[i][j]) {
-					const path = [];
-					dfs(arr, i, j, visited, path);
-					result.push(path);
-				}
-			}
-		}
-		return result;
-	};
-
 	// Depth first search to find all the connected ones
 	const dfs = (arr, i, j, visited, path) => {
 		const rows = arr.length;
@@ -264,25 +197,6 @@ export default function SVG() {
 		);
 	};
 
-	//connecting all the surrounding ones into a single path
-	const connectedPath = (arr) => {
-		const result = [];
-		const rows = arr.length;
-		const cols = arr[0].length;
-
-		// Loop through the array and find all the connected ones
-		for (let i = 0; i < rows; i++) {
-			for (let j = 0; j < cols; j++) {
-				if (arr[i][j] === 1) {
-					const path = [];
-					dfsPath(arr, i, j, path);
-					result.push(path);
-				}
-			}
-		}
-		return result;
-	};
-
 	// Depth first search to find all the connected ones
 	const dfsPath = (arr, i, j, path) => {
 		const rows = arr.length;
@@ -313,131 +227,28 @@ export default function SVG() {
 		);
 	};
 
-	// A function to convert the path to svg path
-	const pathToSvgPath = (path) => {
-		const svgPath = [];
-		for (let i = 0; i < path.length; i++) {
-			const [x, y, z] = path[i].split("_");
-			svgPath.push(
-				`M${x * 10} ${y * 10} h${(z - y) * 10 + 10} v10 h-${
-					(z - y) * 10 + 10
-				} z`
-			);
-		}
-		return svgPath;
-	};
-
-	// A function to convert the path to svg path
-	const pathToConnectedSvgPath = (coords) => {
-		const svgPath = [];
-
-		for (let i = 0; i < coords.length; i++) {
-			const { line, start, end } = coords[i];
-
-			svgPath.push(
-				`M${start * 10} ${line * 10} h${(end - start) * 10 + 10} v10 h-${
-					(end - start) * 10 + 10
-				} z`
-			);
-		}
-		return svgPath;
-	};
-
-	//finding all the connected ones vertically and horizontally and drawing a path through it
-
-	const pathToConnectedRect = (coords) => {
-		const rect = [];
-
-		for (let i = 0; i < coords.length; i++) {
-			const { line, start, end } = coords[i];
-
-			rect.push(
-				<rect
-					x={start * 10}
-					rx="5"
-					ry="5"
-					padding={50}
-					y={line * 12}
-					width={(end - start) * 10 + 10}
-					height="10"
-					fill={fill}
-					key={i}
-				/>
-			);
-		}
-		//placing 3 rects in top left and right and bottom right 7*7
-		rect.push(
-			<rect
-				x={0}
-				rx="5"
-				ry="5"
-				y={0}
-				width={60}
-				height={60}
-				fill={fill}
-				key={coords.length}
-			/>
-		);
-
-		rect.push(
-			<rect
-				x={0}
-				rx="5"
-				ry="5"
-				y={7 * 28}
-				width={60}
-				height={60}
-				key={coords.length + 1}
-			/>
-		);
-		rect.push(
-			<rect
-				x={7 * 22}
-				rx="5"
-				ry="5"
-				y={0}
-				width={60}
-				height={60}
-				fill={fill}
-				key={coords.length + 2}
-			/>
-		);
-		return rect;
-	};
-
 	React.useEffect(() => {
+		generateQR();
+	}, []);
+
+	const generateQR = () => {
 		const matrix = generateMatrix();
 		setMatrix(matrix);
+		const data = ROOTZAlgo(matrix);
+		setRonnysAlgo(data);
+	};
+
+	const generateNew = () => {
+		// const matrix = generateMatrix();
 		// const path = matrixToPath(matrix);
 		// const svgPath = pathToSvgPath(path);
 		// const rects = pathToRect(path);
-		// console.log(path);
 		// const arrObj = convertOnes(matrix);
 		// const connectedRects = pathToConnectedRect(arrObj);
 		// setConnectedCords(connectedRects);
-
-		// const dynamicisland = connectedOnes(matrix);
-		const data = ROOTZAlgo(matrix);
-		setRonnysAlgo(data);
-		// console.log("dslsssssssssssssssss", data);
-		// pathToConnectedSvgPath(arrObj);
-
 		// setRects(rects);
-		// console.log(convertOnes(generateMatrix()));
-
 		// setQrCords(svgPath);
-	}, []);
-
-	const generateNew = () => {
-		const matrix = generateMatrix();
-		const path = matrixToPath(matrix);
-		const svgPath = pathToSvgPath(path);
-		const rects = pathToRect(path);
-		const arrObj = convertOnes(matrix);
-		const connectedRects = pathToConnectedRect(arrObj);
-		setConnectedCords(connectedRects);
-		setRects(rects);
-		setQrCords(svgPath);
+		generateQR();
 	};
 
 	const paddingBoundaries = (matrix) => {
@@ -455,7 +266,7 @@ export default function SVG() {
 	const ROOTZAlgo = (arr) => {
 		arr = paddingBoundaries(arr);
 
-    const result = [];
+		const result = [];
 
 		for (let i = 0; i < arr.length; i++) {
 			const mat = [];
@@ -471,11 +282,11 @@ export default function SVG() {
 				};
 
 				if (arr[i][j] === 1) {
-          data.pixel = "black";
-          
-          //  right & left & i == 0 or i == arr.length - 1
+					data.pixel = "black";
 
-          //  top  &  bottom  &  j == 0 or j == arr[0].length - 1
+					//  right & left & i == 0 or i == arr.length - 1
+
+					//  top  &  bottom  &  j == 0 or j == arr[0].length - 1
 
 					//  top right
 					if (
@@ -537,7 +348,7 @@ export default function SVG() {
 						i > 0 &&
 						j < arr[0].length - 1 &&
 						arr[i - 1][j] === 1 &&
-						arr[i - 1][j + 1] === 1 &&
+						// arr[i - 1][j + 1] === 1 &&
 						arr[i][j + 1] === 1
 					) {
 						data.curved.TR = 1;
@@ -548,7 +359,7 @@ export default function SVG() {
 						i > 0 &&
 						j > 0 &&
 						arr[i - 1][j] === 1 &&
-						arr[i - 1][j - 1] === 1 &&
+						// arr[i - 1][j - 1] === 1 &&
 						arr[i][j - 1] === 1
 					) {
 						data.curved.TL = 1;
@@ -559,7 +370,7 @@ export default function SVG() {
 						i < arr.length - 1 &&
 						j < arr[0].length - 1 &&
 						arr[i + 1][j] === 1 &&
-						arr[i + 1][j + 1] === 1 &&
+						// arr[i + 1][j + 1] === 1 &&
 						arr[i][j + 1] === 1
 					) {
 						data.curved.BR = 1;
@@ -570,7 +381,7 @@ export default function SVG() {
 						i < arr.length - 1 &&
 						j > 0 &&
 						arr[i + 1][j] === 1 &&
-						arr[i + 1][j - 1] === 1 &&
+						// arr[i + 1][j - 1] === 1 &&
 						arr[i][j - 1] === 1
 					) {
 						data.curved.BL = 1;
@@ -625,62 +436,21 @@ export default function SVG() {
 	};
 
 	return (
-		<div style={{ padding: "50px", display: "flex" }}>
-			<MatrixToTable matrix={matrix} />
+		<div style={{ display: "grid", placeContent: "center", width: "100%" }}>
+			<div style={{ padding: "50px", display: "flex" }}>
+				<div
+					style={{
+						width: "300px",
+						height: "300px",
 
-			<MatrixToJSONTable matrix={ronnysAlgo} />
-
-			<div
-				style={{
-					width: "300px",
-					height: "300px",
-
-					position: "relative",
-				}}
-			>
-				{/* curved */}
-				{ronnysAlgo.map((rect, x) => {
-					console.log("rect", rect);
-					return rect.map((data, y) =>
-						data.pixel === "black" ? (
-							<div
-								style={{
-									width: "10px",
-									height: "10px",
-									backgroundColor: data.pixel,
-									position: "absolute",
-									top: x * 10,
-									left: y * 10,
-									backgroundColor: "black",
-									borderTopLeftRadius: data.curved.TL * 5,
-									borderTopRightRadius: data.curved.TR * 5,
-									borderBottomLeftRadius: data.curved.BL * 5,
-									borderBottomRightRadius: data.curved.BR * 5,
-								}}
-								key={x + y}
-							>
-								{" "}
-							</div>
-						) : (
-							<>
-								<div
-									style={{
-										width: "10px",
-										height: "10px",
-										backgroundColor: data.pixel,
-										position: "absolute",
-										top: x * 10,
-										left: y * 10,
-										zIndex: 2,
-										borderTopLeftRadius: data.curved.TL * 5,
-										borderTopRightRadius: data.curved.TR * 5,
-										borderBottomLeftRadius: data.curved.BL * 5,
-										borderBottomRightRadius: data.curved.BR * 5,
-									}}
-									key={x + y}
-								>
-									{" "}
-								</div>
+						position: "relative",
+					}}
+				>
+					{/* curved */}
+					{ronnysAlgo.map((rect, x) => {
+						console.log("rect", rect);
+						return rect.map((data, y) =>
+							data.pixel === "black" ? (
 								<div
 									style={{
 										width: "10px",
@@ -690,51 +460,69 @@ export default function SVG() {
 										top: x * 10,
 										left: y * 10,
 										backgroundColor: "black",
-										zIndex: 1,
+										borderTopLeftRadius: data.curved.TL * 5,
+										borderTopRightRadius: data.curved.TR * 5,
+										borderBottomLeftRadius: data.curved.BL * 5,
+										borderBottomRightRadius: data.curved.BR * 5,
 									}}
 									key={x + y}
 								>
 									{" "}
 								</div>
-							</>
-						)
-					);
-				})}
-			</div>
+							) : (
+								<>
+									<div
+										style={{
+											width: "10px",
+											height: "10px",
+											backgroundColor: data.pixel,
+											position: "absolute",
+											top: x * 10,
+											left: y * 10,
+											zIndex: 2,
+											borderTopLeftRadius: data.curved.TL * 5,
+											borderTopRightRadius: data.curved.TR * 5,
+											borderBottomLeftRadius: data.curved.BL * 5,
+											borderBottomRightRadius: data.curved.BR * 5,
+										}}
+										key={x + y}
+									>
+										{" "}
+									</div>
+									<div
+										style={{
+											width: "10px",
+											height: "10px",
+											backgroundColor: data.pixel,
+											position: "absolute",
+											top: x * 10,
+											left: y * 10,
+											backgroundColor: "black",
+											zIndex: 1,
+										}}
+										key={x + y}
+									>
+										{" "}
+									</div>
+								</>
+							)
+						);
+					})}
+				</div>
 
-			<div
-				style={{
-					width: "300px",
-					height: "300px",
+				<div
+					style={{
+						width: "300px",
+						height: "300px",
 
-					position: "relative",
-				}}
-			>
-				{/* plane */}
-				{ronnysAlgo.map((rect, x) => {
-					console.log("rect", rect);
-					return rect.map((data, y) =>
-						data.pixel === "black" ? (
-							<div
-								style={{
-									width: "10px",
-									height: "10px",
-									backgroundColor: data.pixel,
-									position: "absolute",
-									top: x * 10,
-									left: y * 10,
-									backgroundColor: "black",
-									// borderTopLeftRadius: data.curved.TL * 5,
-									// borderTopRightRadius: data.curved.TR * 5,
-									// borderBottomLeftRadius: data.curved.BL * 5,
-									// borderBottomRightRadius: data.curved.BR * 5,
-								}}
-								key={x + y}
-							>
-								{" "}
-							</div>
-						) : (
-							<>
+						position: "relative",
+					}}
+				>
+					{/* plane */}
+					{ronnysAlgo.map((rect, x) => {
+						console.log("rect", rect);
+						return rect.map((data, y) =>
+							data.pixel === "black" ? (
 								<div
 									style={{
 										width: "10px",
@@ -743,7 +531,7 @@ export default function SVG() {
 										position: "absolute",
 										top: x * 10,
 										left: y * 10,
-										zIndex: 2,
+										backgroundColor: "black",
 										// borderTopLeftRadius: data.curved.TL * 5,
 										// borderTopRightRadius: data.curved.TR * 5,
 										// borderBottomLeftRadius: data.curved.BL * 5,
@@ -753,7 +541,27 @@ export default function SVG() {
 								>
 									{" "}
 								</div>
-								{/* <div
+							) : (
+								<>
+									<div
+										style={{
+											width: "10px",
+											height: "10px",
+											backgroundColor: data.pixel,
+											position: "absolute",
+											top: x * 10,
+											left: y * 10,
+											zIndex: 2,
+											// borderTopLeftRadius: data.curved.TL * 5,
+											// borderTopRightRadius: data.curved.TR * 5,
+											// borderBottomLeftRadius: data.curved.BL * 5,
+											// borderBottomRightRadius: data.curved.BR * 5,
+										}}
+										key={x + y}
+									>
+										{" "}
+									</div>
+									{/* <div
 									style={{
 										width: "10px",
 										height: "10px",
@@ -768,10 +576,11 @@ export default function SVG() {
 								>
 									{" "}
 								</div> */}
-							</>
-						)
-					);
-				})}
+								</>
+							)
+						);
+					})}
+				</div>
 			</div>
 			<div
 				style={{
